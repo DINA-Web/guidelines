@@ -440,10 +440,10 @@ Generic operations
 All DINA-compliant APIs **MUST** provide support paging for large result
 sets, accepting the following parameters:
 
-  |URI term   | Parameter  | Default   |  Description
-  |:----------|:-----------|:----------|:---------------------------------------------------------
-  |**[ANY]**  |limit       |100        | The maximum number of items in the returned result set.
-  |**[ANY]**  | offset     | -         |  Determines the offset of items in a result set and thus provides an implicit paging mechanism.
+|URI term   | Parameter  | Default   |  Description |
+|:----------|:-----------|:----------|:-------------------|
+|**[ANY]**  |limit       |100        | The maximum number of items in the returned result set.|
+|**[ANY]**  | offset     | -         |  Determines the offset of items in a result set and thus provides an implicit paging mechanism.|
 
 ### Count
 
@@ -475,9 +475,9 @@ request languages supported by the service. Support for this request
 **MUST** be implemented with a non-parameterised GET request using the
 reserved word **languages** as the last element of the endpoint URI.
 
-  URI term            Parameter   Description
-  ------------------- ----------- ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  **GET/languages**   -           Requests a list of all languages supported by the service, returned as a meta-data object in the standard response format. By default supported languages should be included in the meta-data section of API responses. This call should support retrieval of supported languages **only**.
+|URI term |  Parameter  | Description |
+|:--------|:-----------|:-----------|:---------------|
+|**GET/languages** |-       |Requests a list of all languages supported by the service, returned as a meta-data object in the standard response format. By default supported languages should be included in the meta-data section of API responses. This call should support retrieval of supported languages **only**.|
 
 Sample reponse:
 <pre>
