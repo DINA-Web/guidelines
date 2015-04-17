@@ -250,6 +250,9 @@ accomplished using rewrite/redirect/proxy directives from an original
 URL of
 "[http://localhost:port/module/version](http://localhost:port/module/version)".
 
+All date time formats **MUST** conform to the subset of ISO 8601 defined in
+<http://www.w3.org/TR/NOTE-datetime> and <http://schema.org/DateTime>.
+
 #### Passing parameters
 
 DINA-compliant APIs **MUST** accept parameters as key-value pairs
@@ -376,24 +379,26 @@ API response "metadata"
 -----------------------
 
 A DINA-compliant endpoint **MUST** return the following properties in
-the response meta-data section:
+the response metadata section:
 
 |Property | Datatype | Description |
 |----|----|----|
 | callEndpoint    |     URL |       The complete URL of the endpoint that issued this reponse.|
-| limit          |      ...  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
-| offset        |       ...  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
-| callDate      |       ...  |      Datetime at which the call to the endpoint was received.|
-| statusCode     |      ...  |      HTTP response code issued by the endpoint.|
-| apiVersion     |      ...  |      Version identifier of the endpoint API.|
-| resultCount    |      ...  |      Count of the result objects returned by the call to this endpoint.|
-| orderBy     |      ...  |      Result object property on which the returned result set is sorted.|
-| sortOrder      |      ...  |      Sort order of the result set.|
-| resultLanguages|      ...  |      Languages of the result content - if applicable.|
-| supportedLanguages |  ...  |      Supported content languages of the endpoint - if applicable.|
-| contentLicenses    |  ...  |      Licenses applying to the results returned by the endpoint - - if applicable.|
-| message            |  ...  |      General message explaining the response - if any.|
-| maintenanceContact |  ...  |      Links to services and contacts that provide information and support in case of service |disruptions.
+| next    |     URL |       The complete URL of the endpoint for the next page of content. Only for paging.|
+| previous    |     URL |       The complete URL of the endpoint for the previous page of content. Only for paging.|
+| limit          |      int  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
+| offset        |       long  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
+| callDate      |       string  |      Datetime at which the call to the endpoint was received. http://schema.org/DateTime. Format as per http://www.w3.org/TR/NOTE-datetime|
+| statusCode     |      int  |      HTTP response code issued by the endpoint.|
+| apiVersion     |      string  |      Version identifier of the endpoint API.|
+| resultCount    |      long  |      Count of the result objects returned by the call to this endpoint.|
+| orderBy     |      array of string  |      Result object properties  on which the returned result set is sorted.|
+| sortOrder      |      string  |      Sort order of the result set. "asc" or "desc".|
+| resultLanguages|      array of string  |      Languages of the result content - if applicable.|
+| supportedLanguages |  array of string  |      Supported content languages of the endpoint - if applicable.|
+| contentLicenses    |  array of string  |      Licenses applying to the results returned by the endpoint - - if applicable.|
+| message            |  string  |      General message explaining the response - if any.|
+| maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service |disruptions.
 | ...                |  ...  |      ...|
 
 Reference base for data types: <http://schema.org>[^5]
@@ -404,13 +409,18 @@ A compliant sample response in JSON format:
     {
        "metadata": {
           "callEndpoint": "http://api.refimplementation.net/v1/media/...",
-          "callDate": "2014-10-08T08:08:18+01:00",
-          "limit": 100,
-          "offset": 0,
+          "next": "http://api.refimplementation.net/v1/media/...?offset=150&limit=50",
+          "previous": "http://api.refimplementation.net/v1/media/...?offset=50&limit=50",
+          "limit": 50,
+	  "callDate": "2015-11-05T08:15:30-05:00",
+          "offset": 100,
           "apiVersion: "1.0",
           "statusCode": 200,
           "results": 18,
-          "orderBy": "ID",
+          "orderBy": [
+	  	     "ID",
+		     "InventoryDate"
+          ],
           "sortOrder": "asc",
           "resultLanguages": [
               "SE_sv",
