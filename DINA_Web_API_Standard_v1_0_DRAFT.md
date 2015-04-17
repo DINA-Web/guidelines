@@ -142,11 +142,11 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 |PUT         |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
 |DELETE      |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
 |HEAD        |/media/images?minid=1000&maxid=2000                                       |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("images.id has no values in range 1000-2000": 404 Not Found)                                                                          |
-|GET         |/collectionobjects?orderby=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve the first 100 collectionobjects starting a offset 0, ordered by ProjectNumber,InventoryDate.                                                     |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
-|POST        |/collectionobjects?orderby=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|PUT         |/collectionobjects?orderby=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|DELETE      |/collectionobjects?orderby=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|HEAD        |/collectionobjects?orderby=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
+|GET         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve the first 100 collectionobjects starting a offset 0, ordered by ProjectNumber,InventoryDate.                                                     |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
+|POST        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
+|PUT         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
+|DELETE      |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
+|HEAD        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
 
 
 
@@ -387,7 +387,7 @@ the response meta-data section:
 | statusCode     |      ...  |      HTTP response code issued by the endpoint.|
 | apiVersion     |      ...  |      Version identifier of the endpoint API.|
 | resultCount    |      ...  |      Count of the result objects returned by the call to this endpoint.|
-| sortColumn     |      ...  |      Result object property on which the returned result set is sorted.|
+| orderBy     |      ...  |      Result object property on which the returned result set is sorted.|
 | sortOrder      |      ...  |      Sort order of the result set.|
 | resultLanguages|      ...  |      Languages of the result content - if applicable.|
 | supportedLanguages |  ...  |      Supported content languages of the endpoint - if applicable.|
@@ -410,7 +410,7 @@ A compliant sample response in JSON format:
           "apiVersion: "1.0",
           "statusCode": 200,
           "results": 18,
-          "sortColumn": "ID",
+          "orderBy": "ID",
           "sortOrder": "asc",
           "resultLanguages": [
               "SE_sv",
