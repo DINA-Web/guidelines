@@ -26,7 +26,7 @@ Web application security
 Web applications (including web services like a RESTful web service) must test the application or service with the Open Source tool, (OWASP ZED)[https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project].
 
 For each release, for each web application/service:
-* Will have a directory called *security* which will contain the OWASP HTML report.
+* Will have a directory called *security* which will contain the OWASP ZED HTML report *for that release of the application/service*.
 * Other security controls (below) will also be in the *security* directory
 
 
