@@ -21,12 +21,29 @@ Some definitions:
 * Security: availability, integrity and confidentiality
 
 
-Addddd
+Web application security
 -------
+Web applications (including web services like a RESTful web service) must test the application or service with the Open Source tool, (OWASP ZED)[https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project].
+
+For each release, for each web application/service:
+* Will have a directory called *security* which will contain the OWASP HTML report.
+* Other security controls (below) will also be in the *security* directory
 
 
-Addddd
+Dependent Component Security
 -------
+Applications/services depend on non-DINA applications/services for operation.
+An example is a datqabase like MySql or Postgresql.
+
+Application/service dependencies/components should adhere to the security best practices for that component.
+For example, MySql can be secured or *hardened* using guidelines such as (MySQL Database Security Best Practices)[http://www.greensql.com/content/mysql-security-best-practices-hardening-mysql-tips].
+
+Components may be deployed and configured by the end users or by DINA scripts.
+In either case, a desciption of all of the security controls put in place, or required to put in place, to harden the component should also be in the 'security' directory.
+(An example security directory is forthcoming).
+
+
+
 
 
 
