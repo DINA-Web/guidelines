@@ -516,34 +516,60 @@ Documentation
     documentation **MUST** provide curl examples to document the usage.
     For example (illustrative):
 
-<pre>
-    CREATE
-    Mind the syntax: when posing a file with cURL , you have to put the '@'-sign in front of the file
 
-    URI: '/v1/media/create'
 
-    Method = Post:
-    → curl -v -F "owner=Laxness" -F "access=public" -F "licenseType=CC BY" -F "legend=en
-    skata" -F "legendLanguage=sv_SE" -F "tags=view:left" -F "fileName=pica-pica-flying.jpg" -F
-    "selectedFile=@pica-pica-flying.jpg" http://refimplementation.mediaserver.net/v1/media/create
+```bash
+curl --request POST  \\
+  --header "Accept: application/json" \\
+  --header "Content-Type: application/json; charset=UTF-8" \\
+  -data '{"metadata": {"owner":"Laxness", "access":"public", \\
+  "licenseType":"CC BY", "legend":"en skata", \\
+  "legendLanguage":"sv_SE", "tags":"view:left"}, \\
+  "data":{"fileName": "pica-pica-flying.jpg", \\
+  "fileContentTransferEncoding": "base64_RFC4648", \\
+  "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="}}' \\
+  http://refimplementation.mediaserver.net/v1/media/create
+```
 
-    Response if HTTP '200 OK':
-    → <UUID>
-    for instance, in this case→ 46853e82-6cad-430b-b582-90e85203dce8
+Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
 
-    Test :
-    → curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
-    for instance, in this case→ 46853e82-6cad-430b-b582-90e85203dce8
+```bash
+{  
+   "meta":{  
+      "owner":"Laxness",
+      "access":"public",
+      "licenseType":"CC BY",
+      "legend":"en skata",
+      "legendLanguage":"sv_SE",
+      "tags":"view:left"
+   },
+   "data":{  
+      "fileName":"pica-pica-flying.jpg",
+      "fileContentTransferEncoding":"base64_RFC4648",
+      "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="
+   }
+}
 
-    → curl http://refimplementation.mediaserver.net/v1/media/metadata/ 46853e82-6cad-430b-b582-
-    90e85203dce8
-</pre>
+```
+
+References:  
+- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#json-requests  
+- http://stackoverflow.com/questions/4083702/posting-a-file-and-data-to-restful-webservice-as-json  
+- https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
+
+Response if HTTP '200 OK': provides identifier <UUID> for instance, in this case 6853e82-6cad-430b-b582-90e85203dce8, so retrieval can be tested with:
+
+```bash
+# use pattern: curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
+curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-430b-b582-90e85203dce8
+```
 
 -   In addition to the required basic API documentation, DINA compliant
     REST API **SHOULD** provide self-documentation capabilities for each
     endpoint similar to the example provided by e.g. the [Django REST
     framework](http://www.django-rest-framework.org)[^6] or
     [Apiary](http://apiary.io)[^7]
+    
 -   The documentation for the API **COULD** refer to an online reference
     implementation in the curl examples (rather than to localhost)
 
