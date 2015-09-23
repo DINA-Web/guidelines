@@ -9,16 +9,13 @@ DINA consortium - Technical Committee
 Version
 -------
 
+**1.0.1** *(23. Sept 2015)*
 **1.0** *(DRAFT 16. March 2015)*
 
 Miscellaneous discussion items
 ==============================
 
--   Use Media Server when we refer to examples ? [Assumes Media Server
-    is correct: see
-    <https://github.com/gnewton/dina-mediaserver/blob/master/docs/mediaserver-environment.odt?raw=true>
-    ]
--   ...
+-   Use "seqdb" APIs when we refer to examples?
 
 
 DINA REST API standard - Background, resources, conventions
