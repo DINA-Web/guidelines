@@ -13,9 +13,9 @@ DINA International consortium - Technical Committee
 Version History
 -------
 
-|  Version # | Date  |  Author |   |   |
+|  Version # | Date  |  Author |  Desc |   |
 |---|---|---|---|---|
-|**1.0.2** |*(12. May 2016)*   |Ingimar E, NRM  |   |   |
+|**1.0.2** |*(12. May 2016)*   |Ingimar E, NRM  | fixed broken link to  Google JSON Style Guide  |   |
 |**1.0.1**  |*(23. Sept 2015)*   |   |   |   |
 |**1.0**  |*(DRAFT 16. March 2015)*  |   |   |   |
 
