@@ -15,6 +15,7 @@ Version History
 
 |  Version # | Date  |  Author |  Desc |   |
 |---|---|---|---|---|
+|**1.0.3** |*(15. Juni 2016)*   |Ingimar E, NRM  | change in 'BASIC-CRUD image' examples  |   |
 |**1.0.2** |*(12. May 2016)*   |Ingimar E, NRM  | fixed broken link to  Google JSON Style Guide  |   |
 |**1.0.1**  |*(23. Sept 2015)*   |   |   |   |
 |**1.0**  |*(DRAFT 16. March 2015)*  |   |   |   |
@@ -120,11 +121,11 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 
 |HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
 |:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/images/1234  |Retrieve data object of type image and with id '1234'.                                                           |200 OK         |Various possible ("id does not exist": 404 Not Found) |
-|POST        |/media/images/1234  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/images/1234  |Replace data object with id '1234'. Suitable when the client knows the identifier, e.g. an UUID                  |200 OK         |Various possible ("id does not exist": 404 Not Found) |
-|DELETE      |/media/images/1234  |Delete media data object of type image with id '1234'.                                                           |204 No Content |Various possible ("id does not exist": 404 Not Found) |
-|HEAD        |/media/images/1234  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found) |
+|GET         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve the media object with the uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
+|POST        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
+|PUT         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Update the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                 |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
+|DELETE      |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Delete the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |204 No Content |Various possible ("uuid does not exist": 404 Not Found) |
+|HEAD        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
 |GET         |/media/images       |Retrieve first page of paged list of all images (id´s or url´s) starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK         |Various possible                                      |
 |POST        |/media/images       |Create a new image.                                                                                              |201 Created    |Various possible                                      |
 |PUT         |/media/images       |NA                                                                                                               |NA             |405 Method Not Allowed                                |
