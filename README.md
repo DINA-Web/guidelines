@@ -10,11 +10,14 @@ Authors
 
 DINA International consortium - Technical Committee
 
-Version
+Version History
 -------
 
-- **1.0.1** *(23. Sept 2015)*
-- **1.0** *(DRAFT 16. March 2015)*
+|  Version # | Date  |  Author |  Desc |   |
+|---|---|---|---|---|
+|**1.0.2** |*(12. May 2016)*   |Ingimar E, NRM  | fixed broken link to  Google JSON Style Guide  |   |
+|**1.0.1**  |*(23. Sept 2015)*   |   |   |   |
+|**1.0**  |*(DRAFT 16. March 2015)*  |   |   |   |
 
 Miscellaneous discussion items
 ==============================
@@ -316,8 +319,7 @@ structure of a DINA API compliant JSON reponse is listed below:
 </pre>
 
 HTTP responses in JSON format **MUST** satisfy the property name
-guidelines from the JSON Style Guide:
-<https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml#Property_Name_Guidelines>,
+guidelines from the Google [JSON Style Guide]: ,
 to ensure for example that JSON results do not have unique ids as
 property names of the marshalled object. Similarly, these principles
 **SHOULD** apply to XML reponses. Examples for valid and invalid
@@ -662,3 +664,6 @@ Consulted resources
 [^6]: [Django REST framework](http://www.django-rest-framework.org)
 
 [^7]: [Apiary](http://apiary.io)
+
+[//]: # ( ref not shown)
+[JSON Style Guide]: <https://google.github.io/styleguide/jsoncstyleguide.xml> 
