@@ -553,7 +553,7 @@ References:
 - https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
 
 Response if HTTP '200 OK': provides identifier <UUID> for instance, in this case 6853e82-6cad-430b-b582-90e85203dce8, so retrieval can be tested with:
-
+ 
 ```bash
 # use pattern: curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
 curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-430b-b582-90e85203dce8
