@@ -13,25 +13,27 @@ The DINA TC views secure software as fundamental to the integrity of DINA-produc
 Security: availability, integrity and confidentiality
 
 
-Summary
-=============
+#Summary
 * 'https' everywhere
 * Applications and web services pass OWASP10
 * Non-DINA components hardened as-per component best-practices
 * docker hardening
 * other?
 
-http/https
-==========
-All applications and web services are to run only 'https'.
+##http/https
+All applications and web services are to run only `https`.
 
+###http Redirects
+* For applications, http is redirected to https, but all parameters on the URL are scrubbed (assumed to be compromised) and the redirect is to the entry / default page for the application
+* For web services, http is redirected to a `403` error
 
-Web application and Web Services Security
-=============
+##Web application and Web Services Security
+[OWASP10](https://www.owasp.org/index.php/Main_Page) is a list of the 10 top web vulnerabilities, with associated [https://www.owasp.org/index.php/Top_10_2013-Top_10](explanations and mitigation documentation)xo.
+
 Web applications (including web services like a RESTful web service) must test the application or service with the Open Source tool, [OWASP ZED](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project).
 
-For each release, for each web application/service:
-* Will have a directory called 'security' which will contain the OWASP ZED HTML report *for that release of the application/service*.
+* OWASP10 (and any other reports) MUST not be checked in to github, or attached to issues (we need to agree/figure out how we talk about these reports)
+
 
 TODO: agree on how to use this tool
 
@@ -40,6 +42,7 @@ Tools
 * [Jenkins plugin](https://wiki.jenkins-ci.org/display/JENKINS/Zapper+Plugin)
 * [OWASP Dependency-Check](OWASP Dependency-CheckOWASP Dependency-Check) -- [Jenkins plugin](https://wiki.jenkins-ci.org/display/JENKINS/OWASP+Dependency-Check+Plugin)
 * [OWASP Lapse Project](https://www.owasp.org/index.php/OWASP_LAPSE_Project)
+* [Big list of OWASP10 tools (some for single OWASP vulnerabilities)](https://www.owasp.org/index.php/Appendix_A:_Testing_Tools)
 
 TODO: which to use / how to use
 
