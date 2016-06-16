@@ -23,10 +23,10 @@ Security: availability, integrity and confidentiality
 ###Network Connections Encryption
 All network connections including those between internal and external services, must be encrypted if encryption is available.
 
-####`http/https`
+####http/https
 All applications and web services are to run only `https`.
 
-#####`http` Redirects
+#####http Redirects
 * For applications, http is redirected to https, but all parameters on the URL are scrubbed (assumed to be compromised) and the redirect is to the entry / default page for the application
 * For web services, http is redirected to a `[403](https://en.wikipedia.org/wiki/HTTP_403)` error
 
@@ -41,7 +41,7 @@ Examples:
 This hardening can be centralized through `docker`ization.
 
 ##Web application and Web Services Security
-[OWASP10](https://www.owasp.org/index.php/Main_Page) is a list of the 10 top web vulnerabilities, with associated [https://www.owasp.org/index.php/Top_10_2013-Top_10](explanations and mitigation documentation)xo.
+[OWASP10](https://www.owasp.org/index.php/Main_Page) is a list of the 10 top web vulnerabilities, with associated [explanations and mitigation documentation](https://www.owasp.org/index.php/Top_10_2013-Top_10).
 
 Web applications (including web services like a RESTful web service) must pass tests of the Open Source tool, [OWASP ZED](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project).
 *Pass* means no vulnerabilities are detected by this tool.
@@ -82,11 +82,16 @@ TODO: Agree on same best practices *per component*
   * [pupppet-postgres-hardening](https://github.com/dev-sec/puppet-postgres-hardening)
 
 
-docker hardening
-================
+##docker hardening
 As docker is a fundamental technology for this project, making it secure is a priority.
 * [docker hardening - 1.6](https://benchmarks.cisecurity.org/tools2/docker/CIS_Docker_1.6_Benchmark_v1.0.0.pdf)
 * Install [fail2ban](http://www.fail2ban.org/)
+* [SANS Linux Security checklist](https://www.sans.org/media/score/checklists/linuxchecklist.pdf)
+
+These same hardening best-practices should also be applied to the host OS (not all of them are possible at the container level).
+The host OS is not in the control of the DINA team, so install instructions should strongly suggest these and maybe other hardening best-practices.
+
+
 
 TODO
 * Which docker hardening to use (big list)
