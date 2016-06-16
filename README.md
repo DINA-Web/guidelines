@@ -1,7 +1,15 @@
-# DINA Web API Standard
+For more information about the DINA Project, please visit the [DINA wiki](http://www.dina-project.net/wiki/DINA_Technical_Committee).
 
-Provides binding guidelines for the development of RESTful DINA Web APIs. 
+Authors
+-------
 
-Formulated by the DINA Technical Committee as established by the DINA International consortium. For more information visit the DINA wiki: 
+DINA International consortium - Technical Committee
 
- - http://www.dina-project.net/wiki/DINA_Technical_Committee
+DINA Guidelines
+==============================
+
+-   [Web API Guidelines](DINA-Web-API-Guidelines.md)
+-   [Release Guidelines](DINA-Web-Release-Guidelines.md)
+-   [QA Guidelines](DINA-Web-QA-Guidelines.md)
+
+

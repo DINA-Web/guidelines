@@ -1,24 +1,20 @@
 This document
 =============
 
+Provides binding guidelines for the design of DINA Web APIs. 
+
+For more information about the DINA Project, please visit the [DINA wiki](http://www.dina-project.net/wiki/DINA_Technical_Committee).
+
 Authors
 -------
 
-DINA consortium - Technical Committee
+DINA International consortium - Technical Committee
 
-Version
--------
-
-**1.0** *(DRAFT 16. March 2015)*
 
 Miscellaneous discussion items
 ==============================
 
--   Use Media Server when we refer to examples ? [Assumes Media Server
-    is correct: see
-    <https://github.com/gnewton/dina-mediaserver/blob/master/docs/mediaserver-environment.odt?raw=true>
-    ]
--   ...
+-   Use "seqdb" APIs when we refer to examples?
 
 
 DINA REST API standard - Background, resources, conventions
@@ -116,13 +112,13 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 
 |HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
 |:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/images/1234  |Retrieve data object of type image and with id '1234'.                                                           |200 OK         |Various possible ("id does not exist": 404 Not Found) |
-|POST        |/media/images/1234  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/images/1234  |Replace data object with id '1234'. Suitable when the client knows the identifier, e.g. an UUID                  |200 OK         |Various possible ("id does not exist": 404 Not Found) |
-|DELETE      |/media/images/1234  |Delete media data object of type image with id '1234'.                                                           |204 No Content |Various possible ("id does not exist": 404 Not Found) |
-|HEAD        |/media/images/1234  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found) |
+|GET         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve the media object with the uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
+|POST        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
+|PUT         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Update the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                 |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
+|DELETE      |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Delete the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |204 No Content |Various possible ("uuid does not exist": 404 Not Found) |
+|HEAD        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
 |GET         |/media/images       |Retrieve first page of paged list of all images (id´s or url´s) starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK         |Various possible                                      |
-|POST        |/media/images       |Create a new image.                                                                                              |201 Created    |Various possible                                      |
+|POST        |/media/images       |Create one or more new images.                                                                                              |201 Created    |Various possible                                      |
 |PUT         |/media/images       |NA                                                                                                               |NA             |405 Method Not Allowed                                |
 |DELETE      |/media/images       |NA                                                                                                               |Na             |405 Method Not Allowed                                |
 |HEAD        |/media/images       |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible                                      |
@@ -315,8 +311,7 @@ structure of a DINA API compliant JSON reponse is listed below:
 </pre>
 
 HTTP responses in JSON format **MUST** satisfy the property name
-guidelines from the JSON Style Guide:
-<https://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml#Property_Name_Guidelines>,
+guidelines from the Google [JSON Style Guide]: ,
 to ensure for example that JSON results do not have unique ids as
 property names of the marshalled object. Similarly, these principles
 **SHOULD** apply to XML reponses. Examples for valid and invalid
@@ -516,34 +511,60 @@ Documentation
     documentation **MUST** provide curl examples to document the usage.
     For example (illustrative):
 
-<pre>
-    CREATE
-    Mind the syntax: when posing a file with cURL , you have to put the '@'-sign in front of the file
 
-    URI: '/v1/media/create'
 
-    Method = Post:
-    → curl -v -F "owner=Laxness" -F "access=public" -F "licenseType=CC BY" -F "legend=en
-    skata" -F "legendLanguage=sv_SE" -F "tags=view:left" -F "fileName=pica-pica-flying.jpg" -F
-    "selectedFile=@pica-pica-flying.jpg" http://refimplementation.mediaserver.net/v1/media/create
+```bash
+curl --request POST  \\
+  --header "Accept: application/json" \\
+  --header "Content-Type: application/json; charset=UTF-8" \\
+  -data '{"metadata": {"owner":"Laxness", "access":"public", \\
+  "licenseType":"CC BY", "legend":"en skata", \\
+  "legendLanguage":"sv_SE", "tags":"view:left"}, \\
+  "data":{"fileName": "pica-pica-flying.jpg", \\
+  "fileContentTransferEncoding": "base64_RFC4648", \\
+  "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="}}' \\
+  http://refimplementation.mediaserver.net/v1/media/create
+```
 
-    Response if HTTP '200 OK':
-    → <UUID>
-    for instance, in this case→ 46853e82-6cad-430b-b582-90e85203dce8
+Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
 
-    Test :
-    → curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
-    for instance, in this case→ 46853e82-6cad-430b-b582-90e85203dce8
+```bash
+{  
+   "meta":{  
+      "owner":"Laxness",
+      "access":"public",
+      "licenseType":"CC BY",
+      "legend":"en skata",
+      "legendLanguage":"sv_SE",
+      "tags":"view:left"
+   },
+   "data":{  
+      "fileName":"pica-pica-flying.jpg",
+      "fileContentTransferEncoding":"base64_RFC4648",
+      "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="
+   }
+}
 
-    → curl http://refimplementation.mediaserver.net/v1/media/metadata/ 46853e82-6cad-430b-b582-
-    90e85203dce8
-</pre>
+```
+
+References:  
+- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#json-requests  
+- http://stackoverflow.com/questions/4083702/posting-a-file-and-data-to-restful-webservice-as-json  
+- https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
+
+Response if HTTP '200 OK': provides identifier <UUID> for instance, in this case 6853e82-6cad-430b-b582-90e85203dce8, so retrieval can be tested with:
+
+```bash
+# use pattern: curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
+curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-430b-b582-90e85203dce8
+```
 
 -   In addition to the required basic API documentation, DINA compliant
     REST API **SHOULD** provide self-documentation capabilities for each
     endpoint similar to the example provided by e.g. the [Django REST
     framework](http://www.django-rest-framework.org)[^6] or
     [Apiary](http://apiary.io)[^7]
+    
 -   The documentation for the API **COULD** refer to an online reference
     implementation in the curl examples (rather than to localhost)
 
@@ -635,3 +656,6 @@ Consulted resources
 [^6]: [Django REST framework](http://www.django-rest-framework.org)
 
 [^7]: [Apiary](http://apiary.io)
+
+[//]: # ( ref not shown)
+[JSON Style Guide]: <https://google.github.io/styleguide/jsoncstyleguide.xml> 
