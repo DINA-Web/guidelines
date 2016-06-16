@@ -33,7 +33,7 @@ Web applications (including web services like a RESTful web service) must test t
 For each release, for each web application/service:
 * Will have a directory called 'security' which will contain the OWASP ZED HTML report *for that release of the application/service*.
 
-TODO: agree on what tools to use
+TODO: agree on how to use this tool
 
 Tools
 ----------------------
