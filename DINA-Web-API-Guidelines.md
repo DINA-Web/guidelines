@@ -530,7 +530,7 @@ Here is the above JSON in the POST body formatted a little better (this is just 
 
 ```bash
 {  
-   "meta":{  
+   "metadata":{  
       "owner":"Laxness",
       "access":"public",
       "licenseType":"CC BY",
