@@ -10,13 +10,6 @@ Authors
 
 DINA International consortium - Technical Committee
 
-
-Miscellaneous discussion items
-==============================
-
--   Use "seqdb" APIs when we refer to examples?
-
-
 DINA REST API standard - Background, resources, conventions
 ===========================================================
 
