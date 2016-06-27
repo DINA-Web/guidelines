@@ -389,18 +389,17 @@ the response metadata section:
 | maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service |disruptions.
 | ...                |  ...  |      ...|
 
-Reference base for data types: <http://schema.org>[^5]
 
 A compliant sample response in JSON format:
 
 <pre>
     {
-       "metadata": {
+       "meta": {
           "callEndpoint": "http://api.refimplementation.net/v1/media/...",
           "next": "http://api.refimplementation.net/v1/media/...?offset=150&limit=50",
           "previous": "http://api.refimplementation.net/v1/media/...?offset=50&limit=50",
           "limit": 50,
-	  "callDate": "2015-11-05T08:15:30-05:00",
+	        "callDate": "2015-11-05T08:15:30-05:00",
           "offset": 100,
           "apiVersion: "1.0",
           "statusCode": 200,
