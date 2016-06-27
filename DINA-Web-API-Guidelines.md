@@ -290,7 +290,7 @@ structure of a DINA API compliant JSON reponse is listed below:
 
 <pre>
     {
-       "metadata": {
+       "meta": {
           "callEndpoint": "http://api.refimplementation.net/v1/media/...",
           "callDate": "2014-10-08T08:08:18+01:00",
           "apiVersion: "1.0",
@@ -367,7 +367,7 @@ API response "metadata"
 -----------------------
 
 A DINA-compliant endpoint **MUST** return the following properties in
-the response metadata section:
+the response meta section:
 
 |Property | Datatype | Description |
 |----|----|----|
@@ -479,7 +479,7 @@ reserved word **languages** as the last element of the endpoint URI.
 Sample reponse:
 <pre>
     {
-       "metadata": {
+       "meta": {
           "callEndpoint": "http://api.refimplementation.net/v1/media/languages",
           "callDate": "2014-10-08T08:08:18+01:00",
           "apiVersion: "1.0",
@@ -509,7 +509,7 @@ Documentation
 curl --request POST  \\
   --header "Accept: application/json" \\
   --header "Content-Type: application/json; charset=UTF-8" \\
-  -data '{"metadata": {"owner":"Laxness", "access":"public", \\
+  -data '{"meta": {"owner":"Laxness", "access":"public", \\
   "licenseType":"CC BY", "legend":"en skata", \\
   "legendLanguage":"sv_SE", "tags":"view:left"}, \\
   "data":{"fileName": "pica-pica-flying.jpg", \\
@@ -522,7 +522,7 @@ Here is the above JSON in the POST body formatted a little better (this is just 
 
 ```bash
 {  
-   "metadata":{  
+   "meta":{  
       "owner":"Laxness",
       "access":"public",
       "licenseType":"CC BY",
