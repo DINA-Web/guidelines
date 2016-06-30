@@ -94,8 +94,8 @@ agreed mapping of HTTP methods to common CRUD operations ensures a
 transparent behaviour. The DINA API standard assumes the mappings listed
 in the following sections. To illustrate these mappings the table refers
 partly to the ongoing specification of the collections module and partly
-to a DINA-compliant media server modules, indicated by the reserved word
-(URI path component) ***"media"*** and a data object (media type)
+to the DINA-compliant 'media server' module, indicated by the reserved word
+(URI path component) ***"media"*** and a data object ('media type' / 'entity' [^8])
 handled by the web service indicated by ***"image"***.
 
 If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls are returning just the meta-data section of the corresponding ***HTTP GET*** call.
@@ -110,6 +110,10 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 |PUT         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Update the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                 |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
 |DELETE      |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Delete the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |204 No Content |Various possible ("uuid does not exist": 404 Not Found) |
 |HEAD        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
+
+|HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
+|:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
+|GET         |/media/\<entity\> [^8]    | |        |                                     |
 |GET         |/media/images       |Retrieve first page of paged list of all images (id´s or url´s) starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK         |Various possible                                      |
 |POST        |/media/images       |Create one or more new images.                                                                                              |201 Created    |Various possible                                      |
 |PUT         |/media/images       |NA                                                                                                               |NA             |405 Method Not Allowed                                |
@@ -283,8 +287,8 @@ In general, both singular and plural versions of those terms should be considere
 ### HTTP response
 
 HTTP responses returned by DINA-compliant API endpoints **MUST** be
-returned as valid JSON documents and follow a standard response
-structure. In addition, DINA-compliant API endpoints SHOULD
+returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta )and follow a standard response structure. 
+In addition, DINA-compliant API endpoints SHOULD
 alternatively return responses as valid XML documents. The basic
 structure of a DINA API compliant JSON reponse is listed below:
 
@@ -361,9 +365,20 @@ responses under this scheme are given in the following table.
 
 </table>  
 
+API response - Top Level
+-----------------------
 
+"A document MUST contain at least one of the following top-level members: <p>
 
-API response "metadata"
+* data: the document’s “primary data”
+* errors: an array of error objects
+* meta: a meta object that contains non-standard meta-information.
+
+The members data and errors MUST NOT coexist in the same document."<p>
+
+source : http://jsonapi.org/format/#document-top-level
+
+API response "meta"
 -----------------------
 
 A DINA-compliant endpoint **MUST** return the following properties in
@@ -428,6 +443,26 @@ A compliant sample response in JSON format:
        ... "data" ...
     }
 </pre>
+
+
+API response "errors"
+-----------------------
+
+source : http://jsonapi.org/format/#errors <p>
+A DINA-compliant endpoint **MAY** return the following properties in
+the response errors section:
+
+|Property | Datatype | Description |
+|----     |----|----|
+| id      |----| a unique identifier for this particular occurrence of the problem.|
+| links   |----| a links object containing the following members (about)|
+| status  |----| the HTTP status code applicable to this problem, expressed as a string value.|
+| code    |----|  an application-specific error code, expressed as a string value|
+| title   |----| a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization. |
+| detail  |----| a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.|
+| source  |----| an object containing references to the source of the error, optionally including any of the following members: (pointer,parameter)|
+| meta    |----| a *meta object* containing non-standard meta-information about the error. ( see *meta object* ) |
+| ...     |...| ...|
 
 Generic operations
 ------------------
@@ -648,6 +683,8 @@ Consulted resources
 [^6]: [Django REST framework](http://www.django-rest-framework.org)
 
 [^7]: [Apiary](http://apiary.io)
+
+[^8]: 2016-06-27 , supported media-types are  [image/images,video/videos,sound/sounds,attachment/attachments]
 
 [//]: # ( ref not shown)
 [JSON Style Guide]: <https://google.github.io/styleguide/jsoncstyleguide.xml> 
