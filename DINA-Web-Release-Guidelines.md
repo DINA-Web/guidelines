@@ -5,7 +5,7 @@ The following are RECOMMENDED guidelines to follow when making releases of modul
 
   - Use Travis CI for build and deploy releases to GitHub Releases
   - Make your README.md contain a "badge" - builds should show green badge :)
-  - Use semantic versioning and tag your releases like this: `git tag -a v0.0.1 -m "description"`
+  - Use semantic versioning and tag your releases like this: `git tag -a v0.0.1 -m "description"`, you can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
   - Provide a NEWS.md or CHANGELOG for the releases
   - Notify someone at DINA TC if your stable release is ready to go upstream
 
