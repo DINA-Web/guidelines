@@ -1,0 +1,23 @@
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 10) excessive indentation, headers section is expected to be indented by just 8 spaces or 2 tabs on lines 190-191
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 10) message-body asset is expected to be a pre-formatted code block, separate it by a newline and indent every of its line by 12 spaces or 3 tabs on lines 244-247
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 5) unexpected header block, expected a group, resource or an action definition, e.g. '# Group <name>', '# <resource name> [<URI>]' or '# <HTTP method> <URI>' on line 266
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 10) headers is expected to be a pre-formatted code block, separate it by a newline and indent every of its line by 4 spaces or 1 tabs on lines 267-268
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 9) the 'headers' section at this level is deprecated and will be removed in a future, use respective payload header section(s) instead on line 267
+[33mwarn[39m: Parser warning in file '/tmp/DINA-Web-API-Guidelines.apib': (warning code 5) ignoring unrecognized block on line 270
+[33mwarn[39m: Compilation warning in file '/tmp/DINA-Web-API-Guidelines.apib': Ambiguous URI parameter in template: /media/{count}
+Parameter not defined in API description document: count ( > Media > Retrieve count of all media entity types json document, paged) 
+[33mwarn[39m: Compilation warning in file '/tmp/DINA-Web-API-Guidelines.apib': Ambiguous URI parameter in template: /media/{mid}/
+Parameter not defined in API description document: mid ( > Media > Retrieve all items of type {mid}, paged) 
+[33mwarn[39m: Compilation warning in file '/tmp/DINA-Web-API-Guidelines.apib': Ambiguous URI parameter in template: /media/{mid}/count
+Parameter not defined in API description document: mid ( > Media > Count of items of media type {mid}) 
+[34minfo[39m: Beginning Dredd testing...
+[34minfo[39m: Dry run. Not performing HTTP request
+[33mskip[39m: GET /media/
+[34minfo[39m: Dry run. Not performing HTTP request
+[33mskip[39m: GET /media/images
+[34minfo[39m: Dry run. Not performing HTTP request
+[33mskip[39m: GET /media/images/001196a9
+[34minfo[39m: Dry run. Not performing HTTP request
+[33mskip[39m: PUT /media/images/001196a9
+[32mcomplete[39m: 0 passing, 0 failing, 0 errors, 4 skipped, 4 total
+[32mcomplete[39m: Tests took 9ms
