@@ -73,7 +73,7 @@ the contract covered by this standard, but they **MUST** not break any
 of the recommendations covered by mandatory or optional features defined
 by this standard.
 
-Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
+**NB** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
 
 DINA REST API standard - Specification
 ======================================
