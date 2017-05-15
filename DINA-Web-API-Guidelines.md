@@ -73,7 +73,7 @@ the contract covered by this standard, but they **MUST** not break any
 of the recommendations covered by mandatory or optional features defined
 by this standard.
 
-**NB** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
+**NB:** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
 
 DINA REST API standard - Specification
 ======================================
@@ -105,11 +105,13 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 
 #### Basic CRUD operations ####
 
+http://jsonapi.org/format/#crud
+
 #### Filtering, ordering, paging ####
 
-http://jsonapi.org/format/#fetching-filtering
-http://jsonapi.org/format/#fetching-pagination
-http://jsonapi.org/format/#fetching-sorting
+1. http://jsonapi.org/format/#fetching-filtering
+2. http://jsonapi.org/format/#fetching-pagination
+3. http://jsonapi.org/format/#fetching-sorting
 
 #### Relations / one-to-many ####
 Reference for relational RESTful services:
