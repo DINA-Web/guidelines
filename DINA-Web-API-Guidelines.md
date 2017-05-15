@@ -73,6 +73,8 @@ the contract covered by this standard, but they **MUST** not break any
 of the recommendations covered by mandatory or optional features defined
 by this standard.
 
+Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
+
 DINA REST API standard - Specification
 ======================================
 
@@ -103,57 +105,11 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 
 #### Basic CRUD operations ####
 
-|HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
-|:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve the media object with the uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-|POST        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Update the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                 |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-|DELETE      |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Delete the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |204 No Content |Various possible ("uuid does not exist": 404 Not Found) |
-|HEAD        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-
-|HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
-|:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/\<entity\> [^8]    | |        |                                     |
-|GET         |/media/images       |Retrieve first page of paged list of all images (id´s or url´s) starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK         |Various possible                                      |
-|POST        |/media/images       |Create one or more new images.                                                                                              |201 Created    |Various possible                                      |
-|PUT         |/media/images       |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|DELETE      |/media/images       |NA                                                                                                               |Na             |405 Method Not Allowed                                |
-|HEAD        |/media/images       |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible                                      |
-|GET         |/media/images/count |Retrieve the total number of images.                                                                             |200 OK         |Various possible                                      |
-|POST        |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|DELETE      |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|HEAD        |/media/images/count |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible                                      |
-
-
 #### Filtering, ordering, paging ####
 
-|HTTP method |Endpoint                                                                  |Semantics/Behaviour                                                                                                                                       |Success code |Fail codes                                                                                                                                              |
-|:-----------|:-------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/media/images?minid=1000&maxid=2000                                       |Retrieve first page of paged list of all matching data objects of type image, within id range 1000-2000, starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK       |Various possible ("images.id has no values in range 1000-2000": 404 Not Found)                                                                          |
-|POST        |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|PUT         |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|DELETE      |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|HEAD        |/media/images?minid=1000&maxid=2000                                       |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("images.id has no values in range 1000-2000": 404 Not Found)                                                                          |
-|GET         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve the first 100 collectionobjects starting a offset 0, ordered by ProjectNumber,InventoryDate.                                                     |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
-|POST        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|PUT         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|DELETE      |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|HEAD        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
-
-
-
-#### Dedicated search endpoint for text searches ####
-|HTTP method |Endpoint                        |Semantics/Behaviour                                                                                                                             |Success code |Fail codes                                                                                                      |
-|:-----------|:-------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:------------|:---------------------------------------------------------------------------------------------------------------|
-|GET         |/media/images?taxon=Thaumotopea |Retrieve first page of paged list of all matching records, where taxon contains "Thaumotopea", starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK       |Various possible ("taxon is not a valid field for images": 405 Method Not Allowed; "no records": 404 Not Found) |
-|POST        |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|PUT         |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|DELETE      |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|HEAD        |/media/images?taxon=Thaumotopea |Retrieve only meta-data section for corresponding GET request.                                                                                  |200 OK       |Various possible ("taxon is not a valid field for images": 405 Method Not Allowed; "no records": 404 Not Found) |
-
-
-
+http://jsonapi.org/format/#fetching-filtering
+http://jsonapi.org/format/#fetching-pagination
+http://jsonapi.org/format/#fetching-sorting
 
 #### Relations / one-to-many ####
 Reference for relational RESTful services:
