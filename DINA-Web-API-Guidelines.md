@@ -146,14 +146,12 @@ DINA-compliant web APIs **MUST** support at least the variables
 indicating the requested an support media types. For HTTP requests this
 is ***Accept:*** (e.g. *Accept: application/json*) and for HTTP response
 this is ***Content-Type:*** (e.g. *Content-Type: application/json*). The
-Accept: header is described by W3C RFC2616 Section 14.1
-(<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.hml\#sec14.1>[^3]).
+Accept: header is described by [W3C RFC2616 Section 14.1](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.hml\#sec14.1)[^3]
 
 The supported and indicated media types must be recognized *Multipurpose
 Internet Mail Extensions (MIME) types* registered with the Internet
 Assigned Numbers Authority (IANA)'s media type catalogue. For most
-standard file types IANA's media type catalogue
-(<http://www.iana.org/assignments/media-types/media-types.xhtml>[^4])
+standard file types [IANA's media type catalogue](http://www.iana.org/assignments/media-types/media-types.xhtml)[^4]
 will provide the appropriate type definition.
 
 ### URI structure
