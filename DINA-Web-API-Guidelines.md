@@ -160,21 +160,22 @@ will provide the appropriate type definition.
 #### Basics
 
 DINA-compliant APIs **SHOULD** indicate base URLs for API endpoints with
-an "api" subdomain, thus *<http://api.dinamodule.net/>* would be
-considered preferable over *<http://www.dinamodule.net/api/>* under this
+an "api" subdomain, thus *```http://api.dinamodule.net/```* would be
+considered preferable over *```http://www.dinamodule.net/api/```* under this
 scheme.
 
 DINA-compliant APIs **MUST** include a version indicator that is
 appended directly to the endpoint base URI,see  the [Versioning](#Versioning) section of this document.
 
 Multiple URL schemes **COULD** be supported by using
-rewrite/redirect/proxy directives. Example scenarios: 1) Each module is
-hosted at a unique domain, e.g. "<http://api.dinamodule.net/version/>"
-and 2) Modules are consolidated and provided via a single domain, e.g.
-"<http://api.host/module/version>". Both of these scenarios can be
+rewrite/redirect/proxy directives.<p>
+Example scenarios: 
+(1) Each module is
+hosted at a unique domain, e.g. ```http://api.dinamodule.net/version/```
+and (2) Modules are consolidated and provided via a single domain, e.g.
+```http://api.host/module/version```.<p> Both of these scenarios can be
 accomplished using rewrite/redirect/proxy directives from an original
-URL of
-"[http://localhost:port/module/version](http://localhost:port/module/version)".
+URL of ```http://localhost:port/module/version```.
 
 All date time formats **MUST** conform to the subset of ISO 8601 defined in
 <http://www.w3.org/TR/NOTE-datetime> and <http://schema.org/DateTime>.
@@ -183,7 +184,7 @@ All date time formats **MUST** conform to the subset of ISO 8601 defined in
 
 DINA-compliant APIs **MUST** accept parameters as key-value pairs
 following standard URI patterns, e.g.
-*<http://api.dinamodule.net/v1/media/image/search?id=1234>*.
+*```<path>/xxx?id=1234```*.
 
 #### Reserved words
 
