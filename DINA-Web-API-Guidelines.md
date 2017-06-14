@@ -77,6 +77,12 @@ by this standard.
 
 DINA REST API standard - Specification
 ======================================
+ 
+Adheres to the JSON API -specification
+------
+
+The DINA REST API Standard adheres to the [JSON API - specification version (v1.0)](http://jsonapi.org/format/).
+If the DINA REST API deviates from the JSON API-Specifiaction that is noted in this document.
 
 Basics
 ------
@@ -113,54 +119,25 @@ http://jsonapi.org/format/#crud
 2. http://jsonapi.org/format/#fetching-pagination
 3. http://jsonapi.org/format/#fetching-sorting
 
-#### Relations / one-to-many ####
-Reference for relational RESTful services:
-<https://stackoverflow.com/questions/6324547/how-to-handle-many-to-many-relationships-in-a-restful-api>
+#### Relations ;  one-to-many and many-to-many ####
 
-|HTTP method |Endpoint                                   |Semantics/Behaviour                                                                                                                                                                                                                                                                                          |Success code   |Fail codes                                                                                                                                                                                     |
-|:-----------|:------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/collectionobjects/:id/determinations/     |Retrieve first page of paged list of all determinations associated with the given collectionobject id, starting at OFFSET=0 and LIMIT=defaultLimitSize                                                                                                                                                       |200 OK         |Various possible ("id does not exist": 404 Not Found)                                                                                                                                          |
-|POST        |/collectionobjects/:id/determinations/     |Associating a determination with a collectionobjects should be done during the creation of the determination, i.e. POST /determinations, with the foreign key of the collectionobjects contained in the POST json OR if the entity already exists, with the below /collectionobjects/:id/determinations/:id2 |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|PUT         |/collectionobjects/:id/determinations/     |NA                                                                                                                                                                                                                                                                                                           |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|DELETE      |/collectionobjects/:id/determinations/     |NA                                                                                                                                                                                                                                                                                                           |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|HEAD        |/collectionobjects/:id/determinations/     |Retrieve only meta-data section for corresponding GET request.                                                                                                                                                                                                                                               |200 OK         |Various possible ("id does not exist": 404 Not Found)                                                                                                                                          |
-|GET         |/collectionobjects/:id/determinations/:id2 |Retrieve determination with id=id2 that is also a member of collectionobjects=id                                                                                                                                                                                                                             |200 OK         |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found)                                                                                                |
-|POST        |/collectionobjects/:id/determinations/:id2 |Create a new association between the determination=id2 and the given collectionobject=id                                                                                                                                                                                                                     |201 Created    |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|PUT         |/collectionobjects/:id/determinations/:id2 |Update association.                                                                                                                                                                                                                                                                                          |201 Created    |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|DELETE      |/collectionobjects/:id/determinations/:id2 |Delete association.                                                                                                                                                                                                                                                                                          |204 No Content |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|HEAD        |/collectionobjects/:id/determinations/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                                                                                                                                                                               |200 OK         |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found)                                                                                                |
+1. see : http://jsonapi.org/format/#document-links
+2. see : http://jsonapi.org/format/#fetching-relationships
 
+**'links'** would give you the number of how many relationships and then you would use 'Fetching Relationships'<p>
+scrap from the jsonapi.org : "The following related link includes a URL as well as meta-information about a related resource collection:
 
+```
+"links": {
+  "related": {
+    "href": "http://example.com/articles/1/comments",
+    "meta": {
+      "count": 10
+    }
+  }
+}
+```
 
-#### Relations / many-to-many ####
-
-|HTTP method |Endpoint                             |Semantics/Behaviour                                                                                                                              |Success code   |Fail codes                                                                                                                                          |
-|:-----------|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/projects/:id/collectionobjects/     |Retrieve first page of paged list of all collectionobjects associated with the given project id, starting at OFFSET=0 and LIMIT=defaultLimitSize |200 OK         |Various possible ("id does not exist": 404 Not Found; "collectionobject does not have n:n relationship with project": 405 Method Not Allowed)       |
-|POST        |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|PUT         |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|DELETE      |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|HEAD        |/projects/:id/collectionobjects/     |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "collectionobject does not have n:n relationship with project": 405 Method Not Allowed)       |
-|GET         |/collectionobjects/:id/projects/     |Retrieve first page of paged list of all projects associated with the given collectionobject id starting at OFFSET=0 and LIMIT=defaultLimitSize  |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|POST        |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|PUT         |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|DELETE      |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|HEAD        |/collectionobjects/:id/projects/     |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|GET         |/projects/:id/collectionobjects/:id2 |Retrieve collectionobject with id2 which is a member of project with id.                                                                         |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|POST        |/projects/:id/collectionobjects/:id2 |Create a relation between the given project id and a collectionobject id2.                                                                       |201 Created    |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|PUT         |/projects/:id/collectionobjects/:id2 |Replace the association between the project and the collectionobject.                                                                            |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|DELETE      |/projects/:id/collectionobjects/:id2 |Delete the association between the project and the collectionobject.                                                                             |204 No Content |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|HEAD        |/projects/:id/collectionobjects/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|GET         |/collectionobjects/:id/projects/:id2 |Retrieve project with id2 which is a member of collectionobjects with id.                                                                        |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|POST        |/collectionobjects/:id/projects/:id2 |Create a relation between the given collectionsobject id and a projects id2.                                                                     |201 Created    |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|PUT         |/collectionobjects/:id/projects/:id2 |Replace the association between the project and the collectionobject.                                                                            |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|DELETE      |/collectionobjects/:id/projects/:id2 |Delete the association between the project and the collectionobject.                                                                             |204 No Content |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|HEAD        |/collectionobjects/:id/projects/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-
-
-Similar examples can be found in
-<https://github.com/wet-boew/wet-boew-api-standards>[^1] or
-<http://www.oracle.com/technetwork/articles/javase/index-137171.html>[^2].
 
 ### HTTP header use
 
