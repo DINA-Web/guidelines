@@ -165,9 +165,7 @@ considered preferable over *<http://www.dinamodule.net/api/>* under this
 scheme.
 
 DINA-compliant APIs **MUST** include a version indicator that is
-appended directly to the endpoint base URI, e.g.
-*<http://api.dinamodule.net/v1>* (see also the section on versioning
-schemes).
+appended directly to the endpoint base URI,see  the [[Versioning]] section of this document.
 
 Multiple URL schemes **COULD** be supported by using
 rewrite/redirect/proxy directives. Example scenarios: 1) Each module is
