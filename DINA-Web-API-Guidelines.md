@@ -165,7 +165,7 @@ considered preferable over *<http://www.dinamodule.net/api/>* under this
 scheme.
 
 DINA-compliant APIs **MUST** include a version indicator that is
-appended directly to the endpoint base URI,see  the [[Versioning]] section of this document.
+appended directly to the endpoint base URI,see  the [Versioning](#Versioning) section of this document.
 
 Multiple URL schemes **COULD** be supported by using
 rewrite/redirect/proxy directives. Example scenarios: 1) Each module is
@@ -528,7 +528,7 @@ curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-43
 -   The documentation for the API **COULD** refer to an online reference
     implementation in the curl examples (rather than to localhost)
 
-Versioning
+<a name="Versioning">Versioning</a>
 ----------
 
 DINA compliant APIs **MUST** follow a versioning scheme to provide a
