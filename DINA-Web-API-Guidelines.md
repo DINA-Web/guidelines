@@ -115,9 +115,10 @@ http://jsonapi.org/format/#crud
 
 #### Filtering, ordering, paging ####
 
-1. http://jsonapi.org/format/#fetching-filtering
-2. http://jsonapi.org/format/#fetching-pagination
-3. http://jsonapi.org/format/#fetching-sorting
+* http://jsonapi.org/format/#fetching-filtering
+  * http://jsonapi.org/recommendations/#filtering
+* http://jsonapi.org/format/#fetching-pagination
+* http://jsonapi.org/format/#fetching-sorting
 
 #### Relations ;  one-to-many and many-to-many ####
 
@@ -222,7 +223,7 @@ In general, both singular and plural versions of those terms should be considere
 
 HTTP responses returned by DINA-compliant API endpoints **MUST** be
 returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta )and follow a standard response structure. 
-In addition, DINA-compliant API endpoints SHOULD
+In addition, DINA-compliant API endpoints **SHOULD**
 alternatively return responses as valid XML documents. The basic
 structure of a DINA API compliant JSON reponse is listed below:
 
