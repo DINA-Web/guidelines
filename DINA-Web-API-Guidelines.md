@@ -241,8 +241,10 @@ The basic structure of a DINA API compliant JSON reponse is listed below:
     }
 </pre>
 
+**[under-discussion]** this is an exception to jsonapi, we should remove this line on xml ?
 In addition, DINA-compliant API endpoints **SHOULD** alternatively return responses as valid XML documents. 
 
+**[under-discussion]** remove the reference to  xml ?
 HTTP responses in JSON format **MUST** satisfy the property name
 guidelines from the Google JSON Style Guide ( source : https://google.github.io/styleguide/jsoncstyleguide.xml ) ,
 to ensure for example that JSON results do not have unique ids as
@@ -250,6 +252,7 @@ property names of the marshalled object. Similarly, these principles
 **SHOULD** apply to XML reponses. Examples for valid and invalid
 responses under this scheme are given in the following table.
 
+**[under-discussion]** Glens wanted to look at these examples
 
 <table border="5">
 <tr>
@@ -301,10 +304,11 @@ responses under this scheme are given in the following table.
 
 </table>  
 
+
 API response - Top Level
 -----------------------
 
-Accordin to the JSON API specification "A document MUST contain at least one of the following top-level members: <p>
+According to the JSON API specification "A document MUST contain at least one of the following top-level members: <p>
 
 * data: the document’s “primary data”
 * errors: an array of error objects
@@ -313,6 +317,7 @@ Accordin to the JSON API specification "A document MUST contain at least one of 
 The members data and errors MUST NOT coexist in the same document."<p> [^9]
 
 
+**[under-discussion]** Glen will look through the properties (key:values) and see if they adhere to the jsonapi, which should we keep, which should we remove , which to add ?
 
 API response "meta"
 -----------------------
@@ -388,17 +393,15 @@ source : http://jsonapi.org/format/#errors <p>
 A DINA-compliant endpoint **MAY** return the following properties in
 the response errors section:
 
-|Property | Datatype | Description |
-|----     |----|----|
-| id      |----| a unique identifier for this particular occurrence of the problem.|
-| links   |----| a links object containing the following members (about)|
-| status  |----| the HTTP status code applicable to this problem, expressed as a string value.|
-| code    |----|  an application-specific error code, expressed as a string value|
-| title   |----| a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization. |
-| detail  |----| a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.|
-| source  |----| an object containing references to the source of the error, optionally including any of the following members: (pointer,parameter)|
-| meta    |----| a *meta object* containing non-standard meta-information about the error. ( see *meta object* ) |
-| ...     |...| ...|
+**start [under-discussion]** Should we have some members as MUST such as 
+* code
+* source 
+* title
+* detail
+* meta -> Should we add languages here ?
+
+see -> http://jsonapi.org/examples/#error-objects-error-codes
+**End [under-discussion]** 
 
 Generic operations
 ------------------
