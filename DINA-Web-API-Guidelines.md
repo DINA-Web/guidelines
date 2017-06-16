@@ -82,7 +82,8 @@ Adheres to the JSON API -specification
 ------
 
 The DINA REST API Standard adheres to the [JSON API - specification version (v1.0)](http://jsonapi.org/format/).
-If the DINA REST API deviates from the JSON API-Specifiaction that is noted in this document.
+If the DINA REST API deviates from the JSON API-Specifiaction that is noted in this document.  <p>
+**[under-discussion]** For files, non-JSON and therefore non-JSON-API can also be used (e.g. getting raw images). 
 
 Basics
 ------
@@ -220,15 +221,13 @@ In general, both singular and plural versions of those terms should be considere
 ### HTTP response
 
 HTTP responses returned by DINA-compliant API endpoints **MUST** be
-returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta )and follow a standard response structure. 
-In addition, DINA-compliant API endpoints **SHOULD**
-alternatively return responses as valid XML documents. The basic
-structure of a DINA API compliant JSON reponse is listed below:
+returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
+The basic structure of a DINA API compliant JSON reponse is listed below:
 
 <pre>
     {
        "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/...",
+          "callEndpoint": "http://api.refimplementation.net/media/v1...",
           "callDate": "2014-10-08T08:08:18+01:00",
           "apiVersion: "1.0",
           ...
@@ -240,8 +239,10 @@ structure of a DINA API compliant JSON reponse is listed below:
     }
 </pre>
 
+In addition, DINA-compliant API endpoints **SHOULD** alternatively return responses as valid XML documents. 
+
 HTTP responses in JSON format **MUST** satisfy the property name
-guidelines from the Google [JSON Style Guide]: ,
+guidelines from the Google JSON Style Guide ( source : https://google.github.io/styleguide/jsoncstyleguide.xml ) ,
 to ensure for example that JSON results do not have unique ids as
 property names of the marshalled object. Similarly, these principles
 **SHOULD** apply to XML reponses. Examples for valid and invalid
@@ -301,15 +302,15 @@ responses under this scheme are given in the following table.
 API response - Top Level
 -----------------------
 
-"A document MUST contain at least one of the following top-level members: <p>
+Accordin to the JSON API specification "A document MUST contain at least one of the following top-level members: <p>
 
 * data: the document’s “primary data”
 * errors: an array of error objects
 * meta: a meta object that contains non-standard meta-information.
 
-The members data and errors MUST NOT coexist in the same document."<p>
+The members data and errors MUST NOT coexist in the same document."<p> [^9]
 
-source : http://jsonapi.org/format/#document-top-level
+
 
 API response "meta"
 -----------------------
@@ -617,7 +618,8 @@ Consulted resources
 
 [^7]: [Apiary](http://apiary.io)
 
-[^8]: 2016-06-27 , supported media-types are  [image/images,video/videos,sound/sounds,attachment/attachments]
+[^8]: 2016-06-27 : supported media-types are  [image/images,video/videos,sound/sounds,attachment/attachments]
+[^9]: 2017-06-14 : http://jsonapi.org/format/#document-top-level
 
 [//]: # ( ref not shown)
 [JSON Style Guide]: <https://google.github.io/styleguide/jsoncstyleguide.xml> 
