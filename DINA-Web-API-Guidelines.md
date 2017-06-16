@@ -224,6 +224,8 @@ HTTP responses returned by DINA-compliant API endpoints **MUST** be
 returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
 The basic structure of a DINA API compliant JSON reponse is listed below:
 
+**[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta
+
 <pre>
     {
        "meta": {
