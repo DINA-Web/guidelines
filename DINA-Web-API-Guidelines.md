@@ -423,21 +423,14 @@ also support a "**'/count**' that returns the number of results if the
 API had been called. Note that this is also applied to URLs with passed
 parameters, i.e.
 
-    /media/images?taxon=Thaumotopea
+**[under-discussion]** the pattern on 'count'
 
-Retrieves paged list of matching records.
+* Retrieves paged list of matching records. ->  /media/?taxon=Thaumotopea
+* Retrieves the number of results if the search was directly called.->  /media/count?taxon=Thaumotopea
+* Retrieves paged list of all images. -> /media/images
+* Retrieves the total number of images. -> /media/images/count
 
-    /media/images/count?taxon=Thaumotopea
 
-Retrieves the number of results if the search was directly called.
-
-    /media/images
-
-Retrieves paged list of all images.
-
-    /media/images/count
-
-Retrieves the total number of images.
 
 ### Supported languages
 
@@ -468,6 +461,50 @@ Sample reponse:
     }
 </pre>
 
+**Start [under-discussion]** 
+New Section concerning binary ojbects (blobs)
+**End [under-discussion]** 
+RAW / OUT-OF-BAND
+-------------
+Example for image/raw issue:
+ 
+POST /media/image
+
+With embedded base64 image encoding
+
+Returns {.....”id”: “y5y5y5y5y7”, sha1:...}
+
+To get this image, in jsonapi:
+
+GET /media/y5y5y5y5y7
+
+Returns jsonapi with base64 image encoded
+
+GET /media/y5y5y5y5y7/raw/thumbnail?width=100
+
+Get back just the media object in raw format, with http mimetype appropriate (i.e. not ‘json’, but, for example, ‘image/jpg’
+
+POST /media/raw
+
+Just the image is in the http content, no encoding
+
+Returns jsonapi, with {.....”id”: “y5y5y5y5y7”, “mimetype”: “image/jpg”...}
+
+PATCH /media/y5y5y5y5y7
+
+Req jsonapi: contains metadata
+
+Resp: exactly same as the POST jsonapi response
+ 
+For media module, we will support sparsefields jsonapi.
+
+Use case: only want image metadata, not image (or other large media object)
+
+ 
+Look at examples of RESTful apis for image thumbnails, & other image manipulations
+
+
+
 
 Documentation
 -------------
@@ -476,8 +513,6 @@ Documentation
     documentation of the supported methods. For each method the
     documentation **MUST** provide curl examples to document the usage.
     For example (illustrative):
-
-
 
 ```bash
 curl --request POST  \\
@@ -492,6 +527,7 @@ curl --request POST  \\
   http://refimplementation.mediaserver.net/v1/media/create
 ```
 
+**[under-discussion]** replace the below with a reference to a apiray-blueprint file (i.e media.apib)
 Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
 
 ```bash
@@ -567,6 +603,7 @@ minor versions.
 It seems good practice to maintain at least two versions for a suitable
 transition period.
 
+**[under-discussion]**  did we want to adhere to OAuth 2.0 ( https://tools.ietf.org/html/rfc6749 ) ?
 Authentication
 --------------
 
@@ -576,7 +613,7 @@ the identiy that carries permissions to do things) would be required.
 
 However, other non-read-only parts of the API functionality SHOULD
 provide ways for external applications to authenticate before they are
-authorized to make calls. The API SHOULD support use of OAuth
+authorized to make calls. The API **SHOULD** support use of OAuth
 athentication.
 
 Resources & References
