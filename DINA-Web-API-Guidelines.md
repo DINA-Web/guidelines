@@ -482,10 +482,10 @@ request languages supported by the service. Support for this request
 reserved word **languages** as the last element of the endpoint URI.
 
 |URI term |  Parameter  | Description |
-|:--------|:-----------|:-----------|:---------------|
+|:--------|:-----------|:-----------|
 |**GET/languages** |-       |Requests a list of all languages supported by the service, returned as a meta-data object in the standard response format. By default supported languages should be included in the meta-data section of API responses. This call should support retrieval of supported languages **only**.|
 
-Sample reponse:
+Sample response:
 <pre>
     {
        "meta": {
