@@ -74,6 +74,7 @@ of the recommendations covered by mandatory or optional features defined
 by this standard.
 
 **NB:** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
+However, it some circumstances web api wrappers may be used where appropriate.
 
 DINA REST API standard - Specification
 ======================================
@@ -107,7 +108,7 @@ to the DINA-compliant 'media server' module, indicated by the reserved word
 (URI path component) ***"media"*** and a data object ('media type' / 'entity' [^8])
 handled by the web service indicated by ***"image"***.
 
-If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls are returning just the meta-data section of the corresponding ***HTTP GET*** call.
+If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls are returning just the HTTP meta-data section of the corresponding ***HTTP GET*** call.
 
 
 #### Basic CRUD operations ####
@@ -119,6 +120,7 @@ http://jsonapi.org/format/#crud
 * http://jsonapi.org/format/#fetching-filtering
   * http://jsonapi.org/recommendations/#filtering
 * http://jsonapi.org/format/#fetching-pagination
+  * Pagination **MUST** be implemented using the offset-based strategy, using the URI paramaters `page[offset]` and `page[limit]`
 * http://jsonapi.org/format/#fetching-sorting
 
 #### Relations ;  one-to-many and many-to-many ####
@@ -186,6 +188,10 @@ DINA-compliant APIs **MUST** accept parameters as key-value pairs
 following standard URI patterns, e.g.
 *```<path>/xxx?id=1234```*.
 
+This is extended for jsonapi filtering http://jsonapi.org/recommendations/#filtering where the pattern is:
+*```<path>/xxx?filter[id]=1234```*.
+This is consistent with the reserved URI characters described in RFC 3986 Uniform Resource Identifier (URI): Generic Syntax https://tools.ietf.org/html/rfc3986#section-2.2
+
 #### Reserved words
 
 -   Reserved words indicating a module/service endpoint:
@@ -215,95 +221,148 @@ following standard URI patterns, e.g.
     -   "annotation"
     -   ...
 
+-   URI
+    - "filter"
+
+
 In general, both singular and plural versions of those terms should be considered as reserved words, and terms should always be used in lowercase.
 
 
 ### HTTP response
 
 HTTP responses returned by DINA-compliant API endpoints **MUST** be
-returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
+returned as valid JSON jsonapi documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
 The basic structure of a DINA API compliant JSON reponse is listed below:
 
 **[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta
 
+Response for a single record:
 <pre>
-    {
-       "meta": {
-          "callEndpoint": "http://api.refimplementation.net/media/v1...",
-          "callDate": "2014-10-08T08:08:18+01:00",
-          "apiVersion: "1.0",
-          ...
-       }
-
-       "results": [
-          ... module-specific data ...
-       ] 
+{
+ "jsonapi": {
+    "version": "1.0"
+  }
+  "meta": {
+    "copyright": "Copyright 2015 Example Corp.",
+    "authors": [
+      "Yehuda Katz",
+      "Steve Klabnik",
+      "Dan Gebhardt",
+      "Tyler Kellen"
+    ]
+  },
+  "data": [{
+    "type": "articles",
+    "id": "1",
+    "attributes": {
+      "title": "JSON API paints my bikeshed!"
+    },
+    "links": {
+      "self": "http://example.com/articles/1"
+    },
+    "relationships": {
+      "author": {
+        "links": {
+          "self": "http://example.com/articles/1/relationships/author",
+          "related": "http://example.com/articles/1/author"
+        },
+        "data": { "type": "people", "id": "9" }
+      },
+      "comments": {
+        "links": {
+          "self": "http://example.com/articles/1/relationships/comments",
+          "related": "http://example.com/articles/1/comments"
+        },
+        "data": [
+          { "type": "comments", "id": "5" },
+          { "type": "comments", "id": "12" }
+        ]
+      }
     }
-</pre>
-
-**[under-discussion]** this is an exception to jsonapi, we should remove this line on xml ?
-In addition, DINA-compliant API endpoints **SHOULD** alternatively return responses as valid XML documents. 
-
-**[under-discussion]** remove the reference to  xml ?
-HTTP responses in JSON format **MUST** satisfy the property name
-guidelines from the Google JSON Style Guide ( source : https://google.github.io/styleguide/jsoncstyleguide.xml ) ,
-to ensure for example that JSON results do not have unique ids as
-property names of the marshalled object. Similarly, these principles
-**SHOULD** apply to XML reponses. Examples for valid and invalid
-responses under this scheme are given in the following table.
-
-**[under-discussion]** Glens wanted to look at these examples
-
-<table border="5">
-<tr>
-<th>VALID</th>
-<th>INVALID</th>
-</tr>
-
-<tr>
-<td>
-<pre>
-{"taxa":
-     {"taxid":460932,
-      "taxon":"Aspergillus ochraceus"}
+  }],
+  }
 }
+
+
 </pre>
 
-</td>
-<td>
+
+First response for a filter request returning multiple records spanning multiple responses (from jsonapi examples):
+(Note offset/limit based paging)
 <pre>
-{"460932":
-     {"taxid":460932,
-      "taxon":"Aspergillus ochraceus"}
+{
+  "meta": {
+    "results": 13
+  },
+  "data": [
+    {
+      "type": "articles",
+      "id": "3",
+      "attributes": {
+        "title": "JSON API paints my bikeshed!",
+        "body": "The shortest article. Ever.",
+        "created": "2015-05-22T14:56:29.000Z",
+        "updated": "2015-05-22T14:56:28.000Z"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://example.com/articles?page[offset]=3&page[limit]=1",
+    "first": "http://example.com/articles?page[offset]=1&page[limit]=1",
+    "prev": "http://example.com/articles?page[offset]=2&page[limit]=1",
+    "next": "http://example.com/articles?page[offset]=4&page[limit]=1",
+    "last": "http://example.com/articles?page[offset]=13&page[limit]=1"
+  }
 }
+
 </pre>
-</td>
-</tr>
 
-<tr>
-<td>
-<pre>
-&lt;resultset&gt;
-    &lt;row id="1"&gt; ... &lt;/row&gt;
-    &lt;row id="2"&gt; ... &lt;/row&gt;
-    &lt;row id="3"&gt; ... &lt;/row&gt;
-&lt;/resultset>
-</pre> 
-</td>
+In the part of the jsonapi specification where the object's actual data is stored, the `attributes` key, http://jsonapi.org/format/#document-resource-object-attributes can contain json of any form.
+This json **MUST** not use json keys as values.
 
-<td>
+For example, the following is an example of not acceptable json:
 <pre>
-&lt;resultset>
-    &lt;row_1&gt; ... &lt;/row_1&gt;
-    &lt;row_2&gt; ... &lt;/row_2&gt;
-    &lt;row_3&gt; ... &lt;/row_3&gt;
-&lt;/resultset>
+...
+  "data": [
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "460932": "Aspergillus ochraceus"
+		    }
+      },
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "5464387": "Apergillus niger"
+		    }
+      }]
+...
 </pre>
-</td>
-</tr>
 
-</table>  
-
+Here is the equivalent acceptable json:
+<pre>
+...
+  "data": [
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "external_id": "460932"
+      		    "name":"Aspergillus ochraceus"
+		    }
+      },
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "external_id":"5464387"
+		    "name":"Apergillus niger"
+		    }
+      }]
+...
+</pre>
 
 API response - Top Level
 -----------------------
@@ -328,21 +387,19 @@ the response meta section:
 |Property | Datatype | Description |
 |----|----|----|
 | callEndpoint    |     URL |       The complete URL of the endpoint that issued this reponse.|
-| next    |     URL |       The complete URL of the endpoint for the next page of content. Only for paging.|
-| previous    |     URL |       The complete URL of the endpoint for the previous page of content. Only for paging.|
+
 | limit          |      int  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
 | offset        |       long  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
 | callDate      |       string  |      Datetime at which the call to the endpoint was received. http://schema.org/DateTime. Format as per http://www.w3.org/TR/NOTE-datetime|
-| statusCode     |      int  |      HTTP response code issued by the endpoint.|
+| response_time     |      long  |     Time to handle response, in milliseconds
 | apiVersion     |      string  |      Version identifier of the endpoint API.|
-| resultCount    |      long  |      Count of the result objects returned by the call to this endpoint.|
-| orderBy     |      array of string  |      Result object properties  on which the returned result set is sorted.|
-| sortOrder      |      string  |      Sort order of the result set. "asc" or "desc".|
-| resultLanguages|      array of string  |      Languages of the result content - if applicable.|
-| supportedLanguages |  array of string  |      Supported content languages of the endpoint - if applicable.|
+| results    |      long  |      Count of the result objects returned by the call to this endpoint, unless the particular endpoint **ALWAYS** returns one object||
+| sort     |      array of string  |      Result object properties  on which the returned result set is sorted. Example: `sort=age,height`. AS PER jsonapi http://jsonapi.org/format/#fetching-sorting. "The sort order for each sort field MUST be ascending unless it is prefixed with a minus (U+002D HYPHEN-MINUS, “-“), in which case it MUST be descending."|
+| resultLanguage|      string  |      Language of the result content - if applicable.|
 | contentLicenses    |  array of string  |      Licenses applying to the results returned by the endpoint - - if applicable.|
 | message            |  string  |      General message explaining the response - if any.|
-| maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service |disruptions.
+| maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service disruptions.|
+| moduleVersion |  string  |      Version of the underlying module's codebase.|
 | ...                |  ...  |      ...|
 
 
@@ -351,29 +408,18 @@ A compliant sample response in JSON format:
 <pre>
     {
        "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/...",
-          "next": "http://api.refimplementation.net/v1/media/...?offset=150&limit=50",
-          "previous": "http://api.refimplementation.net/v1/media/...?offset=50&limit=50",
+          "results": 34543
+	  "offset": 200
           "limit": 50,
-	        "callDate": "2015-11-05T08:15:30-05:00",
-          "offset": 100,
+	  "callDate": "2015-11-05T08:15:30-05:00",
           "apiVersion: "1.0",
-          "statusCode": 200,
           "results": 18,
+	  "responseTime": 23
           "orderBy": [
-	  	     "ID",
+	  	     "-ID",
 		     "InventoryDate"
           ],
-          "sortOrder": "asc",
-          "resultLanguages": [
-              "SE_sv",
-              "GB_en"
-          ],
-          "supportedLanguages": [
-              "SE_sv",
-              "GB_en",
-              "EE_et"          
-          ]
+          "resultLanguage": "SE_sv"
           "contentLicenses": [
           ],
           "message": "",
@@ -381,7 +427,7 @@ A compliant sample response in JSON format:
           ...
        }
 
-       ... "data" ...
+       "data": ...
     }
 </pre>
 
@@ -423,12 +469,10 @@ also support a "**'/count**' that returns the number of results if the
 API had been called. Note that this is also applied to URLs with passed
 parameters, i.e.
 
-**[under-discussion]** the pattern on 'count'
-
-* Retrieves paged list of matching records. ->  /media/?taxon=Thaumotopea
-* Retrieves the number of results if the search was directly called.->  /media/count?taxon=Thaumotopea
-* Retrieves paged list of all images. -> /media/images
-* Retrieves the total number of images. -> /media/images/count
+* Retrieves paged list of matching records. ->  `/media?filter[taxon]=Thaumotopea`
+* Retrieves the number of results if the search was directly called.->  `/media/count?filter[taxon]=Thaumotopea`
+* Retrieves paged list of all media objects. -> `/media`
+* Retrieves the total number of media objects. -> `/media/count`
 
 
 
@@ -447,7 +491,6 @@ Sample reponse:
 <pre>
     {
        "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/languages",
           "callDate": "2014-10-08T08:08:18+01:00",
           "apiVersion: "1.0",
           "results": 0,
@@ -458,38 +501,40 @@ Sample reponse:
           ]
           ...
        }
+      "links": {
+      	       "self": "http://api.refimplementation.net/v1/media/languages"
+	       }
     }
 </pre>
 
-**Start [under-discussion]** 
-New Section concerning binary ojbects (blobs)
-**End [under-discussion]** 
-RAW / OUT-OF-BAND
--------------
+#### URI parameters for language
+To request results in a supported language, the parameter `language` is used. For example, `/media?filter[taxon]=Thaumotopea&language=SE_sv`
+
+
+
+**RAW Object Access**
+Some objects, such as those that are embeddable natively in HTML, like images, audio, video, etc. need to be accessible directly, not wrapped in a JSON envelope.
+Some of these, such as images, need to be able to produce alternate views of themselves, such as thumbnails, sub-images, black-and-white from colour, etc.
+In order to support these modes and operations, out-of-band (with respect to the json API) API is needed.
+
+This is primarily supported **using the same end points** using the `raw` reserved word.
+
+
 Example for image/raw issue:
- 
-POST /media/image
 
-With embedded base64 image encoding
+|Example URL                             |Request Body                                     |mime type             |     Response body|
+--------------------------------------------------------------------------------------------------------------------------------------
+POST /media                              | json with embedded base64 image encoding of jpg | `application/json`   |{.....”id”: “y5y5y5y5y7”, "sha1":...}  // Image not returned  |
+GET /media/y5y5y5y5y7                    | empty                                           | `application/json`   |{..."content: "base64_of_image", "sha1:"...|
+GET /media/y5y5y5y5y7/raw                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+GET /media/y5y5y5y5y7/raw?width=100      | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+POST /media/raw                          | binary, i.e. jpeg image                         | `image/jpeg`         |{.....”id”: “y5y5y5y5y7”, "sha1":...}  // Image not returned  |
+GET /media?fields[image]=sha1,title      | json with only requested fields                 | `application/json`   |{..."title: "Sunset", "sha1:"...|
+GET /media?fields[image]=-content        | json with all fields except `content`           | `application/json`   |{..."title: "Sunset", "sha1:"...|
+|...                                     |...                                              |...                   |...                             |
 
-Returns {.....”id”: “y5y5y5y5y7”, sha1:...}
 
-To get this image, in jsonapi:
-
-GET /media/y5y5y5y5y7
-
-Returns jsonapi with base64 image encoded
-
-GET /media/y5y5y5y5y7/raw/thumbnail?width=100
-
-Get back just the media object in raw format, with http mimetype appropriate (i.e. not ‘json’, but, for example, ‘image/jpg’
-
-POST /media/raw
-
-Just the image is in the http content, no encoding
-
-Returns jsonapi, with {.....”id”: “y5y5y5y5y7”, “mimetype”: “image/jpg”...}
-
+**STILL TO DO**
 PATCH /media/y5y5y5y5y7
 
 Req jsonapi: contains metadata
@@ -509,66 +554,19 @@ Look at examples of RESTful apis for image thumbnails, & other image manipulatio
 Documentation
 -------------
 
--   Each DINA compliant Web REST API **MUST** provide complete English
-    documentation of the supported methods. For each method the
-    documentation **MUST** provide curl examples to document the usage.
-    For example (illustrative):
+-   Each DINA compliant Web REST API **MUST** blueprint https://apiblueprint.org/ for their API.
 
-```bash
-curl --request POST  \\
-  --header "Accept: application/json" \\
-  --header "Content-Type: application/json; charset=UTF-8" \\
-  -data '{"meta": {"owner":"Laxness", "access":"public", \\
-  "licenseType":"CC BY", "legend":"en skata", \\
-  "legendLanguage":"sv_SE", "tags":"view:left"}, \\
-  "data":{"fileName": "pica-pica-flying.jpg", \\
-  "fileContentTransferEncoding": "base64_RFC4648", \\
-  "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="}}' \\
-  http://refimplementation.mediaserver.net/v1/media/create
-```
 
 **[under-discussion]** replace the below with a reference to a apiray-blueprint file (i.e media.apib)
 Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
 
-```bash
-{  
-   "meta":{  
-      "owner":"Laxness",
-      "access":"public",
-      "licenseType":"CC BY",
-      "legend":"en skata",
-      "legendLanguage":"sv_SE",
-      "tags":"view:left"
-   },
-   "data":{  
-      "fileName":"pica-pica-flying.jpg",
-      "fileContentTransferEncoding":"base64_RFC4648",
-      "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="
-   }
-}
 
-```
 
 References:  
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#json-requests  
 - http://stackoverflow.com/questions/4083702/posting-a-file-and-data-to-restful-webservice-as-json  
 - https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
 
-Response if HTTP '200 OK': provides identifier <UUID> for instance, in this case 6853e82-6cad-430b-b582-90e85203dce8, so retrieval can be tested with:
- 
-```bash
-# use pattern: curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
-curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-430b-b582-90e85203dce8
-```
-
--   In addition to the required basic API documentation, DINA compliant
-    REST API **SHOULD** provide self-documentation capabilities for each
-    endpoint similar to the example provided by e.g. the [Django REST
-    framework](http://www.django-rest-framework.org)[^6] or
-    [Apiary](http://apiary.io)[^7]
-    
--   The documentation for the API **COULD** refer to an online reference
-    implementation in the curl examples (rather than to localhost)
 
 <a name="Versioning">Versioning</a>
 ----------
@@ -603,7 +601,7 @@ minor versions.
 It seems good practice to maintain at least two versions for a suitable
 transition period.
 
-**[under-discussion]**  did we want to adhere to OAuth 2.0 ( https://tools.ietf.org/html/rfc6749 ) ?
+
 Authentication
 --------------
 
@@ -613,8 +611,13 @@ the identiy that carries permissions to do things) would be required.
 
 However, other non-read-only parts of the API functionality SHOULD
 provide ways for external applications to authenticate before they are
-authorized to make calls. The API **SHOULD** support use of OAuth
+authorized to make calls. The API **SHOULD** support use of OAuth 2.0 ( https://tools.ietf.org/html/rfc6749 )
 athentication.
+
+HTTPS
+-----
+All APIs must not provide HTTP public facing. HTTPS **MUST ONLY** be used in public facing APIs.
+This can be implemented directly by the APIs or provided with a reverse proxy.
 
 Resources & References
 ======================
