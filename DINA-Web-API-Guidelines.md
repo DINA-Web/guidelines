@@ -522,13 +522,13 @@ Example for image/raw issue:
 
 |Example URL                             |Request Body                                     |mime type             |     Response body|
 |:---------------------------------------|:------------------------------------------------|:---------------------|:--------------------------
-POST /media                              | json with embedded base64 image encoding of jpg | `application/json`   |{.....”id”: “y5y5y5y5y7”, "sha1":...}  // Image not returned  |
-GET /media/y5y5y5y5y7                    | empty                                           | `application/json`   |{..."content: "base64_of_image", "sha1:"...|
-GET /media/y5y5y5y5y7/raw                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
-GET /media/y5y5y5y5y7/raw?width=100      | empty                                           | `image/jpeg`         | jpeg content (binary)    |
-POST /media/raw                          | binary, i.e. jpeg image                         | `image/jpeg`         |{.....”id”: “y5y5y5y5y7”, "sha1":...}  // Image not returned  |
-GET /media?fields[image]=sha1,title      | json with only requested fields                 | `application/json`   |{..."title: "Sunset", "sha1:"...|
-GET /media?fields[image]=-content        | json with all fields except `content`           | `application/json`   |{..."title: "Sunset", "sha1:"...|
+`POST /media`                              | json with embedded base64 image encoding of jpg | `application/json`   |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
+`GET /media/y5y5y5y5y7`                    | empty                                           | `application/json`   |`{..."content: "base64_of_image", "sha1:"...`|
+`GET /media/y5y5y5y5y7/raw`                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+`GET /media/y5y5y5y5y7/raw?width=100`      | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+`POST /media/raw`                          | binary, i.e. jpeg image                         | `image/jpeg`         |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
+`GET /media?fields[image]=sha1,title`      | json with only requested fields                 | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
+`GET /media?fields[image]=-content`        | json with all fields except `content`           | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
 |...                                     |...                                              |...                   |...                             |
 
 
