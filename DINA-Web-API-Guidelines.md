@@ -386,8 +386,6 @@ the response meta section:
 
 |Property | Datatype | Description |
 |----|----|----|
-| callEndpoint    |     URL |       The complete URL of the endpoint that issued this reponse.|
-
 | limit          |      int  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
 | offset        |       long  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
 | callDate      |       string  |      Datetime at which the call to the endpoint was received. http://schema.org/DateTime. Format as per http://www.w3.org/TR/NOTE-datetime|
