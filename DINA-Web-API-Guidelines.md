@@ -521,7 +521,7 @@ This is primarily supported **using the same end points** using the `raw` reserv
 Example for image/raw issue:
 
 |Example URL                             |Request Body                                     |mime type             |     Response body|
---------------------------------------------------------------------------------------------------------------------------------------
+|:---------------------------------------|:------------------------------------------------|:---------------------|:--------------------------
 POST /media                              | json with embedded base64 image encoding of jpg | `application/json`   |{.....”id”: “y5y5y5y5y7”, "sha1":...}  // Image not returned  |
 GET /media/y5y5y5y5y7                    | empty                                           | `application/json`   |{..."content: "base64_of_image", "sha1:"...|
 GET /media/y5y5y5y5y7/raw                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
