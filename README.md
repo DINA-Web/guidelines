@@ -4,12 +4,3 @@ Authors
 -------
 
 DINA International consortium - Technical Committee
-
-DINA Guidelines
-==============================
-
--   [Web API Guidelines](DINA-Web-API-Guidelines.md)
--   [Release Guidelines](DINA-Web-Release-Guidelines.md)
--   [QA Guidelines](DINA-Web-QA-Guidelines.md)
-
-
