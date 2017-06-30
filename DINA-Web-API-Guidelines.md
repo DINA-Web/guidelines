@@ -206,6 +206,7 @@ This is consistent with the reserved URI characters described in RFC 3986 Unifor
     -   "preparation" and/or "storage"
     -   "determination"
     -   "transaction"
+    -   "account"
     -   ...
 
 -   Reserved words indicating data concepts:
@@ -219,6 +220,7 @@ This is consistent with the reserved URI characters described in RFC 3986 Unifor
     -   "person"
     -   "user"
     -   "annotation"
+    -   "account"
     -   ...
 
 -   URI
