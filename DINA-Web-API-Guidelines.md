@@ -499,9 +499,9 @@ Sample response:
           "apiVersion: "1.0",
           "results": 0,
           "supportedLanguages": [
-              "SE_sv",
-              "GB_en",
-              "EE_et"          
+              "sv",
+              "en",
+              "et"          
           ]
           ...
        }
@@ -512,9 +512,9 @@ Sample response:
 </pre>
 
 #### URI parameters for language
-To request results in a supported language, the parameter `language` is used. For example, `/media?filter[taxon]=Thaumotopea&language=SE_sv`
+To request results in a supported language, the parameter `language` is used. For example, `/media?filter[taxon]=Thaumotopea&language=sv`
 
-Use two-letter ISO-639-1 codes for languages.
+Use lowercase two-letter ISO-639-1 codes for languages.
 
 
 **RAW Object Access**
