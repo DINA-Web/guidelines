@@ -293,7 +293,7 @@ Response for a single record:
 
 
 First response for a filter request returning multiple records spanning multiple responses (from jsonapi examples):
-(Note offset/limit based paging)
+(Note offset/limit based pagination)
 <pre>
 {
   "meta": {
@@ -391,8 +391,8 @@ the response meta section:
 
 |Property | Datatype | Description |
 |----|----|----|
-| limit          |      int  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
-| offset        |       long  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
+| limit          |      int  |      The value of the limit (pagination) parameter provided by the caller of the endpoint.|
+| offset        |       long  |      The value of the offset (pagination) parameter provided by the caller of the endpoint.|
 | callDate      |       string  |      Datetime at which the call to the endpoint was received. http://schema.org/DateTime. Format as per http://www.w3.org/TR/NOTE-datetime|
 | response_time     |      long  |     Time to handle response, in milliseconds
 | apiVersion     |      string  |      Version identifier of the endpoint API.|
@@ -463,7 +463,7 @@ sets, accepting the following parameters:
 |URI term   | Parameter  | Default   |  Description |
 |:----------|:-----------|:----------|:-------------------|
 |**[ANY]**  |limit       |100        | The maximum number of items in the returned result set.|
-|**[ANY]**  | offset     | -         |  Determines the offset of items in a result set and thus provides an implicit paging mechanism.|
+|**[ANY]**  | offset     | -         |  Determines the offset of items in a result set and thus provides an implicit pagination mechanism.|
 
 ### Count
 
