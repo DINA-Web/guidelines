@@ -88,11 +88,14 @@ If the DINA REST API deviates from the JSON API-Specifiaction that is noted in t
 
 Basics
 ------
-
 All DINA-compliant APIs follow basic RESTful practices with regard to
-the use of HTTP as a protocol, conventions of mapping HTTP methods to
-CRUD operations, structuring URIs to address API endpoints and the
-supported request and response formats (JSON, XML).
+the 
+
+- Use of HTTP as a protocol
+- Conventions of mapping HTTP methods to
+CRUD operations
+- Structuring URIs to address API endpoints
+- Using JSON or XML as requests and response format.
 
 Endpoint definitions
 --------------------
@@ -115,7 +118,7 @@ If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls a
 
 http://jsonapi.org/format/#crud
 
-#### Filtering, ordering, paging ####
+#### Filtering, sorting, pagination ####
 
 * http://jsonapi.org/format/#fetching-filtering
   * http://jsonapi.org/recommendations/#filtering
@@ -125,11 +128,12 @@ http://jsonapi.org/format/#crud
 
 #### Relations ;  one-to-many and many-to-many ####
 
+**[under-discussion]**: This part could be clarified further.
+
 1. see : http://jsonapi.org/format/#document-links
 2. see : http://jsonapi.org/format/#fetching-relationships
 
-**'links'** would give you the number of how many relationships and then you would use 'Fetching Relationships'<p>
-scrap from the jsonapi.org : "The following related link includes a URL as well as meta-information about a related resource collection:
+**'links'** would give you the number of how many relationships there are. Then you would make another API call ('Fetching Relationships') to get the relationhips data. The following links-object includes a URL as well as meta-information about a related resource collection:
 
 ```
 "links": {
@@ -146,7 +150,7 @@ scrap from the jsonapi.org : "The following related link includes a URL as well 
 ### HTTP header use
 
 DINA-compliant web APIs **MUST** support at least the variables
-indicating the requested an support media types. For HTTP requests this
+indicating supported media types. For HTTP requests this
 is ***Accept:*** (e.g. *Accept: application/json*) and for HTTP response
 this is ***Content-Type:*** (e.g. *Content-Type: application/json*). The
 Accept: header is described by [W3C RFC2616 Section 14.1](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.hml\#sec14.1)[^3]
@@ -206,13 +210,13 @@ This is consistent with the reserved URI characters described in RFC 3986 Unifor
     -   "preparation" and/or "storage"
     -   "determination"
     -   "transaction"
-    -   "account"
+    -   "account" and/or "user"
     -   ...
 
 -   Reserved words indicating data concepts:
     -   "specimen" and/or "object"
-    -   "taxon"
-    -   "organisation" and/or "institution"
+    -   "taxon" and "taxa"
+    -   "organisation" and/or "institution" and/or "project"
     -   "event"
     -   "locality"
     -   "method" and/or "measurement"
@@ -224,10 +228,9 @@ This is consistent with the reserved URI characters described in RFC 3986 Unifor
     -   ...
 
 -   URI
-    - "filter"
+    - Parameters reserved by JSON-API: "page" and "filter"
 
-
-In general, both singular and plural versions of those terms should be considered as reserved words, and terms should always be used in lowercase.
+In general, both singular and plural versions of those terms **SHOULD** be considered as reserved words, and terms should always be used in lowercase.
 
 
 ### HTTP response
@@ -236,7 +239,7 @@ HTTP responses returned by DINA-compliant API endpoints **MUST** be
 returned as valid JSON jsonapi documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
 The basic structure of a DINA API compliant JSON reponse is listed below:
 
-**[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta
+**[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta Does this still require modification of this document?
 
 Response for a single record:
 <pre>
@@ -318,11 +321,11 @@ First response for a filter request returning multiple records spanning multiple
 }
 
 </pre>
+links and relationships -keys are not mandatory.
 
-In the part of the jsonapi specification where the object's actual data is stored, the `attributes` key, http://jsonapi.org/format/#document-resource-object-attributes can contain json of any form.
-This json **MUST** not use json keys as values.
+The object's actual data is stored in the the `attributes` key http://jsonapi.org/format/#document-resource-object-attributes This can contain json of any form.
 
-For example, the following is an example of not acceptable json:
+This json **MUST** not use json keys as values.For example, the following is an example of not acceptable json:
 <pre>
 ...
   "data": [
@@ -452,9 +455,9 @@ see -> http://jsonapi.org/examples/#error-objects-error-codes
 Generic operations
 ------------------
 
-### Paging
+### Pagination
 
-All DINA-compliant APIs **MUST** provide support paging for large result
+All DINA-compliant APIs **MUST** support pagination of large result
 sets, accepting the following parameters:
 
 |URI term   | Parameter  | Default   |  Description |
@@ -464,8 +467,8 @@ sets, accepting the following parameters:
 
 ### Count
 
-All API calls that result in a list of records (paged of course) must
-also support a "**'/count**' that returns the number of results if the
+All API calls that result in a list of records (paged of course) **MUST**
+also support a "**'/count**' endpoint, that returns the number of results if the
 API had been called. Note that this is also applied to URLs with passed
 parameters, i.e.
 
@@ -473,7 +476,8 @@ parameters, i.e.
 * Retrieves the number of results if the search was directly called.->  `/media/count?filter[taxon]=Thaumotopea`
 * Retrieves paged list of all media objects. -> `/media`
 * Retrieves the total number of media objects. -> `/media/count`
-
+ 
+**[under-discussion]** Is this a MUST?
 
 
 ### Supported languages
@@ -510,6 +514,7 @@ Sample response:
 #### URI parameters for language
 To request results in a supported language, the parameter `language` is used. For example, `/media?filter[taxon]=Thaumotopea&language=SE_sv`
 
+Use two-letter ISO-639-1 codes for languages.
 
 
 **RAW Object Access**
