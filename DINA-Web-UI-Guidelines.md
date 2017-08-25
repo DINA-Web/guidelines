@@ -2,7 +2,7 @@
 
 SUGGESTION 8/2017, NOT OFFICIAL
 
-Major differences compared to previous Style guidelines
+Major differences compared to previous Style guidelines at http://blog.dina-web.net/guidelines/style.html
 - Simpler, less restrictive
 - Discussion removed
 - Expanded to include UI elements
