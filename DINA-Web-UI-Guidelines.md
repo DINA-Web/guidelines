@@ -46,21 +46,32 @@ Possible fonts:
 
 Logo assets are available at [https://github.com/DINA-Web/dina_logo](https://github.com/DINA-Web/dina_logo).
 
-**TODO**: add license that applies
+Colors matching the logo:
 
-**TODO**: Move logo as part of this repository (to reduce amount of repositories)
+**Dark green**
 
-**TODO**: add information about font used
+* RGB 19, 86, 51
+* HEX #135633
 
-**TODO**: Logo colors as HEX and RGB
+**Medium green**
+
+* RGB 30, 140, 67
+* HEX #1e8c43
+
+**Light green**
+
+* RGB 116, 195, 116
+* HEX #74c374
 
 ## Colors
 
-Use default Bootstrap 3 or equivalent colors. See for example https://getbootstrap.com/docs/4.0/components/buttons/
+For general visual design use white background, black text and dark green (see "Logo" above) as accent color.
+
+For user actions and UI elements, use default Bootstrap 3 or equivalent colors. See for example https://getbootstrap.com/docs/4.0/components/buttons/
 
 * Background: white and/or light grey
 * Text: black
-* Links(?)
+* Links: TBD (?)
 * Actions
   * Primary/Save/Edit: bright blue
   * Warning/Cancel: yellow
@@ -71,9 +82,6 @@ Use default Bootstrap 3 or equivalent colors. See for example https://getbootstr
   * Warning: yellow
   * Error: red
   * Information: greyish blue
-
-
-**TODO**: Explain DINA colors, based on the logo. See logo below.
 
 ## Customized colors
 
