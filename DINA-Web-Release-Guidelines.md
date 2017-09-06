@@ -66,7 +66,7 @@ Separate QA guidelines then apply, including making checks for:
   - Accessibility Guidelines compliance
   - Security OWASP compliance
 
-Here is a link to the (QA guidelines)[DINA-Web-QA-Guidelines.md]
+Here is a link to the [QA guidelines](DINA-Web-QA-Guidelines.md)
 
 # Further details and rationale
 
