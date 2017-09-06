@@ -2,14 +2,73 @@
 
 The following are RECOMMENDED guidelines to follow when making releases of modules that are used within the DINA-Web system.
 
+- Provide a `Makefile` that builds code locally and launches services. Various Makefile targets should be provided including for example "dotfiles" which generates random credentials where needed, so these can be provided to components at launch time through environment variables
+- Provide a `docker-compose.yml` file with the system composition referencing versioned ("semver") docker images where applicable
+- Use semantic versioning and tag your releases like this: `git tag -a v0.0.1 -m "description"`, you can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
+- For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub
+- Document usage in README.md and make your README.md contain a "badge" - builds should show green badge :)
+- Provide a NEWS.md or CHANGELOG for the releases
+- Then notify someone at DINA TC if your stable release is ready to go upstream
 
-  - Use Travis CI for build and deploy releases to GitHub Releases
-  - Make your README.md contain a "badge" - builds should show green badge :)
-  - Use semantic versioning and tag your releases like this: `git tag -a v0.0.1 -m "description"`, you can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
-  - Provide a NEWS.md or CHANGELOG for the releases
-  - Notify someone at DINA TC if your stable release is ready to go upstream
+## Notify DINA TC of your release
 
-# Details and rationale
+For the module to be included into the bigger DINA-Web system, you need to notify DINA TC people that you have a stable build. The DINA TC people will need the repo name, the version number (semantic versioning) and see a "green badge" that the code builds properly using Travis CI. If the released module checks out, it will be included in the DINA-Web system. 
+
+# Checklist
+
+Before releasing, make sure that these files are present in the repo:
+
+		LICENSE # open source license
+		README.md # explain usage
+		CHANGES.md # latest changes
+		docker-compose.yml # system composition of versioned micro-services 
+		Dockerfile # definition of the portable images
+		Makefile # automation: various VERBs for building, testing, starting/stopping services etc
+		.travis.yml # continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub
+		apiary.apib # API specification, relevant if the code implements an API
+		api-documentation.html # rendered apiary blueprint as HTML documentation 
+
+Then make sure that the `Makefile` have relevant targets, for example:
+
+		build  # builds from source code
+		clean  # removes binary build artifacts
+
+		up # starts the system locally using docker-compose.yml
+		down # stops and removes containers
+
+		dotfiles  # generates environment variable secrets (using random data for credentials) 
+
+		release  # pushed docker images to Docker Hub
+
+		backup  # backups system state into preferably non-proprietary formats
+		restore  # restores from any timestamped backup
+
+		dox  # if an API component, generates the HTML reference documentation
+
+		test  # launches tests		
+
+The DINA TC will run a check for major or stable releases, looking for:
+
+  - Sources are available openly with LICENSE
+	- Local builds work and Makefile has relevant targets for building, cleaning etc
+  - Green badge for building with Travis CI
+  - Semantic versioning used
+  - Tests are OK
+  - Documentation is provided that explains the module and its usage (README.md etc)
+  - API documentation if the module exposes an API
+
+# Further testing
+
+Released modules will run through a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
+
+Separate QA guidelines then apply, including making checks for:
+
+  - Accessibility Guidelines compliance
+  - Security OWASP compliance
+
+Here is a link to the (QA guidelines)[DINA-Web-QA-Guidelines.md]
+
+# Further details and rationale
 
 Here follow detailed instructions and explanations of the release guidelines summarized just above. 
 
@@ -47,45 +106,15 @@ Use Travis CI to set up builds for the component(s) by adding a simple text file
   - [R](https://docs.travis-ci.com/user/languages/r)
   - [JS](https://docs.travis-ci.com/user/languages/javascript-with-nodejs)
 
-### Releases
+# Releases
 
 Set up deploy to  GitHub Releases to happen when you push versioned tags. You can find deployment procedures documented here: 
 
   - [GitHub Releases Guide](https://docs.travis-ci.com/user/deployment/releases)
 
+For higher level packaging which integrate released modules into systems, primarily `docker` should be used. Binary images should be provided from Docker Hub preferably through Automated Builds: https://docs.docker.com/docker-hub/builds/#understand-the-build-process
 
-# Upstream packaging
-
-Released modules that passed the QA check will be packaged upstream into higher level packages which integrate several different modules into a coherent system.
-
-## Use `docker` and `docker-compose` for integration projects
-
-For higher level packaging which integrate released modules into systems, primarily `docker` should be used. 
-
-When docker images of systems are being built, these will call out to "GitHub Releases" to include a specific version of a stable module.
-
-Integration projects should be available as repos at GitHub. Naming of integration projects should follow the current practice of prefigating with "dw-".
-
-Before including stable modules into an upstream package, the DINA TC will need to test and assure the quality of the module. The current state of the union can be seen here: [DINA-Web Blog](http://blog.dina-web.net/progress/)
-
-## Notify DINA TC of your release
-
-For the module to be included into the bigger DINA-Web system, you need to notify DINA TC people that you have a stable build. The DINA TC people will need the repo name, the version number (semantic versioning) and see a "green badge" that the code builds properly using Travis CI.
-
-If the released module checks out well it will be included in the DINA-Web system. 
-
-## Passing the QA checks
-
-The DINA TC  will then run the check. The module will be checked for:
-
-  - Sources are available openly
-  - Green badge for building with Travis CI
-  - Semantic versioning used
-  - Tests are OK
-  - Documentation provided that explains the module and its usage
-  - API documentation if the module exposes an API
-  - Accessibility Guidelines compliance
-  - Security OWASP compliance
+Use `docker` images for delivering higher level systems and support `docker-compose` for system compositions. When docker images of systems are being built and need to reference external binary build artifacts, these could include a specific version of a stable module taken from "GitHub Releases".
 
 # Regarding versioning and backward compatibility
 
@@ -96,4 +125,4 @@ For example, if you make an API-incompatible change to a rarely-used part of you
 The importance of backward compatibility is directly proportional to the number of people using your package: you are trading your time for your users time. The harder you strive to maintain backward compatibility, the harder it is to develop new features or fix old mistakes. 
 Backward compatible code also tends to be harder to read because of the need to maintain multiple paths to support functionality from previous versions. Be concerned about backward compatibility, but don’t let it paralyse you.
 
-There are good reasons to make backward incompatible changes - if you made a design mistake that makes your package harder to use it is better to fix it sooner rather than later. If you do need to make a backward incompatible change, it’s best to do it gradually. 
+There are good reasons to make backward incompatible changes - if you made a design mistake that makes your package harder to use it is better to fix it sooner rather than later. If you do need to make a backward incompatible change, it’s best to do it gradually.
