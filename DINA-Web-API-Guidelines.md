@@ -73,8 +73,18 @@ the contract covered by this standard, but they **MUST** not break any
 of the recommendations covered by mandatory or optional features defined
 by this standard.
 
+**NB:** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
+However, it some circumstances web api wrappers may be used where appropriate.
+
 DINA REST API standard - Specification
 ======================================
+ 
+Adheres to the JSON API -specification
+------
+
+The DINA REST API Standard adheres to the [JSON API - specification version (v1.0)](http://jsonapi.org/format/).
+If the DINA REST API deviates from the JSON API-Specifiaction that is noted in this document.  <p>
+**[under-discussion]** For files, non-JSON and therefore non-JSON-API can also be used (e.g. getting raw images). 
 
 Basics
 ------
@@ -98,111 +108,40 @@ to the DINA-compliant 'media server' module, indicated by the reserved word
 (URI path component) ***"media"*** and a data object ('media type' / 'entity' [^8])
 handled by the web service indicated by ***"image"***.
 
-If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls are returning just the meta-data section of the corresponding ***HTTP GET*** call.
+If not noted otherwise it is expected that an endpoint's ***HTTP HEAD*** calls are returning just the HTTP meta-data section of the corresponding ***HTTP GET*** call.
 
 
 #### Basic CRUD operations ####
 
-|HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
-|:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve the media object with the uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-|POST        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Update the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                 |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-|DELETE      |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Delete the media object with uuid '001196a9-abef-419e-a8b7-f0a00157c588'.                                                           |204 No Content |Various possible ("uuid does not exist": 404 Not Found) |
-|HEAD        |/media/001196a9-abef-419e-a8b7-f0a00157c588  |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible ("uuid does not exist": 404 Not Found) |
-
-|HTTP method |Endpoint            |Semantics/Behaviour                                                                                              |Success code   |Fail codes                                            |
-|:-----------|:-------------------|:----------------------------------------------------------------------------------------------------------------|:--------------|:-----------------------------------------------------|
-|GET         |/media/\<entity\> [^8]    | |        |                                     |
-|GET         |/media/images       |Retrieve first page of paged list of all images (id´s or url´s) starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK         |Various possible                                      |
-|POST        |/media/images       |Create one or more new images.                                                                                              |201 Created    |Various possible                                      |
-|PUT         |/media/images       |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|DELETE      |/media/images       |NA                                                                                                               |Na             |405 Method Not Allowed                                |
-|HEAD        |/media/images       |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible                                      |
-|GET         |/media/images/count |Retrieve the total number of images.                                                                             |200 OK         |Various possible                                      |
-|POST        |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|PUT         |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|DELETE      |/media/images/count |NA                                                                                                               |NA             |405 Method Not Allowed                                |
-|HEAD        |/media/images/count |Retrieve only meta-data section for corresponding GET request.                                                   |200 OK         |Various possible                                      |
-
+http://jsonapi.org/format/#crud
 
 #### Filtering, ordering, paging ####
 
-|HTTP method |Endpoint                                                                  |Semantics/Behaviour                                                                                                                                       |Success code |Fail codes                                                                                                                                              |
-|:-----------|:-------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/media/images?minid=1000&maxid=2000                                       |Retrieve first page of paged list of all matching data objects of type image, within id range 1000-2000, starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK       |Various possible ("images.id has no values in range 1000-2000": 404 Not Found)                                                                          |
-|POST        |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|PUT         |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|DELETE      |/media/images?minid=1000&maxid=2000                                       |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|HEAD        |/media/images?minid=1000&maxid=2000                                       |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("images.id has no values in range 1000-2000": 404 Not Found)                                                                          |
-|GET         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve the first 100 collectionobjects starting a offset 0, ordered by ProjectNumber,InventoryDate.                                                     |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
-|POST        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|PUT         |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|DELETE      |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |NA                                                                                                                                                        |NA           |405 Method Not Allowed                                                                                                                                  |
-|HEAD        |/collectionobjects?orderBy=ProjectNumber,InventoryDate&limit=100&offset=0 |Retrieve only meta-data section for corresponding GET request.                                                                                            |200 OK       |Various possible ("ProjectNumber and/or InventoryDate are not valid fields for collectionobjects": 405 Method Not Allowed; "no records": 404 Not Found) |
+* http://jsonapi.org/format/#fetching-filtering
+  * http://jsonapi.org/recommendations/#filtering
+* http://jsonapi.org/format/#fetching-pagination
+  * Pagination **MUST** be implemented using the offset-based strategy, using the URI paramaters `page[offset]` and `page[limit]`
+* http://jsonapi.org/format/#fetching-sorting
 
+#### Relations ;  one-to-many and many-to-many ####
 
+1. see : http://jsonapi.org/format/#document-links
+2. see : http://jsonapi.org/format/#fetching-relationships
 
-#### Dedicated search endpoint for text searches ####
-|HTTP method |Endpoint                        |Semantics/Behaviour                                                                                                                             |Success code |Fail codes                                                                                                      |
-|:-----------|:-------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|:------------|:---------------------------------------------------------------------------------------------------------------|
-|GET         |/media/images?taxon=Thaumotopea |Retrieve first page of paged list of all matching records, where taxon contains "Thaumotopea", starting at OFFSET=0 and LIMIT=defaultLimitSize. |200 OK       |Various possible ("taxon is not a valid field for images": 405 Method Not Allowed; "no records": 404 Not Found) |
-|POST        |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|PUT         |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|DELETE      |/media/images?taxon=Thaumotopea |NA                                                                                                                                              |NA           |405 Method Not Allowed                                                                                          |
-|HEAD        |/media/images?taxon=Thaumotopea |Retrieve only meta-data section for corresponding GET request.                                                                                  |200 OK       |Various possible ("taxon is not a valid field for images": 405 Method Not Allowed; "no records": 404 Not Found) |
+**'links'** would give you the number of how many relationships and then you would use 'Fetching Relationships'<p>
+scrap from the jsonapi.org : "The following related link includes a URL as well as meta-information about a related resource collection:
 
+```
+"links": {
+  "related": {
+    "href": "http://example.com/articles/1/comments",
+    "meta": {
+      "count": 10
+    }
+  }
+}
+```
 
-
-
-#### Relations / one-to-many ####
-Reference for relational RESTful services:
-<https://stackoverflow.com/questions/6324547/how-to-handle-many-to-many-relationships-in-a-restful-api>
-
-|HTTP method |Endpoint                                   |Semantics/Behaviour                                                                                                                                                                                                                                                                                          |Success code   |Fail codes                                                                                                                                                                                     |
-|:-----------|:------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/collectionobjects/:id/determinations/     |Retrieve first page of paged list of all determinations associated with the given collectionobject id, starting at OFFSET=0 and LIMIT=defaultLimitSize                                                                                                                                                       |200 OK         |Various possible ("id does not exist": 404 Not Found)                                                                                                                                          |
-|POST        |/collectionobjects/:id/determinations/     |Associating a determination with a collectionobjects should be done during the creation of the determination, i.e. POST /determinations, with the foreign key of the collectionobjects contained in the POST json OR if the entity already exists, with the below /collectionobjects/:id/determinations/:id2 |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|PUT         |/collectionobjects/:id/determinations/     |NA                                                                                                                                                                                                                                                                                                           |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|DELETE      |/collectionobjects/:id/determinations/     |NA                                                                                                                                                                                                                                                                                                           |NA             |405 Method Not Allowed                                                                                                                                                                         |
-|HEAD        |/collectionobjects/:id/determinations/     |Retrieve only meta-data section for corresponding GET request.                                                                                                                                                                                                                                               |200 OK         |Various possible ("id does not exist": 404 Not Found)                                                                                                                                          |
-|GET         |/collectionobjects/:id/determinations/:id2 |Retrieve determination with id=id2 that is also a member of collectionobjects=id                                                                                                                                                                                                                             |200 OK         |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found)                                                                                                |
-|POST        |/collectionobjects/:id/determinations/:id2 |Create a new association between the determination=id2 and the given collectionobject=id                                                                                                                                                                                                                     |201 Created    |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|PUT         |/collectionobjects/:id/determinations/:id2 |Update association.                                                                                                                                                                                                                                                                                          |201 Created    |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|DELETE      |/collectionobjects/:id/determinations/:id2 |Delete association.                                                                                                                                                                                                                                                                                          |204 No Content |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found; "determination does not have 1:n relationship with collection object": 405 Method Not Allowed) |
-|HEAD        |/collectionobjects/:id/determinations/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                                                                                                                                                                               |200 OK         |Various possible ("id/id2 does not exist", "id2 is not member of collection id": 404 Not Found)                                                                                                |
-
-
-
-#### Relations / many-to-many ####
-
-|HTTP method |Endpoint                             |Semantics/Behaviour                                                                                                                              |Success code   |Fail codes                                                                                                                                          |
-|:-----------|:------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------|:--------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-|GET         |/projects/:id/collectionobjects/     |Retrieve first page of paged list of all collectionobjects associated with the given project id, starting at OFFSET=0 and LIMIT=defaultLimitSize |200 OK         |Various possible ("id does not exist": 404 Not Found; "collectionobject does not have n:n relationship with project": 405 Method Not Allowed)       |
-|POST        |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|PUT         |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|DELETE      |/projects/:id/collectionobjects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|HEAD        |/projects/:id/collectionobjects/     |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "collectionobject does not have n:n relationship with project": 405 Method Not Allowed)       |
-|GET         |/collectionobjects/:id/projects/     |Retrieve first page of paged list of all projects associated with the given collectionobject id starting at OFFSET=0 and LIMIT=defaultLimitSize  |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|POST        |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|PUT         |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|DELETE      |/collectionobjects/:id/projects/     |NA                                                                                                                                               |NA             |405 Method Not Allowed                                                                                                                              |
-|HEAD        |/collectionobjects/:id/projects/     |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|GET         |/projects/:id/collectionobjects/:id2 |Retrieve collectionobject with id2 which is a member of project with id.                                                                         |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|POST        |/projects/:id/collectionobjects/:id2 |Create a relation between the given project id and a collectionobject id2.                                                                       |201 Created    |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|PUT         |/projects/:id/collectionobjects/:id2 |Replace the association between the project and the collectionobject.                                                                            |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|DELETE      |/projects/:id/collectionobjects/:id2 |Delete the association between the project and the collectionobject.                                                                             |204 No Content |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|HEAD        |/projects/:id/collectionobjects/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-|GET         |/collectionobjects/:id/projects/:id2 |Retrieve project with id2 which is a member of collectionobjects with id.                                                                        |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|POST        |/collectionobjects/:id/projects/:id2 |Create a relation between the given collectionsobject id and a projects id2.                                                                     |201 Created    |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|PUT         |/collectionobjects/:id/projects/:id2 |Replace the association between the project and the collectionobject.                                                                            |200 OK         |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|DELETE      |/collectionobjects/:id/projects/:id2 |Delete the association between the project and the collectionobject.                                                                             |204 No Content |Various possible ("id/id2 does not exist": 404 Not Found; "collectionobjects does not have n:n relationship with projects": 405 Method Not Allowed) |
-|HEAD        |/collectionobjects/:id/projects/:id2 |Retrieve only meta-data section for corresponding GET request.                                                                                   |200 OK         |Various possible ("id does not exist": 404 Not Found; "projects does not have n:n relationship with collectionobject": 405 Method Not Allowed)      |
-
-
-Similar examples can be found in
-<https://github.com/wet-boew/wet-boew-api-standards>[^1] or
-<http://www.oracle.com/technetwork/articles/javase/index-137171.html>[^2].
 
 ### HTTP header use
 
@@ -210,14 +149,12 @@ DINA-compliant web APIs **MUST** support at least the variables
 indicating the requested an support media types. For HTTP requests this
 is ***Accept:*** (e.g. *Accept: application/json*) and for HTTP response
 this is ***Content-Type:*** (e.g. *Content-Type: application/json*). The
-Accept: header is described by W3C RFC2616 Section 14.1
-(<http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.hml\#sec14.1>[^3]).
+Accept: header is described by [W3C RFC2616 Section 14.1](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.hml\#sec14.1)[^3]
 
 The supported and indicated media types must be recognized *Multipurpose
 Internet Mail Extensions (MIME) types* registered with the Internet
 Assigned Numbers Authority (IANA)'s media type catalogue. For most
-standard file types IANA's media type catalogue
-(<http://www.iana.org/assignments/media-types/media-types.xhtml>[^4])
+standard file types [IANA's media type catalogue](http://www.iana.org/assignments/media-types/media-types.xhtml)[^4]
 will provide the appropriate type definition.
 
 ### URI structure
@@ -225,23 +162,22 @@ will provide the appropriate type definition.
 #### Basics
 
 DINA-compliant APIs **SHOULD** indicate base URLs for API endpoints with
-an "api" subdomain, thus *<http://api.dinamodule.net/>* would be
-considered preferable over *<http://www.dinamodule.net/api/>* under this
+an "api" subdomain, thus *```http://api.dinamodule.net/```* would be
+considered preferable over *```http://www.dinamodule.net/api/```* under this
 scheme.
 
 DINA-compliant APIs **MUST** include a version indicator that is
-appended directly to the endpoint base URI, e.g.
-*<http://api.dinamodule.net/v1>* (see also the section on versioning
-schemes).
+appended directly to the endpoint base URI,see  the [Versioning](#Versioning) section of this document.
 
 Multiple URL schemes **COULD** be supported by using
-rewrite/redirect/proxy directives. Example scenarios: 1) Each module is
-hosted at a unique domain, e.g. "<http://api.dinamodule.net/version/>"
-and 2) Modules are consolidated and provided via a single domain, e.g.
-"<http://api.host/module/version>". Both of these scenarios can be
+rewrite/redirect/proxy directives.<p>
+Example scenarios: 
+(1) Each module is
+hosted at a unique domain, e.g. ```http://api.dinamodule.net/version/```
+and (2) Modules are consolidated and provided via a single domain, e.g.
+```http://api.host/module/version```.<p> Both of these scenarios can be
 accomplished using rewrite/redirect/proxy directives from an original
-URL of
-"[http://localhost:port/module/version](http://localhost:port/module/version)".
+URL of ```http://localhost:port/module/version```.
 
 All date time formats **MUST** conform to the subset of ISO 8601 defined in
 <http://www.w3.org/TR/NOTE-datetime> and <http://schema.org/DateTime>.
@@ -250,7 +186,11 @@ All date time formats **MUST** conform to the subset of ISO 8601 defined in
 
 DINA-compliant APIs **MUST** accept parameters as key-value pairs
 following standard URI patterns, e.g.
-*<http://api.dinamodule.net/v1/media/image/search?id=1234>*.
+*```<path>/xxx?id=1234```*.
+
+This is extended for jsonapi filtering http://jsonapi.org/recommendations/#filtering where the pattern is:
+*```<path>/xxx?filter[id]=1234```*.
+This is consistent with the reserved URI characters described in RFC 3986 Uniform Resource Identifier (URI): Generic Syntax https://tools.ietf.org/html/rfc3986#section-2.2
 
 #### Reserved words
 
@@ -266,6 +206,7 @@ following standard URI patterns, e.g.
     -   "preparation" and/or "storage"
     -   "determination"
     -   "transaction"
+    -   "account"
     -   ...
 
 -   Reserved words indicating data concepts:
@@ -279,7 +220,12 @@ following standard URI patterns, e.g.
     -   "person"
     -   "user"
     -   "annotation"
+    -   "account"
     -   ...
+
+-   URI
+    - "filter"
+
 
 In general, both singular and plural versions of those terms should be considered as reserved words, and terms should always be used in lowercase.
 
@@ -287,96 +233,152 @@ In general, both singular and plural versions of those terms should be considere
 ### HTTP response
 
 HTTP responses returned by DINA-compliant API endpoints **MUST** be
-returned as valid JSON documents ( source : http://jsonapi.org/format/#document-meta )and follow a standard response structure. 
-In addition, DINA-compliant API endpoints SHOULD
-alternatively return responses as valid XML documents. The basic
-structure of a DINA API compliant JSON reponse is listed below:
+returned as valid JSON jsonapi documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
+The basic structure of a DINA API compliant JSON reponse is listed below:
 
+**[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta
+
+Response for a single record:
 <pre>
-    {
-       "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/...",
-          "callDate": "2014-10-08T08:08:18+01:00",
-          "apiVersion: "1.0",
-          ...
-       }
-
-       "results": [
-          ... module-specific data ...
-       ] 
+{
+ "jsonapi": {
+    "version": "1.0"
+  }
+  "meta": {
+    "copyright": "Copyright 2015 Example Corp.",
+    "authors": [
+      "Yehuda Katz",
+      "Steve Klabnik",
+      "Dan Gebhardt",
+      "Tyler Kellen"
+    ]
+  },
+  "data": [{
+    "type": "articles",
+    "id": "1",
+    "attributes": {
+      "title": "JSON API paints my bikeshed!"
+    },
+    "links": {
+      "self": "http://example.com/articles/1"
+    },
+    "relationships": {
+      "author": {
+        "links": {
+          "self": "http://example.com/articles/1/relationships/author",
+          "related": "http://example.com/articles/1/author"
+        },
+        "data": { "type": "people", "id": "9" }
+      },
+      "comments": {
+        "links": {
+          "self": "http://example.com/articles/1/relationships/comments",
+          "related": "http://example.com/articles/1/comments"
+        },
+        "data": [
+          { "type": "comments", "id": "5" },
+          { "type": "comments", "id": "12" }
+        ]
+      }
     }
-</pre>
-
-HTTP responses in JSON format **MUST** satisfy the property name
-guidelines from the Google [JSON Style Guide]: ,
-to ensure for example that JSON results do not have unique ids as
-property names of the marshalled object. Similarly, these principles
-**SHOULD** apply to XML reponses. Examples for valid and invalid
-responses under this scheme are given in the following table.
-
-
-<table border="5">
-<tr>
-<th>VALID</th>
-<th>INVALID</th>
-</tr>
-
-<tr>
-<td>
-<pre>
-{"taxa":
-     {"taxid":460932,
-      "taxon":"Aspergillus ochraceus"}
+  }],
+  }
 }
+
+
 </pre>
 
-</td>
-<td>
+
+First response for a filter request returning multiple records spanning multiple responses (from jsonapi examples):
+(Note offset/limit based paging)
 <pre>
-{"460932":
-     {"taxid":460932,
-      "taxon":"Aspergillus ochraceus"}
+{
+  "meta": {
+    "results": 13
+  },
+  "data": [
+    {
+      "type": "articles",
+      "id": "3",
+      "attributes": {
+        "title": "JSON API paints my bikeshed!",
+        "body": "The shortest article. Ever.",
+        "created": "2015-05-22T14:56:29.000Z",
+        "updated": "2015-05-22T14:56:28.000Z"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://example.com/articles?page[offset]=3&page[limit]=1",
+    "first": "http://example.com/articles?page[offset]=1&page[limit]=1",
+    "prev": "http://example.com/articles?page[offset]=2&page[limit]=1",
+    "next": "http://example.com/articles?page[offset]=4&page[limit]=1",
+    "last": "http://example.com/articles?page[offset]=13&page[limit]=1"
+  }
 }
+
 </pre>
-</td>
-</tr>
 
-<tr>
-<td>
-<pre>
-&lt;resultset&gt;
-    &lt;row id="1"&gt; ... &lt;/row&gt;
-    &lt;row id="2"&gt; ... &lt;/row&gt;
-    &lt;row id="3"&gt; ... &lt;/row&gt;
-&lt;/resultset>
-</pre> 
-</td>
+In the part of the jsonapi specification where the object's actual data is stored, the `attributes` key, http://jsonapi.org/format/#document-resource-object-attributes can contain json of any form.
+This json **MUST** not use json keys as values.
 
-<td>
+For example, the following is an example of not acceptable json:
 <pre>
-&lt;resultset>
-    &lt;row_1&gt; ... &lt;/row_1&gt;
-    &lt;row_2&gt; ... &lt;/row_2&gt;
-    &lt;row_3&gt; ... &lt;/row_3&gt;
-&lt;/resultset>
+...
+  "data": [
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "460932": "Aspergillus ochraceus"
+		    }
+      },
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "5464387": "Apergillus niger"
+		    }
+      }]
+...
 </pre>
-</td>
-</tr>
 
-</table>  
+Here is the equivalent acceptable json:
+<pre>
+...
+  "data": [
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "external_id": "460932"
+      		    "name":"Aspergillus ochraceus"
+		    }
+      },
+    {
+      "type": "species",
+      "id": "3",
+      "attributes": {
+      		    "external_id":"5464387"
+		    "name":"Apergillus niger"
+		    }
+      }]
+...
+</pre>
 
 API response - Top Level
 -----------------------
 
-"A document MUST contain at least one of the following top-level members: <p>
+According to the JSON API specification "A document MUST contain at least one of the following top-level members: <p>
 
 * data: the document’s “primary data”
 * errors: an array of error objects
 * meta: a meta object that contains non-standard meta-information.
 
-The members data and errors MUST NOT coexist in the same document."<p>
+The members data and errors MUST NOT coexist in the same document."<p> [^9]
 
-source : http://jsonapi.org/format/#document-top-level
+
+**[under-discussion]** Glen will look through the properties (key:values) and see if they adhere to the jsonapi, which should we keep, which should we remove , which to add ?
 
 API response "meta"
 -----------------------
@@ -386,22 +388,18 @@ the response meta section:
 
 |Property | Datatype | Description |
 |----|----|----|
-| callEndpoint    |     URL |       The complete URL of the endpoint that issued this reponse.|
-| next    |     URL |       The complete URL of the endpoint for the next page of content. Only for paging.|
-| previous    |     URL |       The complete URL of the endpoint for the previous page of content. Only for paging.|
 | limit          |      int  |      The value of the limit (paging) parameter provided by the caller of the endpoint.|
 | offset        |       long  |      The value of the offset (paging) parameter provided by the caller of the endpoint.|
 | callDate      |       string  |      Datetime at which the call to the endpoint was received. http://schema.org/DateTime. Format as per http://www.w3.org/TR/NOTE-datetime|
-| statusCode     |      int  |      HTTP response code issued by the endpoint.|
+| response_time     |      long  |     Time to handle response, in milliseconds
 | apiVersion     |      string  |      Version identifier of the endpoint API.|
-| resultCount    |      long  |      Count of the result objects returned by the call to this endpoint.|
-| orderBy     |      array of string  |      Result object properties  on which the returned result set is sorted.|
-| sortOrder      |      string  |      Sort order of the result set. "asc" or "desc".|
-| resultLanguages|      array of string  |      Languages of the result content - if applicable.|
-| supportedLanguages |  array of string  |      Supported content languages of the endpoint - if applicable.|
+| results    |      long  |      Count of the result objects returned by the call to this endpoint, unless the particular endpoint **ALWAYS** returns one object||
+| sort     |      array of string  |      Result object properties  on which the returned result set is sorted. Example: `sort=age,height`. AS PER jsonapi http://jsonapi.org/format/#fetching-sorting. "The sort order for each sort field MUST be ascending unless it is prefixed with a minus (U+002D HYPHEN-MINUS, “-“), in which case it MUST be descending."|
+| resultLanguage|      string  |      Language of the result content - if applicable.|
 | contentLicenses    |  array of string  |      Licenses applying to the results returned by the endpoint - - if applicable.|
 | message            |  string  |      General message explaining the response - if any.|
-| maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service |disruptions.
+| maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service disruptions.|
+| moduleVersion |  string  |      Version of the underlying module's codebase.|
 | ...                |  ...  |      ...|
 
 
@@ -410,29 +408,18 @@ A compliant sample response in JSON format:
 <pre>
     {
        "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/...",
-          "next": "http://api.refimplementation.net/v1/media/...?offset=150&limit=50",
-          "previous": "http://api.refimplementation.net/v1/media/...?offset=50&limit=50",
+          "results": 34543
+	  "offset": 200
           "limit": 50,
-	        "callDate": "2015-11-05T08:15:30-05:00",
-          "offset": 100,
+	  "callDate": "2015-11-05T08:15:30-05:00",
           "apiVersion: "1.0",
-          "statusCode": 200,
           "results": 18,
+	  "responseTime": 23
           "orderBy": [
-	  	     "ID",
+	  	     "-ID",
 		     "InventoryDate"
           ],
-          "sortOrder": "asc",
-          "resultLanguages": [
-              "SE_sv",
-              "GB_en"
-          ],
-          "supportedLanguages": [
-              "SE_sv",
-              "GB_en",
-              "EE_et"          
-          ]
+          "resultLanguage": "SE_sv"
           "contentLicenses": [
           ],
           "message": "",
@@ -440,7 +427,7 @@ A compliant sample response in JSON format:
           ...
        }
 
-       ... "data" ...
+       "data": ...
     }
 </pre>
 
@@ -452,17 +439,15 @@ source : http://jsonapi.org/format/#errors <p>
 A DINA-compliant endpoint **MAY** return the following properties in
 the response errors section:
 
-|Property | Datatype | Description |
-|----     |----|----|
-| id      |----| a unique identifier for this particular occurrence of the problem.|
-| links   |----| a links object containing the following members (about)|
-| status  |----| the HTTP status code applicable to this problem, expressed as a string value.|
-| code    |----|  an application-specific error code, expressed as a string value|
-| title   |----| a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization. |
-| detail  |----| a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.|
-| source  |----| an object containing references to the source of the error, optionally including any of the following members: (pointer,parameter)|
-| meta    |----| a *meta object* containing non-standard meta-information about the error. ( see *meta object* ) |
-| ...     |...| ...|
+**start [under-discussion]** Should we have some members as MUST such as 
+* code
+* source 
+* title
+* detail
+* meta -> Should we add languages here ?
+
+see -> http://jsonapi.org/examples/#error-objects-error-codes
+**End [under-discussion]** 
 
 Generic operations
 ------------------
@@ -484,21 +469,12 @@ also support a "**'/count**' that returns the number of results if the
 API had been called. Note that this is also applied to URLs with passed
 parameters, i.e.
 
-    /media/images?taxon=Thaumotopea
+* Retrieves paged list of matching records. ->  `/media?filter[taxon]=Thaumotopea`
+* Retrieves the number of results if the search was directly called.->  `/media/count?filter[taxon]=Thaumotopea`
+* Retrieves paged list of all media objects. -> `/media`
+* Retrieves the total number of media objects. -> `/media/count`
 
-Retrieves paged list of matching records.
 
-    /media/images/count?taxon=Thaumotopea
-
-Retrieves the number of results if the search was directly called.
-
-    /media/images
-
-Retrieves paged list of all images.
-
-    /media/images/count
-
-Retrieves the total number of images.
 
 ### Supported languages
 
@@ -508,14 +484,13 @@ request languages supported by the service. Support for this request
 reserved word **languages** as the last element of the endpoint URI.
 
 |URI term |  Parameter  | Description |
-|:--------|:-----------|:-----------|:---------------|
+|:--------|:-----------|:-----------|
 |**GET/languages** |-       |Requests a list of all languages supported by the service, returned as a meta-data object in the standard response format. By default supported languages should be included in the meta-data section of API responses. This call should support retrieval of supported languages **only**.|
 
-Sample reponse:
+Sample response:
 <pre>
     {
        "meta": {
-          "callEndpoint": "http://api.refimplementation.net/v1/media/languages",
           "callDate": "2014-10-08T08:08:18+01:00",
           "apiVersion: "1.0",
           "results": 0,
@@ -526,76 +501,74 @@ Sample reponse:
           ]
           ...
        }
+      "links": {
+      	       "self": "http://api.refimplementation.net/v1/media/languages"
+	       }
     }
 </pre>
+
+#### URI parameters for language
+To request results in a supported language, the parameter `language` is used. For example, `/media?filter[taxon]=Thaumotopea&language=SE_sv`
+
+
+
+**RAW Object Access**
+Some objects, such as those that are embeddable natively in HTML, like images, audio, video, etc. need to be accessible directly, not wrapped in a JSON envelope.
+Some of these, such as images, need to be able to produce alternate views of themselves, such as thumbnails, sub-images, black-and-white from colour, etc.
+In order to support these modes and operations, out-of-band (with respect to the json API) API is needed.
+
+This is primarily supported **using the same end points** using the `raw` reserved word.
+
+
+Example for image/raw issue:
+
+|Example URL                             |Request Body                                     |mime type             |     Response body|
+|:---------------------------------------|:------------------------------------------------|:---------------------|:--------------------------
+`POST /media`                              | json with embedded base64 image encoding of jpg | `application/json`   |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
+`GET /media/y5y5y5y5y7`                    | empty                                           | `application/json`   |`{..."content: "base64_of_image", "sha1:"...`|
+`GET /media/y5y5y5y5y7/raw`                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+`GET /media/y5y5y5y5y7/raw?width=100`      | empty                                           | `image/jpeg`         | jpeg content (binary)    |
+`POST /media/raw`                          | binary, i.e. jpeg image                         | `image/jpeg`         |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
+`GET /media?fields[image]=sha1,title`      | json with only requested fields                 | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
+`GET /media?fields[image]=-content`        | json with all fields except `content`           | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
+|...                                     |...                                              |...                   |...                             |
+
+
+**STILL TO DO**
+PATCH /media/y5y5y5y5y7
+
+Req jsonapi: contains metadata
+
+Resp: exactly same as the POST jsonapi response
+ 
+For media module, we will support sparsefields jsonapi.
+
+Use case: only want image metadata, not image (or other large media object)
+
+ 
+Look at examples of RESTful apis for image thumbnails, & other image manipulations
+
+
 
 
 Documentation
 -------------
 
--   Each DINA compliant Web REST API **MUST** provide complete English
-    documentation of the supported methods. For each method the
-    documentation **MUST** provide curl examples to document the usage.
-    For example (illustrative):
+-   Each DINA compliant Web REST API **MUST** blueprint https://apiblueprint.org/ for their API.
 
 
-
-```bash
-curl --request POST  \\
-  --header "Accept: application/json" \\
-  --header "Content-Type: application/json; charset=UTF-8" \\
-  -data '{"meta": {"owner":"Laxness", "access":"public", \\
-  "licenseType":"CC BY", "legend":"en skata", \\
-  "legendLanguage":"sv_SE", "tags":"view:left"}, \\
-  "data":{"fileName": "pica-pica-flying.jpg", \\
-  "fileContentTransferEncoding": "base64_RFC4648", \\
-  "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="}}' \\
-  http://refimplementation.mediaserver.net/v1/media/create
-```
-
+**[under-discussion]** replace the below with a reference to a apiray-blueprint file (i.e media.apib)
 Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
 
-```bash
-{  
-   "meta":{  
-      "owner":"Laxness",
-      "access":"public",
-      "licenseType":"CC BY",
-      "legend":"en skata",
-      "legendLanguage":"sv_SE",
-      "tags":"view:left"
-   },
-   "data":{  
-      "fileName":"pica-pica-flying.jpg",
-      "fileContentTransferEncoding":"base64_RFC4648",
-      "image":"Tm8gRGlzY291cnNlIHdoYXRzb2V2ZXIsIGNhbiBFbmQgaW4gYWJzb2x1dGUgS25vd2xlZGdlIG9mIEZhY3QuCg=="
-   }
-}
 
-```
 
 References:  
 - http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#json-requests  
 - http://stackoverflow.com/questions/4083702/posting-a-file-and-data-to-restful-webservice-as-json  
 - https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
 
-Response if HTTP '200 OK': provides identifier <UUID> for instance, in this case 6853e82-6cad-430b-b582-90e85203dce8, so retrieval can be tested with:
- 
-```bash
-# use pattern: curl http://refimplementation.mediaserver.net/v1/media/metadata/<UUID>
-curl http://refimplementation.mediaserver.net/v1/media/metadata/46853e82-6cad-430b-b582-90e85203dce8
-```
 
--   In addition to the required basic API documentation, DINA compliant
-    REST API **SHOULD** provide self-documentation capabilities for each
-    endpoint similar to the example provided by e.g. the [Django REST
-    framework](http://www.django-rest-framework.org)[^6] or
-    [Apiary](http://apiary.io)[^7]
-    
--   The documentation for the API **COULD** refer to an online reference
-    implementation in the curl examples (rather than to localhost)
-
-Versioning
+<a name="Versioning">Versioning</a>
 ----------
 
 DINA compliant APIs **MUST** follow a versioning scheme to provide a
@@ -628,6 +601,7 @@ minor versions.
 It seems good practice to maintain at least two versions for a suitable
 transition period.
 
+
 Authentication
 --------------
 
@@ -637,8 +611,13 @@ the identiy that carries permissions to do things) would be required.
 
 However, other non-read-only parts of the API functionality SHOULD
 provide ways for external applications to authenticate before they are
-authorized to make calls. The API SHOULD support use of OAuth
+authorized to make calls. The API **SHOULD** support use of OAuth 2.0 ( https://tools.ietf.org/html/rfc6749 )
 athentication.
+
+HTTPS
+-----
+All APIs must not provide HTTP public facing. HTTPS **MUST ONLY** be used in public facing APIs.
+This can be implemented directly by the APIs or provided with a reverse proxy.
 
 Resources & References
 ======================
@@ -684,7 +663,8 @@ Consulted resources
 
 [^7]: [Apiary](http://apiary.io)
 
-[^8]: 2016-06-27 , supported media-types are  [image/images,video/videos,sound/sounds,attachment/attachments]
+[^8]: 2016-06-27 : supported media-types are  [image/images,video/videos,sound/sounds,attachment/attachments]
+[^9]: 2017-06-14 : http://jsonapi.org/format/#document-top-level
 
 [//]: # ( ref not shown)
 [JSON Style Guide]: <https://google.github.io/styleguide/jsoncstyleguide.xml> 
