@@ -1,7 +1,5 @@
 ## Guidelines for a consistent DINA user interface
 
-SUGGESTION 8/2017, NOT OFFICIAL
-
 Major differences compared to previous Style guidelines at http://blog.dina-web.net/guidelines/style.html
 - Simpler, less restrictive
 - Discussion removed
@@ -9,14 +7,14 @@ Major differences compared to previous Style guidelines at http://blog.dina-web.
 
 --------------------------------
 
-The goal of these guidelines is to help to create a visually and uniform set of DINA modules with consistently working user interfaces, so that users are not surprised or confused when transitioning between modules.
+The goal of these guidelines is to help to create a visually uniform set of DINA modules with consistently working user interfaces, so that users are not surprised or confused when transitioning between modules.
 
 Guidelines can be used in various settings, such as:
 
-*   web applications on both desktop and mobile devices
-*   console applications
-*   printed publications (part on visual style)
-*   documentation
+*   Web applications on both desktop and mobile devices
+*   Console applications
+*   Printed publications (part on visual style)
+*   Documentation
 
 ## Accessibility
 
@@ -26,12 +24,12 @@ Visual style should support good accessibility, and therefore particulary web co
 
 Requirements fo the fonts used in DINA applications:
 
-*   Support for wide variety of languages and characters.
-*   A serif, a sans serif and a fixed width “console font” should be part of the style. Those three types of fonts should harmonize.
-*   Web fonts and TTF versions should exist (or be possible to create) for use on Windows, Linux, Mac providing same appearance regardless of OS used
-*   Open license is required
+* Support for wide variety of languages and characters.
+* Open license is required
+* Web fonts and TTF versions should exist (or be possible to create) for use on Windows, Linux, Mac providing same appearance regardless of OS used
+* A serif, a sans serif and a fixed width “console font” should be part of the style. Those three types of fonts should harmonize.
 
-**TODO**: Select the font(s).
+**TODO**: Select the font(s). Or decide tor rely on Bootstrap or other theme. See User management module.
 
 Possible fonts:
 
@@ -39,12 +37,11 @@ Possible fonts:
 *   **Google Noto** (with great support across cultures/languages)
 *   **Lato** (currently used in user management module)
 
-
 ## Logo
 
-![Logo](https://github.com/DINA-Web/dina_logo/blob/master/Dina%20final%20logo%20horizontal.png?raw=true)
+Logo assets are available at [https://github.com/DINA-Web/dina_logo]
 
-Logo assets are available at [https://github.com/DINA-Web/dina_logo](https://github.com/DINA-Web/dina_logo).
+[comment]: <> (Don't link to image files on Github, since Markdown previewers seem to cause excess traffic which can lead to throttling on Github.)
 
 Colors matching the logo:
 
@@ -71,7 +68,7 @@ For user actions and UI elements, use default Bootstrap 3 or equivalent colors. 
 
 * Background: white and/or light grey
 * Text: black
-* Links: TBD (?)
+* Links: **TODO**
 * Actions
   * Primary/Save/Edit: bright blue
   * Warning/Cancel: yellow
