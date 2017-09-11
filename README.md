@@ -14,6 +14,8 @@ DINA Guidelines
 
 ## Guidelines in Blueprint format
 
+The .apib is a markdown format that allows for various tooling.
+
 A `Makefile` is available that can be used to render and validate guidelines written in API Blueprint format.
 
 Usage:
@@ -30,6 +32,6 @@ Usage:
 
 ## Links
 
-- https://medium.com/@knightstickc/building-an-api-with-swagger-json-api-and-rails-part-2-8f9691e3de04#.8dggtu6bl
+- https://help.apiary.io/api_101/choosing-format/
 
 	
