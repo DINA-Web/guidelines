@@ -21,9 +21,15 @@ Usage:
 	# validate, generate report and HTML versions
 	make APIB=DINA-Web-API-Guidelines.apib
 	
+	# run tests
+	make APIB=DINA-Web-API-Guidelines.apib test
+	
 	# clean up
 	make down
 	make clean
 
+## Links
+
+- https://medium.com/@knightstickc/building-an-api-with-swagger-json-api-and-rails-part-2-8f9691e3de04#.8dggtu6bl
 
 	

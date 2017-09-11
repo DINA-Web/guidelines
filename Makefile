@@ -39,3 +39,19 @@ docs:
 
 clean:
 	rm -f $(APIB) $(APIB).html $(APIB).log
+
+swagger2apib:
+	docker run -ti --rm -v $(PWD):/tmp apiaryio/nodejs-ruby:4 \
+		bash -c "npm install -g swagger2blueprint \
+&& npm install -g swagger-converter \
+&& npm install -g api-spec-converter \
+&& npm install swagger-tools \
+&& npm install -g swagger-tools" 
+
+
+docs-browse:
+	@echo "Launch your browser and point it to http://localhost:8088"
+	@docker run -it --rm -v $(PWD):/doc \
+		-p 8088:8088 bukalapak/snowboard \
+		html -o $(APIB).html -b 0.0.0.0:8088 -s $(APIB)
+
