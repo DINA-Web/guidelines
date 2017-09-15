@@ -1,5 +1,7 @@
 This is RECOMMENDATION for common development practices in the DINA project. It can be deviated for justifiable reasons. Comment and/or document any deviations clearly.
 
+**This needs thorough review from developers!!**
+
 ## What to include in these guidelines?
 
 If there are many common ways to do something, but only one of those is preferred on DINA, include that in these guidelines. 
@@ -8,8 +10,8 @@ No need to describe everything here in detail, instead link to public manuals el
 
 ## Terms
 
-Module = Siungle DINA module, in one or several repositories
-Service = Subpart of a module, e.g. frontend UI, backend API or database
+* Module = Siungle DINA module, in one or several repositories
+* Service = Subpart of a module, e.g. frontend UI, backend API or database
 
 # Summary checklist
 
@@ -50,7 +52,9 @@ Every module and submodule/service must have a readme.md file, which describes b
 
 # Using Docker
 
-Docker practices are desribed in more detail on separate Guidelines. **TODO: Link**
+Use Docker for running the module in a set of containers.
+
+**TODO: Add details**
 
 
 # Makefiles
@@ -95,3 +99,34 @@ Save secrets into “dotfiles” (e.g. .env-servicename). Commit only templates 
 
 **TBD** NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
 include in every .gitignore e.g. `.secret*`
+
+# API documentation
+
+If the module privides an API, document it in API-Blueprint format using an .apib file.
+
+# Travis
+
+**TBD** Building testing and/or releasing?
+
+**TODO** Badge
+
+# Semantic versioning
+
+**TODO** Add text
+
+# Testing
+
+**TODO**Code coverage
+
+**TODO** Link to QA Guidelines
+
+# License
+
+Include license text in the `LICENSE` file.
+
+Appropriate license for DINA are:
+
+* AGPL or GPLv3, MIT or Apache for code
+* Creative Commons for content (Not noncommercial)
+
+See License guidelines **TBD: Is link needed here?**
