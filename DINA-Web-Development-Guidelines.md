@@ -16,13 +16,32 @@ No need to describe everything here in detail, instead link to public manuals el
 # Summary checklist
 
 - Document deviations clearly
-- Add a readme file
+- Use common tools
+- Add a readme.md file
 - Add other relevant files
-- Build & run process
+- Use semantic versioning
+- Build & run with Docker
    - User Docker best practices
    - Use Makefile with standard target names.
    - Create secrets automatically to dotfiles whenever possible.
    - Put secrets into environment variables with docker-compose.yml.
+
+
+# Tools
+
+## Redmine for development tasks
+
+Add new feature ideas, bugs and tasks to Redmine, according to development practices (on Redmine wiki). 
+
+The tasks can be split into smaller issues on Github, if necessary.
+
+## Git and Github for version control
+
+Use Git and Github for version control.
+
+Double-check that no passwords or other **secrets** are committed into Git. See more on secrets below.
+
+If using differenct **branches**, describe on the readme file what they are for.
 
 # Files
 
@@ -49,15 +68,42 @@ Every module and submodule/service must have a readme.md file, which describes b
 - What are the different branches for
 - Important releases/tags, if there are such
 - Deviations from DINA guidelines
+- How to do a local build (for testing) - this should include all the steps needed to have the module running.
+- Travis build badge
+- Code coverage badge **TBD**
 
-# Using Docker
+# License file
 
-Use Docker for running the module in a set of containers.
+Include license text in the `LICENSE` file.
+
+Appropriate license for DINA are:
+
+* AGPL or GPLv3, MIT or Apache for code
+* Creative Commons for content (Not noncommercial)
+
+See License guidelines **TBD: Is link needed here?**
+
+# API documentation
+
+If the module privides an API, document it in API-Blueprint format using an .apib file.
+
+**TODO** Badge
+
+
+# Using Docker for building and running
+
+Use Docker for building and running the module as a set of independent containers, connected by a reverse proxy service.
+
+For an overview of how a can be set up, see the [User management module](https://github.com/DINA-Web/accounts-docker/tree/development), which acts as a reference implementation. **TBD** 
 
 **TODO: Add details**
+- How standardizzed should the build-run process be?
+- How to exactly set secrets/environment variables 
+- One repository per module, or one repository per service? Or both are fine?
+- Using proxy-docker launched separately or include proxy in docker-compose? 
+- Using letsencrypt or self-signed certs (for local builds)? 
 
-
-# Makefiles
+## Makefiles
 
 Provide `Makefile` for building code locally and launch services.
 
@@ -67,7 +113,7 @@ Prefer descriptive commands over short and abstract ones.
 
 Prefer these standard targets in the Makefiles:
 
-## Must-have targets for building and running
+### Must-have targets for building and running
 
 | Target | Purpose |
 --- | --- | ---
@@ -78,7 +124,7 @@ compose-up | starts the system locally using docker-compose
 compose-down | stops and removes containers
 clean | removes binary build artifacts, so that fresh build can be made
 
-## Could-have targets
+### Could-have targets
 
 | Target | Purpose |
 --- | --- | ---
@@ -91,7 +137,7 @@ test | launches tests
 
 Module documentation should refer to separate commands for at least secrets, build-images, init, up-compose. The Makefile can also include make [all], which abstracts all automatic processes under single command (for expert users).
 
-# Secrets
+## Secrets
 
 Generate secrets automatically during build process whenever possible (i.e. when services are inside a multi-container application deployed as a single entity.)
 
@@ -100,33 +146,31 @@ Save secrets into “dotfiles” (e.g. .env-servicename). Commit only templates 
 **TBD** NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
 include in every .gitignore e.g. `.secret*`
 
-# API documentation
-
-If the module privides an API, document it in API-Blueprint format using an .apib file.
-
-# Travis
-
-**TBD** Building testing and/or releasing?
-
-**TODO** Badge
-
-# Semantic versioning
-
-**TODO** Add text
-
 # Testing
 
 **TODO**Code coverage
 
 **TODO** Link to QA Guidelines
 
-# License
+Accessibility Guidelines compliance
+Security OWASP compliance
 
-Include license text in the `LICENSE` file.
+# Release
 
-Appropriate license for DINA are:
+## Versioning and tagging
 
-* AGPL or GPLv3, MIT or Apache for code
-* Creative Commons for content (Not noncommercial)
+Use semantic versioning. See release guidlines for more about version numbers anb tagging.
 
-See License guidelines **TBD: Is link needed here?**
+Tag your releases like this:
+
+    git tag -a v0.0.1 -m "description"
+   
+(You can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate `git push origin <tag>` before pushing.)
+
+**TODO: link** See Release guidelines
+
+## Travis
+
+**TBD** Building testing and/or releasing?
+
+For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub
