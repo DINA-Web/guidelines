@@ -1,31 +1,32 @@
-This is recommendation for common development practices in the DINA project. It can be deviated for justifiable reasons. Comment and/or document any deviations clearly.
+This is RECOMMENDATION for common development practices in the DINA project. It can be deviated for justifiable reasons. Comment and/or document any deviations clearly.
 
-What to include in these guidelines?
+## What to include in these guidelines?
+
 If there are many common ways to do something, but only one of those is preferred on DINA, include that in these guidelines. 
 
-No need to describe everything here in detail, instead link to manuals elsewhere. (And possibly add a backup copy of them in this repository, if they are important and freely licenced.)
-
+No need to describe everything here in detail, instead link to public manuals elsewhere. (And possibly add a backup copy of them in this repository, if they are important and their license allows it.)
 
 # Summary checklist
 
-
-
-Create secrets automatically to dotfiles whenever possible.
-Put secrets into environment variables with docker-compose.yml.
-Use Makefile with standard target names.
-
+- Add a readme file
+- Create secrets automatically to dotfiles whenever possible.
+- Put secrets into environment variables with docker-compose.yml.
+- Use Makefile with standard target names.
 
 
 # Readme
 
 Every module and submodule/service must have a readme.md file, which describes briefly
-What the module is about
-What is the state of the module (active development or not, abandoned...)
-What are the different branches for
-Important releases/tags, if there are such
-Deviations from DINA guidelines
 
-# Docker
+- What the module is about
+- What is the state of the module (active development or not, abandoned...)
+- What are the different branches for
+- Important releases/tags, if there are such
+- Deviations from DINA guidelines
+
+# Using Docker
+
+Docker practices are desribed in more detail on separate Guidelines. **TODO: Link**
 
 
 
@@ -35,14 +36,14 @@ Generate secrets automatically during build process whenever possible (i.e. when
 
 Save secrets into “dotfiles” (e.g. .env-servicename). Commit only templates of these file into Git. Read secrets from these files to containers’ environment variables when deploying with docker-compose (using settings on docker-compose.yml).
 
-NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
-include in every .gitignore e.g. *.secret*
+**TBD** NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
+include in every .gitignore e.g. `.secret*`
 
 
 
 # Makefiles
 
-Use Makefiles to store complex commands and steps.
+Use Makefiles to store and run complex commands and steps.
 
 Comment each step in the Makefile at least in the reference implementation (user management module), and if something deviates from common practice. 
 
