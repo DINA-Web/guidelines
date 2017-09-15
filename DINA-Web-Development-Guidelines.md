@@ -69,26 +69,17 @@ Every module and submodule/service must have a readme.md file, which describes b
 - Important releases/tags, if there are such
 - Deviations from DINA guidelines
 - How to do a local build (for testing) - this should include all the steps needed to have the module running.
-- Travis build badge
-- Code coverage badge **TBD**
+- Badges, see [Release guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Release-Guidelines.md)
 
 # License file
 
-Include license text in the `LICENSE` file.
-
-Appropriate license for DINA are:
-
-* AGPL or GPLv3, MIT or Apache for code
-* Creative Commons for content (Not noncommercial)
-
-See License guidelines **TBD: Is link needed here?**
+Include license text in the `LICENSE` file. See [Licencing guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Licencing-Guidelines.md) for details.
 
 # API documentation
 
 If the module privides an API, document it in API-Blueprint format using an .apib file.
 
-**TODO** Badge
-
+**TODO:** Add example.
 
 # Using Docker for building and running
 
@@ -97,11 +88,16 @@ Use Docker for building and running the module as a set of independent container
 For an overview of how a can be set up, see the [User management module](https://github.com/DINA-Web/accounts-docker/tree/development), which acts as a reference implementation. **TBD** 
 
 **TODO: Add details**
-- How standardizzed should the build-run process be?
+- How standardized should the build-run process be?
 - How to exactly set secrets/environment variables 
-- One repository per module, or one repository per service? Or both are fine?
-- Using proxy-docker launched separately or include proxy in docker-compose? 
-- Using letsencrypt or self-signed certs (for local builds)? 
+- Structure, what would be simplest to set up and debug?
+   1) Whole module dockerized in one repository
+   1) Each service in separate repo, one repo for dockerizing everything?
+   1) Each service in separate repo dockerized, one repo for docker-compose?
+   1) Something else?
+   1) All are fine?
+- Using proxy-docker launched separately vs. include it in docker-compose vs. using third-party proxy image? 
+- Using letsencrypt vs. self-signed certs vs. star-cert (for local builds)?
 
 ## Makefiles
 
@@ -148,29 +144,8 @@ include in every .gitignore e.g. `.secret*`
 
 # Testing
 
-**TODO**Code coverage
-
-**TODO** Link to QA Guidelines
-
-Accessibility Guidelines compliance
-Security OWASP compliance
+See [QA guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-QA-Guidelines.md).
 
 # Release
 
-## Versioning and tagging
-
-Use semantic versioning. See release guidlines for more about version numbers anb tagging.
-
-Tag your releases like this:
-
-    git tag -a v0.0.1 -m "description"
-   
-(You can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate `git push origin <tag>` before pushing.)
-
-**TODO: link** See Release guidelines
-
-## Travis
-
-**TBD** Building testing and/or releasing?
-
-For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub
+See [Release guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Release-Guidelines.md).
