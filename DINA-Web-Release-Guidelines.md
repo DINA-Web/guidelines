@@ -2,13 +2,15 @@
 
 **TODO:** Review this when we are closer to releasing a beta or production version.
 
+
 # Release guidelines
 
 The following are RECOMMENDED guidelines to follow when making releases of modules that are used within the DINA-Web system.
 
 See **Development guidelines** for day-to-day development practices and instructions for making modules build and run with Docker.
 
-# Overview / Checklist
+
+# Checklist for release
 
 **TBD** How to have simple enough tagging/versioning process? What changes are needed for beta releases, what for production releases?
 
@@ -18,45 +20,14 @@ See **Development guidelines** for day-to-day development practices and instruct
   - Provide a `docker-compose.yml` file referencing those tagged Docker images where applicable.
   - Merge changes to master, if you arer using separate development branch.
   - Tag the release
-- Provide a NEWS.md to describe major changes in end user -friendly manner. (Commit messages describe details for developers.)
+- Provide a CHANGES.md to describe major changes in end user -friendly manner. Link to more detailed feature descriptions in the manual as necessary, (Commit messages describe technical details for developers.)
+- For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub **TODO: Describe Travis' role better**
 - Notify DINA Technical committee (mailing list) if your stable release is ready to go upstream **TODO**: Clarify
 
-**TODO: Describe Travis' role better**
-- For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub
 
+# Checklist for reviewing the release
 
-# Checklist
-
-Before releasing, make sure that these files are present in the repo:
-
-		LICENSE # open source license
-		README.md # explain usage
-		CHANGES.md # latest changes
-		docker-compose.yml # system composition of versioned micro-services 
-		Dockerfile # definition of the portable images
-		Makefile # automation: various VERBs for building, testing, starting/stopping services etc
-		.travis.yml # continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub
-		apiary.apib # API specification, relevant if the code implements an API
-		api-documentation.html # rendered apiary blueprint as HTML documentation 
-
-Then make sure that the `Makefile` have relevant targets, for example:
-
-		build  # builds from source code
-		clean  # removes binary build artifacts
-
-		up # starts the system locally using docker-compose.yml
-		down # stops and removes containers
-
-		dotfiles  # generates environment variable secrets (using random data for credentials) 
-
-		release  # pushed docker images to Docker Hub
-
-		backup  # backups system state into preferably non-proprietary formats
-		restore  # restores from any timestamped backup
-
-		dox  # if an API component, generates the HTML reference documentation
-
-		test  # launches tests		
+**TBD**
 
 The DINA TC will run a check for major or stable releases, looking for:
 
@@ -68,29 +39,27 @@ The DINA TC will run a check for major or stable releases, looking for:
   - Documentation is provided that explains the module and its usage (README.md etc)
   - API documentation if the module exposes an API
 
-# Further testing
+## Further testing
 
 Released modules will run through a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
 
-Separate QA guidelines then apply, including making checks for:
+Separate **QA guidelines** then apply, including making checks for:
 
   - Accessibility Guidelines compliance
   - Security OWASP compliance
 
-Here is a link to the [QA guidelines](DINA-Web-QA-Guidelines.md)
 
-# Tagging
+# Further details and rationale
+
+Here follow detailed instructions and explanations of the release guidelines summarized just above. 
+
+## Tagging
 
 Use semantic versioning (see below) and tag your releases like this:
 
     git tag -a v0.0.1 -m "description"
    
 You can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
-
-
-# Further details and rationale
-
-Here follow detailed instructions and explanations of the release guidelines summarized just above. 
 
 ## Use semantic versioning
 
@@ -102,13 +71,9 @@ Use semantic versioning used like this in your releases:
   
   * Increment major, e.g. 1.0.0, for a major release. This is best reserved for changes that are not backward compatible and that are likely to affect many users. Going from 0.b.c to 1.0.0 typically indicates that your module is feature complete with a stable API.
 
-## Provide README.md and NEWS.md or CHANGELOG.md
-
-Besides a `LICENSE` complying with the DINA-Web Licensing Guidelines (ie AGPL or GPLv3, MIT or Apache for code, Creative Commons for content), please provide a README.md file with a "badge" that indicates that the repo builds successfully. 
-
-Also provide a `NEWS.md` or `CHANGELOG.md` which describes shortly your versioned releases. On GitHub, you can put in your markdown a link that looks like this that allows people to see which changes were made between two releases: `https://github.com/jmenglund/CollectionBatchTool/compare/v0.1.2...v0.1.3`
-
 ## Use Travis CI
+
+**TBD** Review, if this still up-to-date, is this the way we want to do this?
 
 Use Travis CI both for building and for releasing. A couple of repos have already started this practice, so you can inspect how these modules have chosen to do this:
 
@@ -128,7 +93,7 @@ Use Travis CI to set up builds for the component(s) by adding a simple text file
 
 # Releases
 
-Set up deploy to  GitHub Releases to happen when you push versioned tags. You can find deployment procedures documented here: 
+Set up deploy to GitHub Releases to happen when you push versioned tags. You can find deployment procedures documented here: 
 
   - [GitHub Releases Guide](https://docs.travis-ci.com/user/deployment/releases)
 
