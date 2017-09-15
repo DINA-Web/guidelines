@@ -6,15 +6,39 @@ If there are many common ways to do something, but only one of those is preferre
 
 No need to describe everything here in detail, instead link to public manuals elsewhere. (And possibly add a backup copy of them in this repository, if they are important and their license allows it.)
 
+## Terms
+
+Module = Siungle DINA module, in one or several repositories
+Service = Subpart of a module, e.g. frontend UI, backend API or database
+
 # Summary checklist
 
+- Document deviations clearly
 - Add a readme file
-- Create secrets automatically to dotfiles whenever possible.
-- Put secrets into environment variables with docker-compose.yml.
-- Use Makefile with standard target names.
+- Add other relevant files
+- Build & run process
+   - User Docker best practices
+   - Use Makefile with standard target names.
+   - Create secrets automatically to dotfiles whenever possible.
+   - Put secrets into environment variables with docker-compose.yml.
 
+# Files
 
-# Readme
+Before releasing, make sure that these files are present in the repo, is applicable for the module:
+
+| File | Purpose |
+--- | --- | ---
+LICENSE | Open source license
+README.md | Explain usage, see below
+CHANGES.md | Overview of changes (details are in commit messages)
+docker-compose.yml | Settings for running the module with docker-compose 
+Dockerfile | Build settings of portable images for services
+Makefile | Automation of build/run processes, see below
+.travis.yml | Continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub **TODO: clarify**
+apiary.apib | API specification if the code implements an API
+api-documentation.html | rendered apiary blueprint as HTML documentation
+
+# Readme file
 
 Every module and submodule/service must have a readme.md file, which describes briefly
 
@@ -29,21 +53,9 @@ Every module and submodule/service must have a readme.md file, which describes b
 Docker practices are desribed in more detail on separate Guidelines. **TODO: Link**
 
 
-
-# Secrets
-
-Generate secrets automatically during build process whenever possible (i.e. when services are inside a multi-container application deployed as a single entity.)
-
-Save secrets into “dotfiles” (e.g. .env-servicename). Commit only templates of these file into Git. Read secrets from these files to containers’ environment variables when deploying with docker-compose (using settings on docker-compose.yml).
-
-**TBD** NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
-include in every .gitignore e.g. `.secret*`
-
-
-
 # Makefiles
 
-Use Makefiles to store and run complex commands and steps.
+Provide `Makefile` for building code locally and launch services.
 
 Comment each step in the Makefile at least in the reference implementation (user management module), and if something deviates from common practice. 
 
@@ -55,8 +67,8 @@ Prefer these standard targets in the Makefiles:
 
 | Target | Purpose |
 --- | --- | ---
-secrets | create secrets
-dotfiles | generates environment variable files
+secrets | generate random credentials
+dotfiles | generates environment variable files from secret file (**TBD: combine with secrets to simplify?**)
 build-images | build docker images from source code
 compose-up | starts the system locally using docker-compose
 compose-down | stops and removes containers
@@ -74,3 +86,12 @@ dox | if an API component, generates the HTML reference documentation
 test | launches tests	
 
 Module documentation should refer to separate commands for at least secrets, build-images, init, up-compose. The Makefile can also include make [all], which abstracts all automatic processes under single command (for expert users).
+
+# Secrets
+
+Generate secrets automatically during build process whenever possible (i.e. when services are inside a multi-container application deployed as a single entity.)
+
+Save secrets into “dotfiles” (e.g. .env-servicename). Commit only templates of these file into Git. Read secrets from these files to containers’ environment variables when deploying with docker-compose (using settings on docker-compose.yml).
+
+**TBD** NAMING SCHEME FOR SECRET AND ENVIRONMENT FILES?
+include in every .gitignore e.g. `.secret*`
