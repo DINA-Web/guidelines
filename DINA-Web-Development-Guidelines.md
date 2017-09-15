@@ -69,11 +69,11 @@ Every module and submodule/service must have a readme.md file, which describes b
 - Important releases/tags, if there are such
 - Deviations from DINA guidelines
 - How to do a local build (for testing) - this should include all the steps needed to have the module running.
-- Badges, see [Release guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Release-Guidelines.md)
+- Badges, see **Release guidelines**.
 
 # License file
 
-Include license text in the `LICENSE` file. See [Licencing guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Licencing-Guidelines.md) for details.
+Include license text in the `LICENSE` file. See **Licencing guideline** for details.
 
 # API documentation
 
@@ -87,14 +87,15 @@ Use Docker for building and running the module as a set of independent container
 
 For an overview of how a can be set up, see the [User management module](https://github.com/DINA-Web/accounts-docker/tree/development), which acts as a reference implementation. **TBD** 
 
-**TODO: Add details**
+**TODO: Decide and add details**
 - How standardized should the build-run process be?
 - How to exactly set secrets/environment variables 
-- Structure, what would be simplest to set up and debug?
+- Structure, what would be simplest to set up and debug? See some notes at https://github.com/DINA-Web/documentation/wiki/Docker-Practices 
    1) Whole module dockerized in one repository
    1) Each service in separate repo, one repo for dockerizing everything?
    1) Each service in separate repo dockerized, one repo for docker-compose?
    1) Something else?
+   1) Development environment can be set locally, only releases dockerized?
    1) All are fine?
 - Using proxy-docker launched separately vs. include it in docker-compose vs. using third-party proxy image? 
 - Using letsencrypt vs. self-signed certs vs. star-cert (for local builds)?
@@ -144,8 +145,8 @@ include in every .gitignore e.g. `.secret*`
 
 # Testing
 
-See [QA guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-QA-Guidelines.md).
+See **QA guidelines**.
 
 # Release
 
-See [Release guidelines](https://github.com/DINA-Web/guidelines/blob/master/DINA-Web-Release-Guidelines.md).
+See **Release guidelines**
