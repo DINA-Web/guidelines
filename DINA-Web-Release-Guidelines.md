@@ -1,18 +1,29 @@
+**This needs thorough review from developers!!**
+
+**TODO:** Review this when we are closer to releasing a beta or production version.
+
 # Release guidelines
 
 The following are RECOMMENDED guidelines to follow when making releases of modules that are used within the DINA-Web system.
 
-- Provide a `Makefile` that builds code locally and launches services. Various Makefile targets should be provided including for example "dotfiles" which generates random credentials where needed, so these can be provided to components at launch time through environment variables
-- Provide a `docker-compose.yml` file with the system composition referencing versioned ("semver") docker images where applicable
-- Use semantic versioning and tag your releases like this: `git tag -a v0.0.1 -m "description"`, you can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
+See **Development guidelines** for day-to-day development practices and instructions for making modules build and run with Docker.
+
+# Overview / Checklist
+
+**TBD** How to have simple enough tagging/versioning process? What changes are needed for beta releases, what for production releases?
+
+- Create the module so that can be built and run with Docker. See **Development guidelines** for details.
+- Use semantic versioning and tag your releases.
+  - Tag Docker images created for individual services
+  - Provide a `docker-compose.yml` file referencing those tagged Docker images where applicable.
+  - Merge changes to master, if you arer using separate development branch.
+  - Tag the release
+- Provide a NEWS.md to describe major changes in end user -friendly manner. (Commit messages describe details for developers.)
+- Notify DINA Technical committee (mailing list) if your stable release is ready to go upstream **TODO**: Clarify
+
+**TODO: Describe Travis' role better**
 - For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub
-- Document usage in README.md and make your README.md contain a "badge" - builds should show green badge :)
-- Provide a NEWS.md or CHANGELOG for the releases
-- Then notify someone at DINA TC if your stable release is ready to go upstream
 
-## Notify DINA TC of your release
-
-For the module to be included into the bigger DINA-Web system, you need to notify DINA TC people that you have a stable build. The DINA TC people will need the repo name, the version number (semantic versioning) and see a "green badge" that the code builds properly using Travis CI. If the released module checks out, it will be included in the DINA-Web system. 
 
 # Checklist
 
@@ -67,6 +78,15 @@ Separate QA guidelines then apply, including making checks for:
   - Security OWASP compliance
 
 Here is a link to the [QA guidelines](DINA-Web-QA-Guidelines.md)
+
+# Tagging
+
+Use semantic versioning (see below) and tag your releases like this:
+
+    git tag -a v0.0.1 -m "description"
+   
+You can use `git config --global push.followTags true` and your 'git push' will take the tag along, if not you have to do a separate 'git push origin <tag>` before pushing
+
 
 # Further details and rationale
 
