@@ -5,8 +5,91 @@ The following are RECOMMENDED guidelines for QA (quality assurance) of DINA-Web 
 
 # QA for new features
 
-Definition of done / 
-Acceptance criteria
+**TBD** We may want to move these to internal development documentation. In that case, correct links on Development documentation.
+
+## Before development
+
+When selecting an issue (especially a new feature) to work on, include **acceptance criteria**: Requirements that are specific to that issue, describing in detail how the feature should work. These must be met for the issue be accepted.
+
+For example:
+- Validations needed
+- Special cases that must be handled
+
+## Testing 
+
+When an issue is resolved for testing (or even before), following things should be done:
+
+**TBD** Common definition of done?
+
+### Manual testing (definition of done):
+
+Most important test cases are marked with *. Others can be skipped is necessary. **TBD**
+
+Check that
+
+- Acceptance criteria for the issue are met **\***
+- Documentation is updated, if applicable **\***
+   - Manual updated
+   - Technical manual updated
+   - Data handbook updated, if feature adds new data fields or chnages their meaning
+- Usability testing
+   - UI guidelines are met. See **UI guidelines**
+   - Content (text) should be relevant to the operation, easy to understand and grammatically correct (in all applicable languages)
+   - Incorrect input is handled correctly
+   - Links lead to correct locations
+   - Delete operations require confirmation
+   - Forms can be used with keyboard only, including submit buttons
+   - Form fields can be tabbed through in logical order
+   - Error messages clearly point to the error
+   - Public pages have proper titles
+   - No content is truncated (e.g. in dropdown lists)
+- Functional testing
+   - Handling negative numbers & zeroes
+   - Handling overly long content
+   - Handling special characters (test string: ÅÄÖåäö ÁáÐðÞþ русский алфавит)
+   - Sorting
+   - Button functionality
+   - Email functionality (emails arriving properly)
+   - User clearing cookies
+   - User working (editing, loggin in/out) on several tabs / browsers simultaneously
+   - Several users working on same data simultaneously
+- Compatibility testing
+   - Works with recent versions of Firefox, Chrome and Safari **TBD**
+   - Responds well to different screen sizes, down to 1024 x 800px **TBD**
+   - No JavaScript errors (in the console)
+- Database testing
+   - Verify that CRUD operations work correctly
+   - Verify that data is saved to and retrieved from the database correctly, and that no data is lost
+   - Test that stored procedures, triggers etc. work correctly
+- Security testing
+   - SSL is used everywhere
+   - No certification warnings or errors
+   - All user input is filtered correctly (e.g. SQL injection attacs)
+   - Users can only access features they are allowed to
+   - Users can only see sensitive information they are allowed to
+   - Improtant operations are logged
+- Performance testing
+   - **TODO later**
+
+
+### Automated testing
+
+Check that
+
+- Unit tests are passing, see badge on Github (for the newest version/branch)
+- **TODO**: Add more?
+- Integration testing? **TBD**
+
+Write result of testing to issue comments: what is working and what isn't, new ideas for further development etc.
+
+If testing is passed, move issue to **resolved**. If problems are found, put the issue back **in progress**.
+
+## Review
+
+During review, check that:
+
+- Acceptance criteria are met (i.e. feature works as expected)
+- Proper testing done and passed
 
 # QA for new releases
 
@@ -14,6 +97,7 @@ Released modules will run through a more thorough QA check before being packaged
 
 ## Manual checks
 
+- Check that **Security guidelines** are met
 - Check that sources are available openly under acceptable license, in included `LICENSE` file.  - Take a note of GitHub URL
 - Check that local builds work and Makefile has relevant targets for building, cleaning etc
 - Check that repo shows Green badge for building with Travis CI
