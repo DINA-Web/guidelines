@@ -53,17 +53,17 @@ If using differenct **branches**, describe on the readme file what they are for.
 
 Before releasing, make sure that these files are present in the repo, is applicable for the module:
 
-| File | Purpose |
-| --- | --- | --- |
-| LICENSE | Open source license |
-| README.md | Explain usage, see below |
-| CHANGES.md | Overview of changes (details are in commit messages) |
-| docker-compose.yml | Settings for running the module with docker-compose |
-| Dockerfile | Build settings of portable images for services |
-| Makefile | Automation of build/run processes, see below |
-| .travis.yml | Continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub **TODO: clarify** |
-| apiary.apib | API specification if the code implements an API |
-| api-documentation.html | rendered apiary blueprint as HTML documentation |
+File | Purpose
+--- | ---
+LICENSE | Open source license
+README.md | Explain usage, see below
+CHANGES.md | Overview of changes (details are in commit messages)
+docker-compose.yml | Settings for running the module with docker-compose
+Dockerfile | Build settings of portable images for services
+Makefile | Automation of build/run processes, see below
+.travis.yml | Continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub **TODO: clarify**
+apiary.apib | API specification if the code implements an API
+api-documentation.html | rendered apiary blueprint as HTML documentation
 
 # Readme file
 
@@ -119,7 +119,7 @@ Prefer these standard targets in the Makefiles:
 ### Must-have targets for building and running
 
 | Target | Purpose |
---- | --- | ---
+--- | ---
 secrets | generate random credentials
 dotfiles | generates environment variable files from secret file (**TBD: combine with secrets to simplify?**)
 build-images | build docker images from source code
@@ -130,7 +130,7 @@ clean | removes binary build artifacts, so that fresh build can be made
 ### Could-have targets
 
 | Target | Purpose |
---- | --- | ---
+--- | ---
 init | set environment variables, if not done with docker-compose
 release | push Docker images to Docker Hub
 backup | backups system state into preferably non-proprietary formats
