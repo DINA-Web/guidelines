@@ -54,16 +54,16 @@ If using differenct **branches**, describe on the readme file what they are for.
 Before releasing, make sure that these files are present in the repo, is applicable for the module:
 
 | File | Purpose |
---- | --- | ---
-LICENSE | Open source license
-README.md | Explain usage, see below
-CHANGES.md | Overview of changes (details are in commit messages)
-docker-compose.yml | Settings for running the module with docker-compose 
-Dockerfile | Build settings of portable images for services
-Makefile | Automation of build/run processes, see below
-.travis.yml | Continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub **TODO: clarify**
-apiary.apib | API specification if the code implements an API
-api-documentation.html | rendered apiary blueprint as HTML documentation
+| --- | --- | --- |
+| LICENSE | Open source license |
+| README.md | Explain usage, see below |
+| CHANGES.md | Overview of changes (details are in commit messages) |
+| docker-compose.yml | Settings for running the module with docker-compose |
+| Dockerfile | Build settings of portable images for services |
+| Makefile | Automation of build/run processes, see below |
+| .travis.yml | Continuous integration, providing delivery of build artifacts to GitHub Releases and Docker Hub **TODO: clarify** |
+| apiary.apib | API specification if the code implements an API |
+| api-documentation.html | rendered apiary blueprint as HTML documentation |
 
 # Readme file
 
