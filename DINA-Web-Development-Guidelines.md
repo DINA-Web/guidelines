@@ -1,6 +1,8 @@
-This is RECOMMENDATION for common development practices in the DINA project. It can be deviated for justifiable reasons. Comment and/or document any deviations clearly.
-
 **This needs thorough review from developers!!**
+
+# Development guidelines
+
+This is RECOMMENDATION for day-to-day development practices in the DINA project. It can be deviated from for justifiable reasons. Comment and/or document any deviations clearly.
 
 ## What to include in these guidelines?
 
