@@ -2,7 +2,12 @@
 
 # Development guidelines
 
-This is RECOMMENDATION for day-to-day development practices in the DINA project. It can be deviated from for justifiable reasons. Comment and/or document any deviations clearly.
+This is RECOMMENDATION for day-to-day development practices used in the DINA project. It aims to  
+- Set common practices so that modules would be built in fairly consistent manner
+- Describe practices to avoid dependencies on any single developer's expertise
+- Act as a reminder checklist for developers 
+
+The guidelines can be deviated from for justifiable reasons. Comment and/or document any deviations clearly.
 
 ## What to include in these guidelines?
 
@@ -17,13 +22,12 @@ No need to describe everything here in detail, instead link to public manuals el
 
 # Summary checklist
 
-- Document deviations clearly
-- Use common tools
-- Add a readme.md file
+- Prefer common tools and processes. Document deviations clearly.
+- Add a readme.md file and keep it up-to-date
 - Add other relevant files
-- Use semantic versioning
+- Document API's in Blueprint-API format
 - Build & run with Docker
-   - User Docker best practices
+   - Use common Docker practices
    - Use Makefile with standard target names.
    - Create secrets automatically to dotfiles whenever possible.
    - Put secrets into environment variables with docker-compose.yml.
