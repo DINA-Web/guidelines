@@ -2,13 +2,11 @@
 
 **TODO:** Review this when we are closer to releasing a beta or production version.
 
-
 # Release guidelines
 
 The following are RECOMMENDED guidelines to follow when making releases of modules that are used within the DINA-Web system.
 
 See **Development guidelines** for day-to-day development practices and instructions for making modules build and run with Docker.
-
 
 # Checklist for release
 
@@ -24,30 +22,7 @@ See **Development guidelines** for day-to-day development practices and instruct
 - For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub **TODO: Describe Travis' role better**
 - Notify DINA Technical committee (mailing list) if your stable release is ready to go upstream **TODO**: Clarify
 
-
-# Checklist for reviewing the release
-
-**TBD**
-
-The DINA TC will run a check for major or stable releases, looking for:
-
-  - Sources are available openly with LICENSE
-	- Local builds work and Makefile has relevant targets for building, cleaning etc
-  - Green badge for building with Travis CI
-  - Semantic versioning used
-  - Tests are OK
-  - Documentation is provided that explains the module and its usage (README.md etc)
-  - API documentation if the module exposes an API
-
-## Further testing
-
-Released modules will run through a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
-
-Separate **QA guidelines** then apply, including making checks for:
-
-  - Accessibility Guidelines compliance
-  - Security OWASP compliance
-
+Separate **QA guidelines** are used for a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
 
 # Further details and rationale
 
