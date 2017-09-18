@@ -9,15 +9,17 @@ Authors
 DINA Guidelines
 ==============================
 
--   [Web API Guidelines](DINA-Web-API-Guidelines.md)
--   [Release Guidelines](DINA-Web-Release-Guidelines.md)
--   [QA Guidelines](DINA-Web-QA-Guidelines.md)
+- [Web API Guidelines](DINA-Web-API-Guidelines.md) - outdated recommendation by TC
+- [Development Guidelines](DINA-Web-Development-Guidelines.md) - draft recommendation by TC
+- [Release Guidelines](DINA-Web-Release-Guidelines.md) - recommendation by TC
+- [QA Guidelines](DINA-Web-QA-Guidelines.md) - draft recommendation by TC
+- [Licensing Guidelines](DINA-Web-Licensing-Guidelines.md) - draft recommendation by TC
+- [Visual style Guidelines](DINA-Web-UI-Guidelines.md) - draft recommendation by TC
+- [Cybersecurity Guidelines](DINA-Cybersecurity-Guidelines.md) - draft recommendation by TC 
 
 ## Guidelines in Blueprint format
 
-The .apib is a markdown format that allows for various tooling.
-
-A `Makefile` is available that can be used to render and validate guidelines written in API Blueprint format.
+The `.apib` format is a markdown format that allows for various tooling. A `Makefile` is provided that for example can be used to render and validate guidelines written in API Blueprint format.
 
 Usage:
 	
@@ -35,13 +37,4 @@ Usage:
 
 - https://help.apiary.io/api_101/choosing-format/
 
-	
-Status of the documents
------------------------
 
-* Cybersecurity: draft by TC
-* API: outdated binding guidelines by TC
-* Licensing: links to draft guidelines at https://dina-web.net/licensing.html
-* QA: draft recommendation by TC
-* Release: recommendation by TC
-* UI: unofficial fork of http://blog.dina-web.net/guidelines/style.html
