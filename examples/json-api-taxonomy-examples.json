@@ -1,0 +1,182 @@
+
+/*
+Three ways to display higher taxonomical ranks in JSON-API.
+To simplify, these only have five levels of taxonomic ranks (species, genus, family, order, class). In practice, there will probably be 20 levels or so.
+
+TODO: Check are these valid?
+
+Questions:
+- What if there are multiple results? i.e. data is an array. - Data-element contains an array of objects instead of an object. A stays human-readable, B and C mix the parents of all results in the same included-element, but may save space by doing so.
+- How well Ember.js supports or even expects reading data from the included-element?
+
+*/
+
+
+/* A: Data->attributes -element holds a list of all parents. */
+
+{
+    "data": {
+      "type": "taxon",
+      "id": 1,
+      "attributes": {
+        "rank": "species",
+        "scientificName": "Turdus merula",
+        "parents": {
+          "genus": "Turdus",
+          "family": "Turdidae",
+          "order": "Passeriformes",
+          "class": "Aves"
+        }
+      }
+    }
+  }
+
+
+/* B: Included-element holds all the parents, but they are referred to from the data->relationships -element. */
+
+{
+  "data": {
+    "type": "taxon",
+    "id": 1,
+    "attributes": {
+      "rank": "species",
+      "scientificName": "Turdus merula"
+    },
+    "relationships": {
+      "parents": [{
+        "data": {
+          "type": "taxon",
+          "id": 2
+        }
+      },
+      {
+        "data": {
+          "type": "taxon",
+          "id": 3
+        }
+      },
+      {
+        "data": {
+          "type": "taxon",
+          "id": 4
+        }
+      },
+      {
+        "data": {
+          "type": "taxon",
+          "id": 5
+        }
+      }]
+    }
+  },
+  "included": [{
+    "type": "taxon",
+    "id": 2,
+    "attributes": {
+      "rank": "genus",
+      "scientificName": "Turdus"
+    }
+  },
+  {
+    "type": "taxon",
+    "id": 3,
+    "attributes": {
+      "rank": "family",
+      "scientificName": "Turdidae"
+    }
+  },
+  {
+    "type": "taxon",
+    "id": 4,
+    "attributes": {
+      "rank": "order",
+      "scientificName": "Passeriformes"
+    }
+  },
+  {
+    "type": "taxon",
+    "id": 5,
+    "attributes": {
+      "rank": "class",
+      "scientificName": "Aves"
+    }
+  }]
+}
+
+/* C: Included-element holds all the parents. Each taxon refers only to its closest parent using th relationships-element. */
+
+{
+    "data": {
+      "type": "taxon",
+      "id": 1,
+      "attributes": {
+        "rank": "species",
+        "scientificName": "Turdus merula"
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "taxon",
+            "id": 2
+          }
+        }
+      }
+    },
+    "included": [{
+      "type": "taxon",
+      "id": 2,
+      "attributes": {
+        "rank": "genus",
+        "scientificName": "Turdus"
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "taxon",
+            "id": 3
+          }
+        }
+      }
+    },
+    {
+      "type": "taxon",
+      "id": 3,
+      "attributes": {
+        "rank": "family",
+        "scientificName": "Turdidae"
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "taxon",
+            "id": 4
+          }
+        }
+      }
+    },
+    {
+      "type": "taxon",
+      "id": 4,
+      "attributes": {
+        "rank": "order",
+        "scientificName": "Passeriformes"
+      },
+      "relationships": {
+        "parent": {
+          "data": {
+            "type": "taxon",
+            "id": 5
+          }
+        }
+      }
+    },
+    {
+      "type": "taxon",
+      "id": 5,
+      "attributes": {
+        "rank": "class",
+        "scientificName": "Aves"
+      },
+    }]
+  }
+

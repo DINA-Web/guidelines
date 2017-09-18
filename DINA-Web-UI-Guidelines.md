@@ -29,8 +29,6 @@ Requirements fo the fonts used in DINA applications:
 * Web fonts and TTF versions should exist (or be possible to create) for use on Windows, Linux, Mac providing same appearance regardless of OS used
 * A serif, a sans serif and a fixed width “console font” should be part of the style. Those three types of fonts should harmonize.
 
-**TODO**: Select the font(s). Or decide tor rely on Bootstrap or other theme. See User management module.
-
 Possible fonts:
 
 *   **[Source Sans Pro](http://www.google.com/fonts/specimen/Source+Sans+Pro) / [Source Serif Pro](http://www.google.com/fonts/specimen/Source+Serif+Pro) / [Source Code Pro](http://www.google.com/fonts/specimen/Source+Code+Pro)**
@@ -40,8 +38,6 @@ Possible fonts:
 ## Logo
 
 Logo assets are available at [https://github.com/DINA-Web/dina_logo]
-
-[comment]: <> (Don't link to image files on Github, since Markdown previewers seem to cause excess traffic which can lead to throttling on Github.)
 
 Colors matching the logo:
 
@@ -68,7 +64,6 @@ For user actions and UI elements, use default Bootstrap 3 or equivalent colors. 
 
 * Background: white and/or light grey
 * Text: black
-* Links: **TODO**
 * Actions
   * Primary/Save/Edit: bright blue
   * Warning/Cancel: yellow
@@ -105,12 +100,3 @@ For a more detailed check, tools like [Vischeck](http://www.vischeck.com/vischec
 ## UI elements
 
 For buttons, use Windows-style order: Save on left, Cancel on right.
-
-## CLI tools
-
-CLI tools should display this message on startup:
-
-<pre>DINA {tool name} - dina-project.net</pre>
-
-**TODO**: Review the real message, or remove this part completely.
-
