@@ -12,4 +12,26 @@ DINA Guidelines
 -   [Release Guidelines](DINA-Web-Release-Guidelines.md)
 -   [QA Guidelines](DINA-Web-QA-Guidelines.md)
 
+## Guidelines in Blueprint format
 
+The .apib is a markdown format that allows for various tooling.
+
+A `Makefile` is available that can be used to render and validate guidelines written in API Blueprint format.
+
+Usage:
+	
+	# validate, generate report and HTML versions
+	make APIB=DINA-Web-API-Guidelines.apib
+	
+	# run tests
+	make APIB=DINA-Web-API-Guidelines.apib test
+	
+	# clean up
+	make down
+	make clean
+
+## Links
+
+- https://help.apiary.io/api_101/choosing-format/
+
+	
