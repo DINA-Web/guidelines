@@ -118,10 +118,12 @@ Prefer these standard targets in the Makefiles:
 
 ### Must-have targets for building and running
 
+**TBD:** target names: short & tradityional (?) vs. descriptive?
+
 | Target | Purpose |
 --- | ---
-secrets | generate random credentials
-dotfiles | generates environment variable files from secret file (**TBD: combine with secrets to simplify?**)
+secrets | generate random credentials (must have if service needs credentials)
+dotfiles | generates environment variable files from secret file (**TBD: combine with secrets to simplify?**)  (must have if service needs credentials)
 build-images | build docker images from source code
 compose-up | starts the system locally using docker-compose
 compose-down | stops and removes containers
