@@ -1,32 +1,59 @@
-**This needs thorough review from developers!!**
-
-**TODO:** Review this when we are closer to releasing a beta or production version.
-
 # Release guidelines
 
 The following are RECOMMENDED guidelines to follow when making releases of modules that are used within the DINA-Web system.
 
-See **Development guidelines** for day-to-day development practices and instructions for making modules build and run with Docker.
+Tagging and versioning (using "semver") should happen for all builds intended for use by others. A particular version may be chosen to be used as either an "alfa", "beta" or a production release if it is stable enough, based on findings from a Quality Assurance (QA) check.
 
 # Checklist for release
 
-**TBD** How to have simple enough tagging/versioning process? What changes are needed for beta releases, what for production releases?
+1. Create the module so that it builds and runs locally. See the [Development guidelines](DINA-Web-Development-Guidelines.md) for day-to-day development practices and instructions for making modules build and run.
+1. When ready to create a release that others can use or test, increment version numbers using semantic versioning for the images and libraries involved in the project.
+	- Provide a `docker-compose.yml` file referencing tagged Docker images where applicable.
+	- Provide a `CHANGES.md` to describe major changes in non-technical language - the commit messages already describe the technical details for developers and often need explanation. Link to more detailed feature descriptions in the manual as necessary.
+1. Push tags to GitHub and release images to Docker Hub
+	- For local manual builds, use "make release"
+	- For non-local automated builds, use Travis CI - ie provide a `.travis.yml` file to build and publish versioned build artifacts automatically - so that libraries are released to GitHub Releases and images are available from Docker Hub.
+1. Notify your colleagues or the DINA Technical committee (mailing list) that a new version is available and ready for QA testing and to be integrated elsewhere in the DINA-Web system.
 
-- Create the module so that can be built and run with Docker. See **Development guidelines** for details.
-- Use semantic versioning and tag your releases.
-  - Tag Docker images created for individual services
-  - Provide a `docker-compose.yml` file referencing those tagged Docker images where applicable.
-  - Merge changes to master, if you arer using separate development branch.
-  - Tag the release
-- Provide a CHANGES.md to describe major changes in end user -friendly manner. Link to more detailed feature descriptions in the manual as necessary, (Commit messages describe technical details for developers.)
-- For non-local build, use Travis CI and deploy released binary artifacts to GitHub Releases and/or DockerHub **TODO: Describe Travis' role better**
-- Notify DINA Technical committee (mailing list) if your stable release is ready to go upstream **TODO**: Clarify
+Separate [QA guidelines](DINA-Web-QA-Guidelines.md) are available for the QA check. The QA check is required to determine whether at particular released version is stable enough to be deployed widely or packaged into other, higher level packages that integrate several different DINA-Web modules into a coherent system. 
 
-Separate **QA guidelines** are used for a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
+For example: all versions may be deployed nightly into "alfa" UAT environments, some more stable "beta" versions may be deployed at end of sprints and more thoroughly tested and stable versions can be deployed in production environments.
 
 # Further details and rationale
 
-Here follow detailed instructions and explanations of the release guidelines summarized just above. 
+Here follows more details in relation to the matters summarized above, such as explanations of semantic versioning, detailed tagging instructions and various links with concrete examples illustrating the  recommended practices for releasing. 
+
+## Releasing versioned libraries and images
+
+In summary: Use `docker` images for delivering higher level systems and support `docker-compose` for system compositions. When docker images of systems are being built and need to reference external binary build artifacts, these could include a specific version of a stable binary library taken from "GitHub Releases".
+
+### Automated Builds at Docker Hub
+
+For higher level packaging which integrate released modules into systems, binary images should be build using `docker`. These should be released to Docker Hub preferably through Automated Builds: 
+
+- [Docker Hub Automated Builds](https://docs.docker.com/docker-hub/builds/#understand-the-build-process)
+
+### Versioned Releases at GitHub Releases
+
+For lower level components, such as libraries etc, use `.travis.yml` to release versioned builds to GitHub Releases. You can find deployment procedures documented here: 
+
+- [GitHub Releases Guide](https://docs.travis-ci.com/user/deployment/releases)
+
+## Continuous Integration with Travis CI
+
+Use Travis CI for automatically triggering non-local builds and releases. Set up builds for the component(s) by adding a simple text file called  `.travis.yml` file to the root directory of your code repository. Guides are available for your stack here:
+
+  - [Java](https://docs.travis-ci.com/user/languages/java)
+  - [Python](https://docs.travis-ci.com/user/languages/python)
+  - [R](https://docs.travis-ci.com/user/languages/r)
+  - [JS](https://docs.travis-ci.com/user/languages/javascript-with-nodejs)
+
+A couple of repos have already started this practice, so you can inspect how these modules have chosen to do this:
+
+  - [Collections Management User Interface](https://github.com/DINA-Web/collections-ui)
+  - [Media Server API](https://github.com/DINA-Web/mediaserver-module)
+  - [DINA-Specify REST API v0](https://github.com/idali0226/dina-web)
+  - [CLI-ETL-tool for Collections data](https://github.com/jmenglund/CollectionBatchTool)
 
 ## Tagging
 
@@ -45,36 +72,6 @@ Use semantic versioning used like this in your releases:
   * Increment minor, e.g. 0.9.0, for a minor release. A minor release can include bug fixes, new features and changes in backward compatibility. This is the most common type of release. 
   
   * Increment major, e.g. 1.0.0, for a major release. This is best reserved for changes that are not backward compatible and that are likely to affect many users. Going from 0.b.c to 1.0.0 typically indicates that your module is feature complete with a stable API.
-
-## Use Travis CI
-
-**TBD** Review, if this still up-to-date, is this the way we want to do this?
-
-Use Travis CI both for building and for releasing. A couple of repos have already started this practice, so you can inspect how these modules have chosen to do this:
-
-  - [Collections Management User Interface](https://github.com/DINA-Web/collections-ui)
-  - [Media Server API](https://github.com/DINA-Web/mediaserver-module)
-  - [DINA-Specify REST API v0](https://github.com/idali0226/dina-web)
-  - [CLI-ETL-tool for Collections data](https://github.com/jmenglund/CollectionBatchTool)
-
-### Builds
-
-Use Travis CI to set up builds for the component(s) by adding a simple text file called  `.travis.yml` file to the root directory of your code repository. Guides are available for your stack here:
-
-  - [Java](https://docs.travis-ci.com/user/languages/java)
-  - [Python](https://docs.travis-ci.com/user/languages/python)
-  - [R](https://docs.travis-ci.com/user/languages/r)
-  - [JS](https://docs.travis-ci.com/user/languages/javascript-with-nodejs)
-
-# Releases
-
-Set up deploy to GitHub Releases to happen when you push versioned tags. You can find deployment procedures documented here: 
-
-  - [GitHub Releases Guide](https://docs.travis-ci.com/user/deployment/releases)
-
-For higher level packaging which integrate released modules into systems, primarily `docker` should be used. Binary images should be provided from Docker Hub preferably through Automated Builds: https://docs.docker.com/docker-hub/builds/#understand-the-build-process
-
-Use `docker` images for delivering higher level systems and support `docker-compose` for system compositions. When docker images of systems are being built and need to reference external binary build artifacts, these could include a specific version of a stable module taken from "GitHub Releases".
 
 # Regarding versioning and backward compatibility
 
