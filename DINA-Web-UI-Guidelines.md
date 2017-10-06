@@ -90,6 +90,21 @@ Keep buttons aligned to left side. Order of the buttons from left to right:
 - Additional functions
 - Cancel
 
+## Terms
+
+Standard terms to use in the modules:
+
+- Sign in & Sign out
+- Register [user creating a new account]
+- Pending & Enabled & Disabled [account status]
+- Confirm [email address]
+- Accepted [user]
+- Save
+- Edit
+- Cancel
+- Remove vs. Delete - **TBD**
+- Move to trash vs. Move to archive - **TBD if needed**
+
 # Further details and rationale 
 
 ## Colors
