@@ -1,13 +1,13 @@
 
 /*
 Three ways to display higher taxonomical ranks in JSON-API.
-To simplify, these only have five levels of taxonomic ranks (species, genus, family, order, class). In practice, there will probably be 20 levels or so.
+To simplify, these only have five levels of taxonomic ranks (species, genus, family, order, class). In practice, there will probably be 20 levels or so, and each of them may contain additional data about the taxa.
 
 TODO: Check are these valid?
 
 Questions:
-- What if there are multiple results? i.e. data is an array. - Data-element contains an array of objects instead of an object. A stays human-readable, B and C mix the parents of all results in the same included-element, but may save space by doing so.
-- How well Ember.js supports or even expects reading data from the included-element?
+- Q: What if there are multiple results? i.e. data is an array. A: Data-element contains an array of objects instead of an object. A stays human-readable, B and C mix the parents of all results in the same included-element, but may save space by doing so.
+- Q: How well Ember.js supports or even expects reading data from the included-element? A: Expects this and reads & "understands" the data automatically automatically.
 
 */
 
@@ -15,21 +15,47 @@ Questions:
 /* A: Data->attributes -element holds a list of all parents. */
 
 {
-    "data": {
-      "type": "taxon",
-      "id": 1,
-      "attributes": {
-        "rank": "species",
-        "scientificName": "Turdus merula",
-        "parents": {
-          "genus": "Turdus",
-          "family": "Turdidae",
-          "order": "Passeriformes",
-          "class": "Aves"
-        }
+  "data": {
+    "type": "taxon",
+    "id": 1,
+    "attributes": {
+      "rank": "species",
+      "scientificName": "Turdus merula",
+      "parents": {
+        "genus": "Turdus",
+        "family": "Turdidae",
+        "order": "Passeriformes",
+        "class": "Aves"
       }
     }
   }
+}
+
+/* A2) Parents are requested in a in a separate request, but that holds them all as a simple list. This is how FinBIF / api.laji.fi does this (but doesn't use the structure of JSON-API).  */
+
+{
+  "data": {
+    "type": "taxon",
+    "id": 1,
+    "attributes": {
+      "rank": "species",
+      "scientificName": "Turdus merula",
+    }
+  }
+}
+
+{
+  "data": {
+    "type": "parents",
+    "id": 1,
+    "attributes": {
+      "genus": "Turdus",
+      "family": "Turdidae",
+      "order": "Passeriformes",
+      "class": "Aves"
+    }
+  }
+}
 
 
 /* B: Included-element holds all the parents, but they are referred to from the data->relationships -element. */
@@ -103,7 +129,7 @@ Questions:
   }]
 }
 
-/* C: Included-element holds all the parents. Each taxon refers only to its closest parent using th relationships-element. */
+/* C: Included-element holds all the parents. Each taxon refers only to its closest parent using the relationships-element. */
 
 {
     "data": {
