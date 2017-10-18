@@ -93,6 +93,20 @@ During review, check that:
 - Acceptance criteria for the issue are met (i.e. feature works as expected)
 - Proper testing done and passed
 
+## User testing
+
+**TBD**: How collection managers are involved in testing?
+
+- Demonstrate new features at sprint review meetings
+- Demonstrate important features as they are developed
+- Organize user testing sessions
+- Encourage users to test and send feedback on their own
+- Record feedback
+   - Include feedback about in-progress issues to the issues and/or developers themselves
+   - File bugs to issue tracking system
+   - Add ideas and feaure requests to wishbucket or to issue tracking system
+
+
 # QA for new releases
 
 Released modules will run through a more thorough QA check before being packaged upstream into higher level packages which integrate several different modules into a coherent system. 
