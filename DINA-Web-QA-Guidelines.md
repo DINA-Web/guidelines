@@ -74,11 +74,11 @@ Check that
 
 ### Automated testing
 
-Check that
-
-- Unit tests are passing, see badge on Github (for the newest version/branch)
-- **TODO**: Add more?
+- Unit tests - how much? **TBD** 
+   - Add Travis and codecov badges
 - Integration testing? **TBD**
+   - Testing that database contains expected data after entering/editing/deleting items? (Query database, export and test the exported file?)
+- **TODO**: Add more?
 
 Write result of testing to issue comments: what is working and what isn't, new ideas for further development etc.
 
