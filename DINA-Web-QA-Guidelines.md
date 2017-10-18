@@ -1,39 +1,56 @@
 
 # Quality Assurance and testing guidelines
 
-The following are RECOMMENDED guidelines for QA (quality assurance) of DINA-Web modules.
+The following are RECOMMENDED guidelines for QA (quality assurance) of DINA-Web modules. 
+
+This should be used as a *checklist that is helping quality assurance*, not as a list of todo items with intrinsic value.
 
 # QA for new features
 
-**TBD** We may want to move these to internal development documentation. In that case, correct links on Development documentation.
-
 ## Before development
 
-When selecting an issue (especially a new feature) to work on, include **acceptance criteria**: Requirements that are specific to that issue, describing in detail how the feature should work. These must be met for the issue be accepted.
+When adding a feature issue to **sprint backlog**, include **acceptance criteria**: requirements that are specific to that issue, describing in detail how the feature should work. These must be met for the issue be accepted.
 
 For example:
+- Workflows to be supported
 - Validations needed
-- Special cases that must be handled
+- Common and special cases that must be handled
 
-## Testing 
+## Testing
 
-When an issue is resolved for testing (or even before), following things should be done:
+When an issue is **resolved for testing** (or even before), following things should be done. (Common definition of done.)
 
-**TBD** Common definition of done?
+If tests are passed, move issue to **resolved**. If problems are found, put the issue back **in progress**. Write result of testing to issue comments.
 
-### Manual testing (definition of done):
-
-Most important test cases are marked with *. Others can be skipped is necessary. **TBD**
-
-Check that
-
-- Acceptance criteria for the issue are met **\***
+- Acceptance criteria for the issue are met (i.e. feature works as expected)
+- DINA UI guidelines are followed.
+   - UI shows clear instructions, labels and success/error messages to the user, pointing their attention to correct place. (e.g. error messages highlight the affected field.)
+   - UI is in English and Swedish. Email messages have subject and body in both English and Swedish.
+- Important user actions are either logged or permantently saved into a database.
+- Database and log files are backed up according to backup policy. **TBD**
 - Documentation is updated, if applicable **\***
    - Manual updated
    - Technical manual updated
-   - Data handbook updated, if feature adds new data fields or chnages their meaning
+   - Data handbook updated, if feature adds new data fields or changes their meaning
+- Compatibility testing
+   - Works with IE 11 and two most recent versions of Firefox and Chrome
+   - Responds well to different screen sizes, down to 1024 x 800px **TBD**
+- Check that automated tests are passed
+- Check test coverage? **TBD**
+
+### Automated testing
+
+- Unit tests - how much coverage? **TBD** 
+   - Add Travis and codecov badges
+- Integration testing? **TBD**
+   - Testing that database contains expected data after entering/editing/deleting items? (Query database, export and test the exported file?)
+- **TODO**: Add more?
+
+### Additional manual testing
+
+These can be skipped as applicable. **TBD**
+
 - Usability testing
-   - UI guidelines are met. See **UI guidelines**
    - Content (text) should be relevant to the operation, easy to understand and grammatically correct (in all applicable languages)
    - Incorrect input is handled correctly
    - Links lead to correct locations
@@ -54,8 +71,6 @@ Check that
    - User working (editing, loggin in/out) on several tabs / browsers simultaneously
    - Several users working on same data simultaneously
 - Compatibility testing
-   - Works with recent versions of Firefox, Chrome and Safari **TBD**
-   - Responds well to different screen sizes, down to 1024 x 800px **TBD**
    - No JavaScript errors (in the console)
 - Database testing
    - Verify that CRUD operations work correctly
@@ -69,26 +84,13 @@ Check that
    - Users can only see sensitive information they are allowed to
    - Improtant operations are logged
 - Performance testing
-   - **TODO later**
+   - **TBD later**
 
-
-### Automated testing
-
-- Unit tests - how much? **TBD** 
-   - Add Travis and codecov badges
-- Integration testing? **TBD**
-   - Testing that database contains expected data after entering/editing/deleting items? (Query database, export and test the exported file?)
-- **TODO**: Add more?
-
-Write result of testing to issue comments: what is working and what isn't, new ideas for further development etc.
-
-If testing is passed, move issue to **resolved**. If problems are found, put the issue back **in progress**.
-
-## Review
+## Final review
 
 During review, check that:
 
-- Acceptance criteria are met (i.e. feature works as expected)
+- Acceptance criteria for the issue are met (i.e. feature works as expected)
 - Proper testing done and passed
 
 # QA for new releases
