@@ -37,6 +37,7 @@ If tests are passed, move issue to **resolved**. If problems are found, put the 
    - Responds well to different screen sizes, down to 1024 x 800px **TBD**
 - Check that automated tests are passed
 - Check test coverage? **TBD**
+- Do security testing, see Security guidelines **TBD**
 
 ### Automated testing
 
