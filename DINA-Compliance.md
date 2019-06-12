@@ -8,7 +8,7 @@ This document outlines requirements and recommendations for a module to be DINA-
 -   **SHOULD** - indicates optional features that are highly recommended for implementation, but are not required; if these features are implemented they MUST follow the recommendations outlined in the standard.
 -   **COULD** -  indicates optional features that are considered beneficial for the module, but are not required; if these features are implemented they MUST follow the recommendations outlined in the standard.
 
-
+# DINA Compliance checklist
 * Follows DINA guidelines (to be reviewed)
 * The module MUST Contains API contract (as form a [JSON Schema 0.7](https://json-schema.org/))
 *	The module MUST Exposes an API following [JSON API Specification](https://jsonapi.org/)
