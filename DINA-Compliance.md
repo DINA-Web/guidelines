@@ -9,6 +9,6 @@ Definition of DINA-Compliant module (DRAFT):
 *	We have the approval from at least 1 member of all voting members
 *	Licensing should enable complete reuse (MIT strongly suggested)
 *	Tracking could be done in GitHub issues
-** Submit an issue to suggest a module
-** Discussions
-**	Approve/Reject
+    * Submit an issue to suggest a module
+    * Discussions
+    *	Approve/Reject
