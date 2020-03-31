@@ -416,7 +416,6 @@ A compliant sample response in JSON format:
           "limit": 50,
 	  "callDate": "2015-11-05T08:15:30-05:00",
           "apiVersion: "1.0",
-          "results": 18,
 	  "responseTime": 23
           "orderBy": [
 	  	     "-ID",
