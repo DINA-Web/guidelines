@@ -558,19 +558,14 @@ Look at examples of RESTful apis for image thumbnails, & other image manipulatio
 Documentation
 -------------
 
--   Each DINA compliant Web REST API **MUST** blueprint https://apiblueprint.org/ for their API.
-
-
-**[under-discussion]** replace the below with a reference to a apiray-blueprint file (i.e media.apib)
-Here is the above JSON in the POST body formatted a little better (this is just an example of what we might want in the REQUEST JSON):
-
+-   Each DINA compliant Web REST API **MUST** have an agreed OpenAPI Specification Version 3 for their API under source control in https://github.com/DINA-Web.
+-   Specification repositories should be able to automaticaly generate API documentation from the OpenAPI Specification file.
 
 
 References:  
-- http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api#json-requests  
-- http://stackoverflow.com/questions/4083702/posting-a-file-and-data-to-restful-webservice-as-json  
-- https://developer.atlassian.com/display/CROWDDEV/JSON+Requests+and+Responses  
-
+- https://www.openapis.org/
+- http://spec.openapis.org/oas/v3.0.3 
+- https://openapi.tools/
 
 <a name="Versioning">Versioning</a>
 ----------
