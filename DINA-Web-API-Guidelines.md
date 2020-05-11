@@ -480,9 +480,9 @@ parameters, i.e.
 
 ### Delete
 
-In order to reduce inter-module reference issues while maintaining the system simplicity and easy of use, resources **SHOULD** be deleted in a "soft-delete" manner.
+In order to reduce inter-module reference issues while maintaining the system simplicity, resources **SHOULD** be deleted in a "soft-delete" manner.
 
-It implies that resources should not be completely deleted. Instead, they should have a `deletedDate` property setting the date of deletion. Such resources **SHOULD** return a `410 Gone` instead of a `404 Not Found`, with a body indicating how to access the deleted entity (e.g. sample/cf71a71e-2176-4d6f-9f17-a4c4f3dd104e?deleted=true). They should also not appear in a list operation.
+It implies that resources should not be completely deleted and still be resolvable after deletion. Such resources **SHOULD** return a `410 Gone` instead of a `404 Not Found`, with a body indicating how to access the deleted entity (e.g. sample/cf71a71e-2176-4d6f-9f17-a4c4f3dd104e?deleted=true). Deleted resources should not appear in a list operation.
 
 Hard-delete **MUST** be available for administrator to completely remove a resource if required (e.g. sensitive information).
 
