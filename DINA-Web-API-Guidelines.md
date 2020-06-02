@@ -81,7 +81,7 @@ DINA REST API standard - Specification
 
 API Isolation
 -----
-An API **SHOULD** only serve what its responsible for and avoid calling another API to supplement data. The caller of the API is responsible for aggregating the data from different APIs response. The goal is to keep the system simple and flexible by avoiding a cascade of calls from a single API call by the client. This is also valid for data mutations since distributed transaction are not supported.
+An API **SHOULD** only serve what its responsible for and avoid calling another API to supplement data. The caller of the API is responsible for aggregating the data from different API responses. The goal is to keep the system simple and flexible by avoiding a cascade of calls from a single API call by the client. This is also valid for data mutations since distributed transaction are not supported.
  
 Adheres to the JSON API -specification
 ------
