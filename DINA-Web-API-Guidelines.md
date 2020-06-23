@@ -82,8 +82,12 @@ DINA REST API standard - Specification
 API Isolation
 -----
 An API **SHOULD** only serve what its responsible for and avoid calling another API to supplement data. The caller of the API is responsible for aggregating the data from different API responses. The goal is to keep the system simple and flexible by avoiding a cascade of calls from a single API call by the client. This is also valid for data mutations since distributed transaction are not supported.
+
+Inter-module reference
+-----
+Inter-module references are not enforced at insert/update/delete time. A module pointing to another module **SHOULD** only keep an identifier. Identifiers usage and potential broken references will be collected asynchronously and aggregated in a report.
  
-Adheres to the JSON API -specification
+Adheres to the JSON API specification
 ------
 
 The DINA REST API Standard adheres to the [JSON API - specification version (v1.0)](http://jsonapi.org/format/).
