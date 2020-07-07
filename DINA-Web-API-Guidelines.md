@@ -437,6 +437,16 @@ A compliant sample response in JSON format:
     }
 </pre>
 
+API response "data"
+-----------------------
+
+A DINA-compliant endpoint **MUST** return a `data` section according to JSON API [Resource Objects](https://jsonapi.org/format/#document-resource-objects).
+
+Additionally, the `data` section **SHOULD** return standard administrative metadata:
+
+* `createdBy`: username used to create the record (not an agent)
+* `createdOn` : date/time (ISO 8601) of when the record was created
+* `group`: the name of the group that owns the record (optional)
 
 API response "errors"
 -----------------------
