@@ -88,7 +88,8 @@ Adheres to the JSON API -specification
 
 The DINA REST API Standard adheres to the [JSON API - specification version (v1.0)](http://jsonapi.org/format/).
 If the DINA REST API deviates from the JSON API-Specifiaction that is noted in this document.  <p>
-**[under-discussion]** For files, non-JSON and therefore non-JSON-API can also be used (e.g. getting raw images). 
+	
+For binary files, non-JSON and therefore non-JSON-API can also be used (e.g. uploading/downloading raw images).
 
 Basics
 ------
@@ -537,51 +538,17 @@ To request results in a supported language, the parameter `language` is used. Fo
 Use lowercase two-letter ISO-639-1 codes for languages.
 
 
-**RAW Object Access**
+**RAW Objects**
 Some objects, such as those that are embeddable natively in HTML, like images, audio, video, etc. need to be accessible directly, not wrapped in a JSON envelope.
-Some of these, such as images, need to be able to produce alternate views of themselves, such as thumbnails, sub-images, black-and-white from colour, etc.
-In order to support these modes and operations, out-of-band (with respect to the json API) API is needed.
+Therefore, on accessing such object the `Content-Type` should be set to the expected value including a filename with the proper extension.
 
-This is primarily supported **using the same end points** using the `raw` reserved word.
-
-
-Example for image/raw issue:
-
-|Example URL                             |Request Body                                     |mime type             |     Response body|
-|:---------------------------------------|:------------------------------------------------|:---------------------|:--------------------------
-`POST /media`                              | json with embedded base64 image encoding of jpg | `application/json`   |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
-`GET /media/y5y5y5y5y7`                    | empty                                           | `application/json`   |`{..."content: "base64_of_image", "sha1:"...`|
-`GET /media/y5y5y5y5y7/raw`                | empty                                           | `image/jpeg`         | jpeg content (binary)    |
-`GET /media/y5y5y5y5y7/raw?width=100`      | empty                                           | `image/jpeg`         | jpeg content (binary)    |
-`POST /media/raw`                          | binary, i.e. jpeg image                         | `image/jpeg`         |`{.....”id”: “y5y5y5y5y7”, "sha1":...}`  // Image not returned  |
-`GET /media?fields[image]=sha1,title`      | json with only requested fields                 | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
-`GET /media?fields[image]=-content`        | json with all fields except `content`           | `application/json`   |`{..."title: "Sunset", "sha1:"...`|
-|...                                     |...                                              |...                   |...                             |
-
-
-**STILL TO DO**
-PATCH /media/y5y5y5y5y7
-
-Req jsonapi: contains metadata
-
-Resp: exactly same as the POST jsonapi response
- 
-For media module, we will support sparsefields jsonapi.
-
-Use case: only want image metadata, not image (or other large media object)
-
- 
-Look at examples of RESTful apis for image thumbnails, & other image manipulations
-
-
-
+APIs supporting raw objects upload should accept `multipart/form-data` request. 
 
 Documentation
 -------------
 
 -   Each DINA compliant Web REST API **MUST** have an agreed OpenAPI Specification Version 3 for their API under source control in https://github.com/DINA-Web.
 -   Specification repositories should be able to automaticaly generate API documentation from the OpenAPI Specification file.
-
 
 References:  
 - https://www.openapis.org/
