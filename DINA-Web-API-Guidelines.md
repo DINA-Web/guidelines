@@ -85,7 +85,7 @@ An API **SHOULD** only serve what its responsible for and avoid calling another 
 
 Inter-module reference
 -----
-Inter-module references are not enforced at insert/update/delete time. A module pointing to another module **SHOULD** only keep an identifier. Identifiers usage and potential broken references will be collected asynchronously and aggregated in a report.
+Inter-module references are not enforced at insert/update/delete time. A module pointing to a record in another module **SHOULD** only keep the type and the identifier. Identifiers usage and potential broken references **SHOULD** be collected asynchronously and aggregated in a report.
  
 Adheres to the JSON API specification
 ------
