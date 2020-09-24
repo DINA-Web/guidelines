@@ -135,7 +135,7 @@ http://jsonapi.org/format/#crud
   * Pagination **MUST** be implemented using the offset-based strategy, using the URI paramaters `page[offset]` and `page[limit]`
 * http://jsonapi.org/format/#fetching-sorting
 
-#### Relations ;  one-to-many and many-to-many ####
+#### Relationhips ####
 
 **[under-discussion]**: This part could be clarified further.
 
@@ -155,6 +155,26 @@ http://jsonapi.org/format/#crud
 }
 ```
 
+#### External Relationhips ####
+
+A relationship **COULD** point to a record in another module. The relationship is represented as a regular relationship except that it can not be expended, only the `type` and the `id` can be returned:
+```
+"relationships": {
+    "dcCreator": {
+      "data": { "type": "person", "id": "bc33af02-db10-4b6d-8c32-c6027733e05c" }
+    }
+  }
+```
+
+When an external relationship is included, the top-level `meta` section **MUST** include the mapping between the external `type` and where does it resolve:
+```
+"meta": {
+  "external": [
+    {"type":"person" 
+     "href":"dinaapi.org/agent/person"}
+   ]
+}
+```
 
 ### HTTP header use
 
