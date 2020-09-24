@@ -166,7 +166,7 @@ A relationship **COULD** point to a record in another module. The relationship i
   }
 ```
 
-When an external relationship is included, the top-level `meta` section **MUST** include the mapping between the external `type` and where does it resolve:
+When an external relationship is included, the top-level `meta` section **MUST** include the mapping between the external `type` and where it resolves to:
 ```
 "meta": {
   "external": [
