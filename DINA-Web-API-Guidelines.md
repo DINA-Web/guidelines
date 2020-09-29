@@ -135,14 +135,14 @@ http://jsonapi.org/format/#crud
   * Pagination **MUST** be implemented using the offset-based strategy, using the URI paramaters `page[offset]` and `page[limit]`
 * http://jsonapi.org/format/#fetching-sorting
 
-#### Relations ;  one-to-many and many-to-many ####
+#### Relationships ####
 
 **[under-discussion]**: This part could be clarified further.
 
 1. see : http://jsonapi.org/format/#document-links
 2. see : http://jsonapi.org/format/#fetching-relationships
 
-**'links'** would give you the number of how many relationships there are. Then you would make another API call ('Fetching Relationships') to get the relationhips data. The following links-object includes a URL as well as meta-information about a related resource collection:
+**'links'** would give you the number of how many relationships there are. Then you would make another API call ('Fetching Relationships') to get the relationships data. The following links-object includes a URL as well as meta-information about a related resource collection:
 
 ```
 "links": {
@@ -155,6 +155,26 @@ http://jsonapi.org/format/#crud
 }
 ```
 
+#### External Relationhips ####
+
+A relationship **COULD** point to a record in another module. The relationship is represented as a regular relationship except that it can not be expended, only the `type` and the `id` can be returned:
+```
+"relationships": {
+    "dcCreator": {
+      "data": { "type": "person", "id": "bc33af02-db10-4b6d-8c32-c6027733e05c" }
+    }
+  }
+```
+
+When an external relationship is included, the top-level `meta` section **MUST** include the mapping between the external `type` and where it resolves to:
+```
+"meta": {
+  "external": [
+    {"type":"person" 
+     "href":"dinaapi.org/agent/person"}
+   ]
+}
+```
 
 ### HTTP header use
 
