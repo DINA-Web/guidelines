@@ -1,5 +1,5 @@
-This document
-=============
+DINA API Guidelines
+===================
 
 Provides binding guidelines for the design of DINA Web APIs. 
 
@@ -74,7 +74,7 @@ of the recommendations covered by mandatory or optional features defined
 by this standard.
 
 **NB:** Non DINA implemented module ( i.e Keycloak, SOLR ) do not have to comply with this specification.
-However, it some circumstances web api wrappers may be used where appropriate.
+However, in some circumstances web api wrappers may be used where appropriate.
 
 DINA REST API standard - Specification
 ======================================
@@ -104,7 +104,7 @@ the
 - Conventions of mapping HTTP methods to
 CRUD operations
 - Structuring URIs to address API endpoints
-- Using JSON or XML as requests and response format.
+- Using JSON as requests and response format
 
 Endpoint definitions
 --------------------
@@ -268,8 +268,6 @@ HTTP responses returned by DINA-compliant API endpoints **MUST** be
 returned as valid JSON jsonapi documents ( source : http://jsonapi.org/format/#document-meta ) and follow a standard response structure. 
 The basic structure of a DINA API compliant JSON reponse is listed below:
 
-**[under-discussion]** there is no top-level member called **'results'**, it should be **'data'** according to http://jsonapi.org/format/#document-meta Does this still require modification of this document?
-
 Response for a single record:
 <pre>
 {
@@ -316,8 +314,6 @@ Response for a single record:
   }],
   }
 }
-
-
 </pre>
 
 
@@ -410,8 +406,6 @@ According to the JSON API specification "A document MUST contain at least one of
 The members data and errors MUST NOT coexist in the same document."<p> [^9]
 
 
-**[under-discussion]** Glen will look through the properties (key:values) and see if they adhere to the jsonapi, which should we keep, which should we remove , which to add ?
-
 API response "meta"
 -----------------------
 
@@ -428,7 +422,6 @@ the response meta section:
 | results    |      long  |      Count of the result objects returned by the call to this endpoint, unless the particular endpoint **ALWAYS** returns one object||
 | sort     |      array of string  |      Result object properties  on which the returned result set is sorted. Example: `sort=age,height`. AS PER jsonapi http://jsonapi.org/format/#fetching-sorting. "The sort order for each sort field MUST be ascending unless it is prefixed with a minus (U+002D HYPHEN-MINUS, “-“), in which case it MUST be descending."|
 | resultLanguage|      string  |      Language of the result content - if applicable.|
-| contentLicenses    |  array of string  |      Licenses applying to the results returned by the endpoint - - if applicable.|
 | message            |  string  |      General message explaining the response - if any.|
 | maintenanceContact |  string  |      Links to services and contacts that provide information and support in case of service disruptions.|
 | moduleVersion |  string  |      Version of the underlying module's codebase.|
@@ -451,8 +444,6 @@ A compliant sample response in JSON format:
 		     "InventoryDate"
           ],
           "resultLanguage": "SE_sv"
-          "contentLicenses": [
-          ],
           "message": "",
           "maintenanceContact": "admin@dina-system.org"
           ...
