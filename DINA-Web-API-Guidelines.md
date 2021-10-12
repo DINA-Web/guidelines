@@ -137,8 +137,6 @@ http://jsonapi.org/format/#crud
 
 #### Relationships ####
 
-**[under-discussion]**: This part could be clarified further.
-
 1. see : http://jsonapi.org/format/#document-links
 2. see : http://jsonapi.org/format/#fetching-relationships
 
@@ -155,9 +153,9 @@ http://jsonapi.org/format/#crud
 }
 ```
 
-#### External Relationhips ####
+#### External Relationships ####
 
-A relationship **COULD** point to a record in another module. The relationship is represented as a regular relationship except that it can not be expended, only the `type` and the `id` can be returned:
+A relationship **COULD** point to a record in another module. The relationship is represented as a regular relationship except that, as opposed to regular relationships, it can not be expended, only the `type` and the `id` can be returned:
 ```
 "relationships": {
     "dcCreator": {
