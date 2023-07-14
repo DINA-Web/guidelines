@@ -614,6 +614,22 @@ provide ways for external applications to authenticate before they are
 authorized to make calls. The API **SHOULD** support use of OAuth 2.0 ( https://tools.ietf.org/html/rfc6749 )
 athentication.
 
+Auditing
+--------
+
+User activity and changes to data **SHOULD** be tracked using audit logs.
+
+Tracked audit data includes:
+
+* What data was changed: data snapshots or diffs
+* When the data was changed: timestamps
+* Who changed the data: user ID or username
+
+Open-source libraries can used to implement auditing, such as:
+
+* Javers ( https://javers.org/ )
+* Hibernate Envers ( https://hibernate.org/orm/envers/ )
+
 HTTPS
 -----
 All APIs must not provide HTTP public facing. HTTPS **MUST ONLY** be used in public facing APIs.
